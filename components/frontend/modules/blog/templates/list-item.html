@@ -1,0 +1,28 @@
+
+<% if (fileKeyExists('teaser')) { %>
+	<div class="article-image">
+		<a href='#article/<%= _id %>'>
+			<%= renderImage('teaser', 'smallPic') %>
+		</a>
+	</div>
+<% } %>
+
+<div class="article-content">
+	<div class="entry-date"><%= formatDate(date) %></div>
+	<div class="row">
+		<div class="col-md-8">
+			<div class="inner">
+				<h1><a href='#article/<%= _id %>'><%= title %></a></h1>
+				<p><%= teaser.slice(0, 175) %> ...</p>
+			</div>
+		</div>
+		<div class="col-md-4 infos">
+			<ul>
+				<li><span class="glyphicon glyphicon-comment"></span> Kommentare</li>
+				<li><span class="glyphicon glyphicon-tag"></span> <%= tags %></li>
+				<li><span class="glyphicon glyphicon-user"></span> by <%= author %></li>
+				<li><span class="glyphicon glyphicon-asterisk"></span> <%= category %></li>
+			</ul>
+		</div>
+	</div>
+</div>

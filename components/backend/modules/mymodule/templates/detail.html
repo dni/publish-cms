@@ -1,0 +1,39 @@
+<h1><%= t.details %></h1>
+<div class="buttons-top">
+	<% if (published) { %>
+		<button class="publish btn btn-default">Unpublish</button>
+	<% } else { %>
+		<button class="publish btn btn-success">Publish</button>
+	<% } %>
+</div>
+<div class="form-fields">
+	<div class="form-group">
+	    <label><%= t.title %></label>
+	    <input type="text" name="title" class="form-control" value="<%= title %>" />
+	</div>
+	<div class="form-group">
+		<label><%= t.author %></label>
+		<input class="form-control" type="text" name="author" value="<%= author %>" />
+	</div>
+	<div class="form-group">
+		<label><%= t.category %></label>
+		<select class="form-control" name="category">
+			<option></option>
+			<% renderCategories(category, function(category, selected) { %>
+				<option <%= selected %> value="<%= category %>"><%= category %></option>
+			<% }); %>
+		</select>
+	</div>
+	<div class="form-group">
+		<label><%= t.tags %></label>
+		<input class="form-control" type="text" name="tags" value="<%= tags %>" />
+	</div>
+</div>
+<div class="form-group">
+	<label><%= t.teaser %></label>
+	<textarea class="form-control" rows="3" name="teaser"><%= teaser %></textarea>
+</div>
+<div class="form-group">
+	<label><%= t.article %></label>
+	<textarea class="wysiwyg form-control" rows="9" name="article"><%= desc %></textarea>
+</div>

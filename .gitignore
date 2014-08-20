@@ -1,0 +1,17 @@
+cache
+node_modules
+bower_components
+baker-master
+vendor
+public/files
+public/books
+
+.project
+.DS_Store
+
+_SpecRunner.html
+.grunt
+
+npm-debug.log
+
+dump

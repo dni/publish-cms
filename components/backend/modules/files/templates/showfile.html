@@ -1,0 +1,35 @@
+<div class="row">
+	<div class="col-md-6">
+		<div class="form-group">
+		    <label>Name</label>
+		    <input type="text" name="name" class="form-control" value="<%= name %>" />
+		</div>
+		<div class="form-group">
+		    <label>Template Key</label>
+		    <input type="text" name="key" class="form-control" value="<%= key %>" />
+		</div>
+		<div class="form-group">
+		    <label>Info</label>
+		    <textarea class="form-control" name="info"><%= info %></textarea>
+		</div>
+		<div class="form-group">
+		    <label>Description</label>
+		    <textarea class="form-control" name="desc"><%= desc %></textarea>
+		</div>
+		<div class="form-group">
+		    <label>Alt</label>
+		    <input class="form-control" type="text" name="alt" value="<%= alt %>" />
+		</div>
+
+	</div>
+	<div class="col-md-6">
+		<% if(type.split("/")[0]=="image") { %>
+			<img src="./public/files/<%= smallPic %>" alt="<%= name %>" />
+		<% } else { %>
+			<p width="100"><%= name %><p>
+		<% } %>
+		<p><%= type %></p>
+	</div>
+</div>
+<a href="#editfile/<%= _id %>" class="btn btn-primary">Edit</a>
+<button class="deleteFile btn btn-danger">Delete</button>

@@ -1,0 +1,13 @@
+<div class="row">
+	<div class="form-group">
+	    <label>Name</label> <%= name %>
+	</div>
+	<% if(type.split("/")[0]=="image") { %>
+		<img src="./public/files/<%= smallPic %>" alt="<%= name %>" />
+	<% } else { %>
+		<p width="100"><%= name %><p>
+	<% } %>
+	<p><%= type %></p>
+</div>
+<button class="save btn btn-primary">Save</button>
+<button class="cancel btn btn-danger">Cancel</button>

@@ -1,0 +1,29 @@
+{
+  "name": "PageModule",
+  "moduleName": "PageModule",
+  "modelName": "PageBlock",
+  "namespace": "pages",
+  "collectionName": "Pages",
+  "url": "/pages/",
+  "urlRoot": "pages",
+  "dbTable": "pages",
+  "navigation": true,
+  "model": {
+    "title" : {
+      "type": "text",
+      "mongooseType": "String"
+    },
+    "magazine" : {
+      "type": "text",
+      "mongooseType": "String"
+    },
+    "layout" : {
+      "type": "text",
+      "mongooseType": "String"
+    },
+    "number" : {
+      "type": "text",
+      "mongooseType": "String"
+    }
+  }
+}

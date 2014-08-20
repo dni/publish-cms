@@ -1,0 +1,12 @@
+{
+    "moduleName": "SettingsModule",
+    "name": "SettingsModule",
+    "modelName": "Setting",
+    "collectionName": "Settings",
+    "url": "/settings/",
+    "urlRoot": "settings",
+    "dbTable": "settings",
+    "navigation": true,
+    "navigationButton": "cog",
+    "model": true
+}

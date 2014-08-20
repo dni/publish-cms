@@ -1,0 +1,21 @@
+<form class="form-inline" role="form">
+  <div class="form-group">
+    <label class="sr-only" ><%= t.message %></label>
+    <input type="text" name="message" class="form-control" placeholder="<%= t.messagePlaceholder %>">
+  </div>
+  <input type="submit" value="<%= t.send %>" class="btn btn-default"/>
+</form>
+<span class="list-btns">
+  <div class="form-group">
+    <label><%= t.limit %></label>
+    <select name="limit" class="form-control">
+    	<option value="0"><%= t.nolimit %></option>
+    	<option selected value="25">25</option>
+    	<option value="50">50</option>
+    	<option value="75">75</option>
+		<option value="100">100</option>
+    </select>
+  </div>
+</span>
+<span></span>
+

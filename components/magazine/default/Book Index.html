@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>Editorial: <%= magazine.title %></title>
+	<meta name="viewport" content="width=768; initial-scale=1.0;"/>
+	<link rel="stylesheet" type="text/css" href="css/book.css">
+	<link rel="stylesheet" media="print" type="text/css" href="css/print.css">
+</head>
+<body>
+	<div id="page" class="editorial">
+		<%- magazine.editorial %>
+
+		<ul class="navigation">
+            <% for (var i = 0; i < pages.length; i++) { %>
+                <li class="page">
+                    <label>Page <%= pages[i].number %>: </label>
+                    <a href="Page<%= pages[i].number %>.html"><h7><%= articles[pages[i].article] %></a>
+                </li>
+            <% } %>
+        </ul>
+
+	</div>
+  <script type="text/javascript" src="js/vendor/jquery.min.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+</body>
+</html>

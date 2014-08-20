@@ -1,0 +1,13 @@
+<span class="label label-default date"><%= (new Date(date)).format() %></span>
+<label><%= fields.name.value %>: </label>
+<p><%= fields.message.value %></p>
+
+
+<% if (fields.additionalinfo.value) { %>
+<% if (fields.additionalinfo.value.href) { %>
+	<a href="#<%= fields.additionalinfo.value.href %>"<span class="label label-info additional"><%= fields.additionalinfo.value.text %></span>
+<% } else if (fields.additionalinfo.value.text) { %>
+	<span class="label label-info additional"><%= fields.additionalinfo.value.text %></span>
+<% } %>
+<% } %>
+

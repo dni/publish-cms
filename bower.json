@@ -1,0 +1,36 @@
+{
+  "name": "publish-",
+  "version": "0.9.6",
+  "homepage": "https://github.com/dni/publish-",
+  "authors": [
+    "dni <dni.khr@gmail.com>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "latest",
+    "jcrop": "latest",
+    "backbone": "latest",
+    "underscore": "latest",
+    "requirejs-text": "latest",
+    "require-cs": "latest",
+    "bootstrap": "latest",
+    "require-less": "latest",
+    "marionette": "latest",
+    "requirejs-tpl": "latest",
+    "backbone.wreqr": "latest",
+    "backbone.babysitter": "latest",
+    "jquery-ui": "latest",
+    "jquery-form": "latest",
+    "d3": "latest",
+    "tinymce-builded": "*",
+    "fancybox": "latest",
+    "jquery-minicolors": "latest",
+    "requirejs-i18n": "latest",
+    "require-css": "latest",
+    "socket.io-client": "~0.9.16",
+    "requirejs": "latest",
+    "notifyjs": "latest",
+    "coffee-script": "~1.7.1"
+  },
+  "devDependencies": {}
+}

@@ -1,0 +1,20 @@
+{
+    "name": "MyModule",
+    "namespace": "mymodule",
+    "url": "/mymodule/",
+    "urlRoot": "mymodule",
+    "dbTable": "MyModule",
+    "collectionName": "MyModules",
+    "navigation": true,
+
+	"settings": {
+		"defaultAuthor" : {
+	      "value": "dnilabs e.U",
+	      "type": "text"
+		},
+		"categories" : {
+	      "value": "Webdevelopment, Interactive, Webdesign",
+	      "type": "text"
+		}
+	}
+}

@@ -1,0 +1,93 @@
+<h1><%= t.details %></h1>
+<div class="buttons-top">
+
+	<div class="btn-group">
+	  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><%= t.preview %> <span class="caret"></span></button>
+	  <ul class="dropdown-menu" role="menu">
+	    <li><a href="public/books/<%= name %>/hpub/Book Cover.html" target="_blank"><%= t.cover %></a></li>
+	    <li><a href="public/books/<%= name %>/hpub/Book Back.html" target="_blank"><%= t.back %></a></li>
+	    <li><a href="public/books/<%= name %>/hpub/Book Index.html" target="_blank"><%= t.index %></a></li>
+	    <li><a href="public/books/<%= name %>/hpub/Tail.html" target="_blank"><%= t.editorial %></a></li>
+	    <li class="divider"></li>
+	    <li><a href="/downloadHpub/<%= _id %>" target="_blank"><%= t.downloadHpub %></a></li>
+	  </ul>
+	</div>
+
+	<% if (published === false) { %>
+		<button class="publish btn btn-success"><%= t.publish %></button>
+	<% } else { %>
+		<button class="publish btn btn-default"><%= t.unpublish %></button>
+	<% } %>
+	<% if (isPrint()) { %>
+		<button id="download" class="btn btn-default"><%= t.downloadPdf %></button>
+	<% } %>
+</div>
+<div class="form-fields">
+	<div class="form-group">
+	    <label><%= t.title %></label>
+	    <input type="text" name="title" class="form-control" value="<%= title %>" />
+	</div>
+
+	<div class="form-group">
+	    <label><%= t.author %></label>
+	    <input type="text" name="author" class="form-control" value="<%= author %>" />
+	</div>
+
+	<div class="form-group">
+	    <label><%= t.product_id %></label>
+	    <input type="text" name="product_id" class="form-control" value="<%= product_id %>" />
+	</div>
+
+	<div class="form-group">
+	    <label><%= t.info %></label>
+	    <input type="text" name="info" class="form-control" value="<%= info %>" />
+	</div>
+
+	<div class="form-group">
+		<label><%= t.impressum %></label>
+		<textarea rows="5" class="wysiwyg form-control" name="impressum"><%= impressum %></textarea>
+	</div>
+
+	<div class="form-group">
+		<label><%= t.editorial %></label>
+		<textarea rows="5" class="wysiwyg form-control" name="editorial"><%= editorial %></textarea>
+	</div>
+	<div class="form-group">
+          <label><%= t.theme %></label>
+          <select name="theme" class="form-control">
+            <% _.each(getThemes(), function(th){%>
+                <% if(theme==th) { %>
+                    <option selected value="<%= th %>"> <%= th %> </option>
+                <% } else { %>
+                    <option value="<%= th %>"> <%= th %> </option>
+                <% } %>
+            <% }) %>
+          </select>
+        </div>
+	<% if (isPrint()) { %>
+		<div class="form-group">
+		  <label><%= t.papersize %></label>
+		  <select name="papersize" class="form-control">
+		    <% _.each(["A4","A5","A6","letter"], function(ps){%>
+		        <% if(papersize==ps) { %>
+		            <option selected value="<%= ps %>"> <%= ps %> </option>
+		        <% } else { %>
+		            <option value="<%= ps %>"> <%= ps %> </option>
+		        <% } %>
+		    <% }) %>
+		  </select>
+		</div>
+		<div class="form-group">
+		  <label><%= t.orientation %></label>
+		  <select name="orientation" class="form-control">
+		    <% _.each(["horizontal","vertical"], function(or){%>
+		        <% if(orientation==or) { %>
+		            <option selected value="<%= or %>"> <%= or %> </option>
+		        <% } else { %>
+		            <option value="<%= or %>"> <%= or %> </option>
+		        <% } %>
+		    <% }) %>
+		  </select>
+		</div>
+	<%}%>
+</div>

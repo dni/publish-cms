@@ -1,0 +1,60 @@
+<h1><%= t.details %></h1>
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            <label><%= t.name %></label>
+            <input type="text" name="name" class="form-control" value="<%= name %>" />
+        </div>
+        <div class="form-group">
+            <label><%= t.info %></label>
+            <textarea rows="2" class="form-control" name="info"><%= info %></textarea>
+        </div>
+        <div class="form-group">
+            <label><%= t.description %></label>
+            <textarea rows="2" class="form-control" name="desc"><%= desc %></textarea>
+        </div>
+        <div class="form-group">
+            <label><%= t.alt %></label>
+            <input class="form-control" type="text" name="alt" value="<%= alt %>" />
+        </div>
+        <div class="form-group">
+            <label><%= t.filetype %></label>
+            <input class="form-control" type="text" name="alt" readonly value="<%= type %>" />
+        </div>
+
+    </div>
+    <div class="col-md-8">
+    	<div class="file-preview">
+	        <% var extGroup = type.split("/")[0], ext = type.split("/")[1];
+	          if (extGroup=="image") { %>
+	            <img height="450" src="./public/files/<%= name %>" alt="<%= name %>" />
+	        <% } else if (extGroup=="text") {
+	        	if (ext =="javascript") {
+		        	require(['./public/files/'+name+"?"+Math.random()]);
+	        	} else if (ext == "html") {
+	        		%> <iframe src="./public/files/<%= name %>" border="0" /> <%
+	        	} else {
+		            $.get('./public/files/'+link, function(data) { $(".file-preview").html(data);} )
+	        	}
+	        } else if (ext=="json"){ %>
+	            <h3>Yes it's a JSON file</h3>
+	        <% } else if (extGroup=="audio"||ext=="ogg"){ %>
+	            <h3>Yes it's a AUDIO file</h3>
+				<audio controls>
+				  <source src="./public/files/<%= name %>" type="<%= type %>">
+				  Your browser does not support this audio format.
+				</audio>
+	        <% } else if (extGroup=="video"){ %>
+	            <h3>Yes it's a Video file</h3>
+				<video controls>
+				  <source src="./public/files/<%= name %>" type="<%= type %>">
+				  Your browser does not support this video format.
+				</video>
+	        <% } else { %>
+	            <h3>Publish can't use this kind of file!</h3>
+	        <% } %>
+    	</div>
+    </div>
+</div>
+<%= vhs.renderButtons %>
+

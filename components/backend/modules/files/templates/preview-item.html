@@ -1,0 +1,11 @@
+<a href="#" data-toggle="modal" data-target="#overlay">
+	<% if(fields.type.value.split("/")[0]=="image") { %>
+  <p>
+    <a href="#showfile/<%= _id %>">
+      <img width="100" src="./public/files/<%= fields.thumbnail.value %>" alt="<%= fields.alt %>" />
+    </a>
+  </p>
+	<% } else { %>
+		<p><%= fields.title.value %></p>
+	<% } %>
+</a>

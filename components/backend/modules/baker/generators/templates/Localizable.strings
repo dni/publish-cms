@@ -1,0 +1,102 @@
+// Shelf Navigation Title at the top of the main Issues List
+"SHELF_NAVIGATION_TITLE" = "<%= settings.shelfNavigationTitle.value %>";
+
+// Products alert
+"PRODUCTS_REQUEST_FAILED_TITLE" = "<%= localisation.PRODUCTS_REQUEST_FAILED_TITLE %>";
+"PRODUCTS_REQUEST_FAILED_CLOSE" = "<%= localisation.CLOSE %>";
+
+// Info button
+"INFO_BUTTON_TEXT" = "<%= localisation.INFO_BUTTON_TEXT %>";
+
+// Subscription button
+"SUBSCRIBE_BUTTON_TEXT" = "<%= localisation.SUBSCRIBE_BUTTON_TEXT %>";
+"SUBSCRIBE_BUTTON_DISABLED_TEXT" = "<%= localisation.SUBSCRIBE_BUTTON_DISABLED_TEXT %>";
+"SUBSCRIBE_BUTTON_SUBSCRIBED_TEXT" = "<%= localisation.SUBSCRIBE_BUTTON_SUBSCRIBED_TEXT %>";
+"SUBSCRIPTIONS_SHEET_FREE" = "<%= localisation.SUBSCRIPTIONS_SHEET_FREE %>";
+"SUBSCRIPTIONS_SHEET_RESTORE" = "<%= localisation.SUBSCRIPTIONS_SHEET_RESTORE %>";
+"SUBSCRIPTIONS_SHEET_CLOSE" = "<%= localisation.CLOSE %>";
+"SUBSCRIPTIONS_SHEET_GENERIC" = "<%= localisation.SUBSCRIPTIONS_SHEET_GENERIC %>";
+"SUBSCRIPTIONS_SHEET_SUBSCRIBED" = "<%= localisation.SUBSCRIPTIONS_SHEET_SUBSCRIBED %>";
+"SUBSCRIPTIONS_SHEET_NOT_SUBSCRIBED" = "<%= localisation.SUBSCRIPTIONS_SHEET_NOT_SUBSCRIBED %>";
+
+// Subscription alerts
+"SUBSCRIPTION_SUCCESSFUL_TITLE" = "<%= localisation.SUBSCRIPTION_SUCCESSFUL_TITLE %>";
+"SUBSCRIPTION_SUCCESSFUL_MESSAGE" = "<%= localisation.SUBSCRIPTION_SUCCESSFUL_MESSAGE %>";
+"SUBSCRIPTION_SUCCESSFUL_CLOSE" = "<%= localisation.CLOSE %>";
+"SUBSCRIPTION_FAILED_TITLE" = "<%= localisation.SUBSCRIPTION_FAILED_TITLE %>";
+"SUBSCRIPTION_FAILED_CLOSE" = "<%= localisation.CLOSE %>";
+
+// Issue purchase alerts
+"ISSUE_PURCHASE_SUCCESSFUL_TITLE" = "<%= localisation.ISSUE_PURCHASE_SUCCESSFUL_TITLE %>";
+"ISSUE_PURCHASE_SUCCESSFUL_MESSAGE" = "<%= localisation.ISSUE_PURCHASE_SUCCESSFUL_MESSAGE %>";
+"ISSUE_PURCHASE_SUCCESSFUL_CLOSE" = "<%= localisation.CLOSE %>";
+"ISSUE_PURCHASE_FAILED_TITLE" = "<%= localisation.ISSUE_PURCHASE_FAILED_TITLE %>";
+"ISSUE_PURCHASE_FAILED_CLOSE" = "<%= localisation.CLOSE %>";
+
+// Restore alerts
+"RESTORE_FAILED_TITLE" = "<%= localisation.RESTORE_FAILED_TITLE %>";
+"RESTORE_FAILED_CLOSE" = "<%= localisation.CLOSE %>";
+
+"RESTORED_ISSUE_NOT_RECOGNISED_TITLE" = "<%= localisation.RESTORED_ISSUE_NOT_RECOGNISED_TITLE %>";
+"RESTORED_ISSUE_NOT_RECOGNISED_MESSAGE" = "<%= localisation.RESTORED_ISSUE_NOT_RECOGNISED_MESSAGE %>";
+"RESTORED_ISSUE_NOT_RECOGNISED_CLOSE" = "<%= localisation.CLOSE %>";
+
+// Download alert
+"DOWNLOAD_FAILED_TITLE" = "<%= localisation.DOWNLOAD_FAILED_TITLE %>";
+"DOWNLOAD_FAILED_MESSAGE" = "<%= localisation.DOWNLOAD_FAILED_MESSAGE %>";
+"DOWNLOAD_FAILED_CLOSE" = "<%= localisation.CLOSE %>";
+
+// Unzip alert
+"UNZIP_FAILED_TITLE" = "<%= localisation.UNZIP_FAILED_TITLE %>";
+"UNZIP_FAILED_MESSAGE" = "<%= localisation.UNZIP_FAILED_MESSAGE %>";
+"UNZIP_FAILED_CLOSE" = "<%= localisation.CLOSE %>";
+
+// Connection alert
+"INTERNET_CONNECTION_UNAVAILABLE_TITLE" = "<%= localisation.INTERNET_CONNECTION_UNAVAILABLE_TITLE %>";
+"INTERNET_CONNECTION_UNAVAILABLE_MESSAGE" = "<%= localisation.INTERNET_CONNECTION_UNAVAILABLE_MESSAGE %>";
+"INTERNET_CONNECTION_UNAVAILABLE_CLOSE" = "<%= localisation.INTERNET_CONNECTION_UNAVAILABLE_CLOSE %>";
+
+// Issue buttons
+"ACTION_REMOTE_TEXT" = "<%= localisation.ACTION_REMOTE_TEXT %>";
+"ACTION_DOWNLOADED_TEXT" = "<%= localisation.ACTION_DOWNLOADED_TEXT %>";
+"ACTION_BUY_TEXT" = "<%= localisation.ACTION_BUY_TEXT %>";
+"ARCHIVE_TEXT" = "<%= localisation.ARCHIVE_TEXT %>";
+"CONNECTING_TEXT" = "<%= localisation.CONNECTING_TEXT %>";
+"DOWNLOADING_TEXT" = "<%= localisation.DOWNLOADING_TEXT %>";
+"OPENING_TEXT" = "<%= localisation.OPENING_TEXT %>";
+"BUYING_TEXT" = "<%= localisation.BUYING_TEXT %>";
+"RETRIEVING_TEXT" = "<%= localisation.RETRIEVING_TEXT %>";
+
+// Issue states
+"FREE_TEXT" = "<%= localisation.FREE_TEXT %>";
+"PURCHASED_TEXT" = "<%= localisation.PURCHASED_TEXT %>";
+
+// Archiving alert
+"ARCHIVE_ALERT_TITLE" = "<%= localisation.ARCHIVE_ALERT_TITLE %>";
+"ARCHIVE_ALERT_MESSAGE" = "<%= localisation.ARCHIVE_ALERT_MESSAGE %>";
+"ARCHIVE_ALERT_BUTTON_CANCEL" = "<%= localisation.ARCHIVE_ALERT_BUTTON_CANCEL %>";
+"ARCHIVE_ALERT_BUTTON_OK" = "<%= localisation.ARCHIVE_ALERT_BUTTON_OK %>";
+
+// Mail alert
+"MAILTO_ALERT_TITLE" = "<%= localisation.MAILTO_ALERT_TITLE %>";
+"MAILTO_ALERT_MESSAGE" = "<%= localisation.MAILTO_ALERT_MESSAGE %>";
+"MAILTO_ALERT_CLOSE" = "<%= localisation.MAILTO_ALERT_CLOSE %>";
+
+// Modal web view
+"WEB_MODAL_FAILURE_MESSAGE" = "<%= localisation.WEB_MODAL_FAILURE_MESSAGE %>";
+"WEB_MODAL_CLOSE_BUTTON_TEXT" = "<%= localisation.WEB_MODAL_CLOSE_BUTTON_TEXT %>";
+
+// Transaction recording alert
+"TRANSACTION_RECORDING_FAILED_TITLE" = "<%= localisation.TRANSACTION_RECORDING_FAILED_TITLE %>";
+"TRANSACTION_RECORDING_FAILED_MESSAGE" = "<%= localisation.TRANSACTION_RECORDING_FAILED_MESSAGE %>";
+"TRANSACTION_RECORDING_FAILED_CLOSE" = "<%= localisation.CLOSE %>";
+
+// Issue opening failure alert
+"ISSUE_OPENING_FAILED_TITLE" = "<%= localisation.ISSUE_OPENING_FAILED_TITLE %>";
+"ISSUE_OPENING_FAILED_MESSAGE" = "<%= localisation.ISSUE_OPENING_FAILED_MESSAGE %>";
+"ISSUE_OPENING_FAILED_CLOSE" = "<%= localisation.CLOSE %>";
+
+// Subscriptions
+// (These are just examples: you'll need to provide your own product IDs and names)
+//"com.example.MyBook.subscription.3months" = "3 Months Subscription";
+//"com.example.MyBook.subscription.6months" = "Half Year Subscription";

@@ -1,0 +1,14 @@
+{
+  "name": "General",
+  "moduleName": "PublishModule",
+  "author": "dnilabs e.U",
+  "version":"0.0.1",
+  "navigation": true,
+  "navigationButton": "off",
+  "settings": {
+    "domain" : {
+      "value": "localhost",
+      "type": "text"
+    }
+  }
+}

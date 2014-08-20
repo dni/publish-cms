@@ -1,0 +1,22 @@
+{
+    "name": "StaticModule",
+    "moduleName": "StaticModule",
+    "modelName": "StaticBlock",
+    "namespace": "staticblocks",
+    "collectionName": "StaticBlocks",
+    "url": "/staticblocks/",
+    "urlRoot": "staticblocks",
+    "dbTable": "staticblocks",
+    "navigation": true,
+
+    "model": {
+        "title" : {
+          "type": "text",
+          "mongooseType": "String"
+        },
+        "data" : {
+          "type": "wysiwyg",
+          "mongooseType": "String"
+        }
+    }
+}

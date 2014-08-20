@@ -1,0 +1,5 @@
+{
+    "productionPort": "1000",
+    "developmentPort": "1666",
+    "dbname": "publish"
+}

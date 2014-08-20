@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Seite: <%= page.number %> <%= magazine.title %></title>
+    <link rel="stylesheet" type="text/css" href="css/book.css">
+    <link rel="stylesheet" media="print" type="text/css" href="css/print.css">
+    <style></style>
+</head>
+<body>
+    <div id="page" class="chapter">
+ertzutrertghzjuhztrewrtzhu
+      <div id="content" class="chapter">
+
+        <div id="images">
+            <div class="image">
+                <% for (key in files) { %>
+                    <img src="images/<%= files[key] %>" />
+                <% } %>
+            </div>
+        </div>
+
+        <h1><div><%= article.title %></div></h1>
+        <p><b><%= article.teaser %></b></p>
+        <p><%- article.desc %></p>
+
+      </div>
+
+    </div>
+
+    <script type="text/javascript" src="js/vendor/jquery.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+</body>
+</html>

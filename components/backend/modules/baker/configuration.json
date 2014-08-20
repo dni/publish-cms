@@ -1,0 +1,101 @@
+{
+    "config": {
+        "name": "Baker",
+        "namespace": "baker"
+    },
+
+    "settings": {
+    	"fileView" : true,
+		"appid" : {
+	      "value": "org.publish.com.magazines",
+	      "type": "text"
+		},
+		"apptype" : {
+	      "value": "standalone",
+	      "type": "select",
+	      "options": {
+	      	"standalone": "Standalone",
+	      	"newsstand": "Newsstand",
+	      	"paid": "Paid"
+	      }
+		},
+
+		"orientation" : {
+	      "type": "header"
+		},
+
+		"orPortrait" : {
+	      "value": true,
+	      "type": "checkbox"
+		},
+		"orUpsidedown" : {
+	      "value": true,
+	      "type": "checkbox"
+		},
+		"orLandscapeleft" : {
+	      "value": true,
+	      "type": "checkbox"
+		},
+		"orLandscaperight" : {
+	      "value": true,
+	      "type": "checkbox"
+		},
+
+		"uiconstants" : {
+	      "type": "header"
+		},
+
+		"bakerColorsetCoverBg" : {
+	      "value": "#ffffff",
+	      "type": "color"
+		},
+		"bakerColorsetTitleColor" : {
+	      "value": "#000000",
+	      "type": "color"
+		},
+		"bakerColorsetInfoColor" : {
+	      "value": "#929292",
+	      "type": "color"
+		},
+		"bakerColorsetPriceColor" : {
+	      "value": "#bc242a",
+	      "type": "color"
+		},
+		"bakerColorsetActionButtonBg" : {
+	      "value": "#bc242a",
+	      "type": "color"
+		},
+		"bakerColorsetActionButtonColor" : {
+	      "value": "#ffffff",
+	      "type": "color"
+		},
+		"bakerColorsetArchiveButtonBg" : {
+	      "value": "#bc242a",
+	      "type": "color"
+		},
+		"bakerColorsetArchiveButtonColor" : {
+	      "value": "#ffffff",
+	      "type": "color"
+		},
+		"bakerColorsetLoadingLabelColor" : {
+	      "value": "#bc242a",
+	      "type": "color"
+		},
+		"bakerColorsetLoadingSpinnerColor" : {
+	      "value": "#929292",
+	      "type": "color"
+		},
+		"bakerColorsetProgressbarTintColor" : {
+	      "value": "#bc242a",
+	      "type": "color"
+		},
+		"shelfNavigationTitle" : {
+	      "value": "Baker Shelf",
+	      "type": "text"
+		},
+		"download" : {
+	      "type": "button",
+	      "event": "downloadApp"
+		}
+	}
+}

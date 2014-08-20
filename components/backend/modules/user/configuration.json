@@ -1,0 +1,31 @@
+{
+    "name": "UserModule",
+    "moduleName": "UserModule",
+    "name": "UserModule",
+    "modelName": "User",
+    "collectionName": "Users",
+    "url": "/users/",
+    "urlRoot": "users",
+    "dbTable": "users",
+    "navigation": true,
+    "navigationButton": "user",
+
+    "model": {
+        "title" : {
+          "type": "text",
+          "mongooseType": "String"
+        },
+        "username": {
+          "type": "text",
+          "mongooseType": "String"
+        },
+        "password": {
+          "type": "text",
+          "mongooseType": "String"
+        },
+        "email": {
+          "type": "text",
+          "mongooseType": "String"
+        }
+    }
+}

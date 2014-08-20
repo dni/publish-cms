@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Index</title>
+	<link rel="stylesheet" type="text/css" href="css/index.css">
+</head>
+<body>
+  <div id="index">
+      <ul class="navigation">
+
+      	<% for (var i = 0; i < pages.length; i++) { %>
+      	    <li class="page">
+    	        <label>Page <%= pages[i].number %>: </label>
+          		<a href="Page<%= pages[i].number %>.html"><h7><%= articles[pages[i].article] %></a>
+      	    </li>
+      	<% } %>
+          <li class="clear"></li>
+      </ul>
+    </div>
+  </div>
+</body>
