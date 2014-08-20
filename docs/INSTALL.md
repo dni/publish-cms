@@ -17,7 +17,7 @@ Make sure mongod process is running, start it with mongod
 
 ## Dowload and Install
 ```js
-git clone --depth 1 https://github.com/dni/publish-
+git clone https://github.com/dni/publish-cms
 cd publish- && npm install
 ```
 
