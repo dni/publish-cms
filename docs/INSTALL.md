@@ -3,11 +3,11 @@
 ## Software Requirements
 
 ```js
-apt-get install nodejs phantomjs git mongodb imagemagick graphicsmagick zip
+apt-get install npm phantomjs git mongodb imagemagick graphicsmagick zip
 ```
 On Mac OSX use Homebrew
 ```js
-brew install nodejs phantomjs git mongodb imagemagick graphicsmagick
+brew install npm phantomjs git mongodb imagemagick graphicsmagick
 ```
 Install node.js modules
 ```js
