@@ -2,7 +2,7 @@ define [
   'cs!App'
   'cs!Router'
   "cs!modules/settings/model/Settings"
-  'cs!utils'
+  'cs!Utils'
   'marionette'
   'tpl!../templates/detail.html'
   'i18n!modules/magazine/nls/language.js'

@@ -1,6 +1,6 @@
 define [
     'cs!Publish'
-    'i18n!modules/pages/nls/language.js'
+    'i18n!./nls/language.js'
     "text!./configuration.json"
 ], (Publish, i18n, Config) ->
   new Publish.Module

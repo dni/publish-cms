@@ -1,6 +1,6 @@
 define [
   'cs!App'
-  'cs!utils'
+  'cs!Utils'
   'cs!Publish'
   "i18n!modules/pages/nls/language.js"
   'marionette'

@@ -1,6 +1,6 @@
 define [
     'jquery'
-    'cs!utils'
+    'cs!Utils'
     "text!./configuration.json"
     "i18n!modules/baker/nls/language.js"
 ],

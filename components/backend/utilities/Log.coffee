@@ -1,8 +1,8 @@
 define [
-  'cs!App'
+  'cs!utilities/App'
   'cs!lib/model/Model'
   'text!modules/messages/configuration.json'
-  'notifyjs'
+  'notify'
   'jquery'
 ], (App, Model, Config, notify, $) ->
   config = JSON.parse Config

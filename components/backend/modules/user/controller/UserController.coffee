@@ -1,6 +1,5 @@
 define [
   'cs!Publish'
-  'i18n!modules/user/nls/language.js'
 ], (Publish) ->
   class UserController extends Publish.Controller.Controller
 

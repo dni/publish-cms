@@ -1,4 +1,5 @@
 config = require "./configuration.json"
+backend_modules = require("./components/backend/configuration.json").backend_modules
 
 mongoose = require "mongoose"
 db = mongoose.connect 'mongodb://localhost/'+config.dbname
@@ -116,8 +117,8 @@ module.exports = (grunt)->
         options:
           destPrefix: "components/backend/vendor"
         files:
-          "io.js": "socket.io-client/dist/socket.io.js"
           "jquery.js": "jquery/dist/jquery.js"
+          "io.js": "socket.io-client/dist/socket.io.js"
           "require.js": "requirejs/require.js"
           "jquery.ui.js": "jquery-ui/jquery-ui.js"
           "jquery.form.js": "jquery-form/jquery.form.js"
@@ -126,22 +127,29 @@ module.exports = (grunt)->
           "babysitter.js": "backbone.babysitter/lib/backbone.babysitter.js"
           "backbone.js": "backbone/backbone.js"
           "marionette.js": "marionette/lib/backbone.marionette.js"
-          "localstorage.js": "backbone-localstorage/backbone-localstorage.js"
           "text.js": 'requirejs-text/text.js'
           "tpl.js": 'requirejs-tpl/tpl.js'
           "cs.js": 'require-cs/cs.js'
           "i18n.js": 'requirejs-i18n/i18n.js'
           "coffee-script.js": 'coffee-script/extras/coffee-script.js'
-          "d3.js": 'd3/d3.js'
-          "notify.js": 'notifyjs/dist/notify-combined.min.js'
-          # Folders
-          "css": 'require-css'
+          "notify.js": "notifyjs/dist/notify-combined.min.js"
+          "bootstrap.js": "bootstrap/dist/js/bootstrap.js"
+          "jquery.minicolors.js": "jquery-minicolors/jquery.minicolors.js"
+          "jquery.jcrop.js": "jcrop/js/jquery.Jcrop.js"
           "tinymce": "tinymce-builded/js/tinymce"
-          "minicolors": 'jquery-minicolors'
-          "fancybox": "fancybox/source"
-          "jcrop": "jcrop"
-          "bootstrap": "bootstrap"
-          "require-less": 'require-less'
+          "less.js": "require-less/less.js"
+          "less-builder.js": "require-less/less-builder.js"
+          "css.js": "require-css/css.js"
+          "css-builder.js": "require-css/css-builder.js"
+          "normalize.js": "require-css/normalize.js"
+          "lessc.js": "require-less/lessc.js"
+          # style
+          "style": "bootstrap/less"
+          "style/boostrap.css": "bootstrap/dist/css/bootstrap.css"
+          "style/.": "jcrop/css/*"
+          "style/jquery.minicolors.css": "jquery-minicolors/jquery.minicolors.css"
+          "style/jquery.minicolors.png": "jquery-minicolors/jquery.minicolors.png"
+
 
 
       libsFrontend:
@@ -182,26 +190,32 @@ module.exports = (grunt)->
     requirejs:
       backend:
         options:
-          baseUrl: './components/backend'
+          appDir: 'components/backend'
+          baseUrl: 'vendor'
           fileExclusionRegExp: /^(server|spec)/
-          mainConfigFile: "components/backend/config.js"
           dir: "cache/build/backend"
-          stubModules: ['cs', 'css', 'less', 'i18n']
+          optimizeAllPluginResources: true,
+          findNestedDependencies: true,
+          stubModules: ['less', 'cs'],
           modules: [{
-            name: 'main'
-            exclude: ['coffee-script', 'i18n', 'css', 'less']
-          }]
-      frontend:
-        options:
-          baseUrl: './components/frontend'
-          fileExclusionRegExp: /^(server|spec)/
-          mainConfigFile: "components/frontend/config.js"
-          dir: "cache/build/frontend"
-          stubModules: ['cs', 'css', 'less']
-          modules: [{
-            name: 'main'
+            name: 'config'
+            include: backend_modules
             exclude: ['coffee-script', 'css', 'less']
           }]
+          # out : './components/backend/build.min.js'
+          optimize : 'none',
+          paths:
+            main: '../main'
+            config: '../config'
+            lib: '../lib'
+            utilities: '../utilities'
+            modules: '../modules'
+            App: "../utilities/App"
+            Publish: "../lib/Publish"
+            Router: '../utilities/Router'
+            Utils: '../utilities/Utilities'
+            tinymce: 'tinymce/tinymce',
+            'jquery.tinymce': 'tinymce/jquery.tinymce.min',
 
   grunt.loadNpmTasks 'grunt-contrib-copy'
   grunt.loadNpmTasks 'grunt-contrib-clean'

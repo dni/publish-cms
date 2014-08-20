@@ -30,7 +30,8 @@
     "socket.io-client": "~0.9.16",
     "requirejs": "latest",
     "notifyjs": "latest",
-    "coffee-script": "~1.7.1"
+    "coffee-script": "~1.7.1",
+    "almond": "~0.2.9"
   },
   "devDependencies": {}
 }

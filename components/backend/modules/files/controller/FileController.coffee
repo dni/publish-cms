@@ -1,14 +1,13 @@
 define [
   'cs!App'
   'cs!Publish'
-  'i18n!modules/files/nls/language.js'
   'jquery'
   'cs!../view/ListView'
   'cs!../view/BrowseView'
   'cs!../view/TopView'
   'cs!../view/ShowFileView'
   'cs!../view/EditFileView'
-], ( App, Publish, i18n, $, ListView, BrowseView, TopView, ShowFileView, EditFileView) ->
+], ( App, Publish, $, ListView, BrowseView, TopView, ShowFileView, EditFileView) ->
 
   class FileController extends Publish.Controller.Controller
 

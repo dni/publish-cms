@@ -1,6 +1,6 @@
 define [
   'jquery'
-  'i18n!modules/files/nls/language.js'
+  'i18n!../nls/language.js'
   'marionette'
   'tpl!../templates/top.html'
   'jquery.form'

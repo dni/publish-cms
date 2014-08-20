@@ -1,7 +1,7 @@
 define [
   'cs!Publish'
   'cs!./controller/FileController'
-  "i18n!modules/files/nls/language.js"
+  "i18n!./nls/language.js"
   "text!./configuration.json"
   'less!./style/browse.less'
 ],( Publish, Controller, i18n, Config ) ->

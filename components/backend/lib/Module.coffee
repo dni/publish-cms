@@ -1,7 +1,7 @@
 define [
     'cs!App'
     'cs!Router'
-    'cs!utils'
+    'cs!Utils'
     'cs!lib/controller/Controller'
 ], ( App, Router, Utils, Controller) ->
   class Module

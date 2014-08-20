@@ -1,7 +1,7 @@
 define [
   'cs!App'
   'cs!Publish'
-  'cs!utils'
+  'cs!Utils'
   'cs!Router'
   'marionette'
   'tpl!lib/templates/detail.html'

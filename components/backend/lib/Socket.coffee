@@ -1,7 +1,7 @@
 define [
   'cs!App'
   'cs!./model/Model'
-  'cs!utils'
+  'cs!Utils'
   'io'
 ], (App, Model, Utils, io ) ->
 

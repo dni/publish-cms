@@ -1,5 +1,5 @@
 define [
-  'cs!utils'
+  'cs!Utils'
   'cs!Router'
   'marionette'
   'tpl!../templates/layout.html'

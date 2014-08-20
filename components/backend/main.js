@@ -1,6 +1,9 @@
-require(["backbone", "cs!utils"],function(Backbone, Utils){
-    var start = function(){ Backbone.history.start(); }
-    Utils.Vent.on("app:ready", start);
-    // TODO fire app ready event ->
-    setTimeout(start, 2000);
+require(['text!../configuration.json', 'backbone'], function(configJSON, Backbone){
+    Backbone.history.start();
+    var config = JSON.parse(configJSON);
+    require(config.backend_modules, function(){
+      for(var i = 0; i < arguments.length;i++) {
+        arguments[i].init();
+      }
+    });
 });

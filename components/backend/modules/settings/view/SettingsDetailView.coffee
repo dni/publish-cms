@@ -1,7 +1,7 @@
 define [
   'cs!App'
   'cs!Router'
-  'cs!utils'
+  'cs!Utils'
   'i18n!../nls/language.js'
   'jquery'
   'marionette'

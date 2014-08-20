@@ -1,11 +1,11 @@
 define [
     'cs!App'
     'cs!Router'
-    'cs!utils'
-    'i18n!modules/magazine/nls/language.js'
-    "text!modules/magazine/configuration.json"
-    'cs!modules/magazine/controller/MagazineController'
-    'cs!modules/magazine/model/Magazines'
+    'cs!Utils'
+    'i18n!./nls/language.js'
+    "text!./configuration.json"
+    'cs!./controller/MagazineController'
+    'cs!./model/Magazines'
     'less!./magazine.less'
 ], ( App, Router, Utils, i18n, Config, Controller, Magazines ) ->
 

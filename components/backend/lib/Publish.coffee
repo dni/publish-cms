@@ -1,5 +1,5 @@
 define [
-  'cs!utils'
+  'cs!Utils'
   'cs!lib/controller/Controller'
   'cs!lib/controller/LayoutController'
   'cs!lib/Module'

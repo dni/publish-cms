@@ -1,6 +1,6 @@
 define [
   'cs!App'
-  'cs!utils'
+  'cs!Utils'
   'jquery'
 ], ( App, Utils, $ ) ->
   $("body").on "overlay:ok", ->

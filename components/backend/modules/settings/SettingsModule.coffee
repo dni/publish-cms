@@ -2,8 +2,8 @@ define [
   'cs!App'
   'cs!Publish'
   "text!./configuration.json"
-  "cs!utils"
-  "i18n!modules/settings/nls/language.js"
+  "cs!Utils"
+  "i18n!./nls/language.js"
   'cs!./controller/SettingsController'
   'cs!./view/TopView'
 ], ( App, Publish, Config, Utils, i18n, Controller, TopView ) ->

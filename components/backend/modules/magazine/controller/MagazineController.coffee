@@ -1,16 +1,16 @@
 define [
   'cs!App'
   'cs!Router'
-  'cs!utils'
+  'cs!Utils'
   'marionette'
-  'cs!modules/magazine/view/MagazineLayout'
-  'cs!modules/magazine/view/MagazineListView'
+  'cs!../view/MagazineLayout'
+  'cs!../view/MagazineListView'
   'cs!utilities/views/TopView'
-  'cs!modules/magazine/model/Magazine'
-  'cs!modules/magazine/model/Magazines'
+  'cs!../model/Magazine'
+  'cs!../model/Magazines'
   'cs!modules/pages/model/Pages'
   'cs!modules/files/model/Files'
-  'i18n!modules/magazine/nls/language.js'
+  'i18n!../nls/language.js'
   'cs!utilities/views/EmptyView'
 ], ( App, Router, Utils, Marionette, MagazineLayout, MagazineListView, TopView, Magazine, Magazines, Pages, Files, i18n, EmptyView) ->
 

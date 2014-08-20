@@ -1,12 +1,11 @@
 define [
   'cs!App'
   'cs!Publish'
-  'i18n!modules/publish/nls/language.js'
+  'i18n!./nls/language'
   'text!./configuration.json'
   'cs!./model/NavigationItem'
   'cs!./model/NavigationItems'
   'cs!./view/NavigationView'
-  "css!vendor/minicolors/jquery.minicolors.css"
   "less!lib/style/main"
 ],
 ( App, Publish, i18n, Config, NavigationItem, NavigationItems, NavigationView)->

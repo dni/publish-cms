@@ -1,10 +1,10 @@
 define [
   'cs!App'
   'cs!Publish'
-  'text!modules/messages/configuration.json'
+  'text!../configuration.json'
   'marionette'
   'tpl!../templates/list.html'
-  'i18n!modules/messages/nls/language.js'
+  'i18n!../nls/language.js'
 ], (App, Publish, Config, Marionette, Template, i18n) ->
 
   config = JSON.parse Config

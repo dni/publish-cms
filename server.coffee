@@ -43,10 +43,10 @@ app.configure ->
 
 #admin route
 app.get '/admin', auth, (req, res)->
-  dir = '/components'
-  dir = '/cache/build' if port is config.port
-  app.use '/components', express.static process.cwd()+dir
-  res.sendfile process.cwd()+dir+'/backend/index.html'
+  dir = '/components/backend/'
+  dir = '/cache/build/backend/' if port is config.port
+  app.use '/', express.static process.cwd()+dir
+  res.sendfile process.cwd()+dir+'/index.html'
 
 
 # load/setup components

@@ -1,7 +1,7 @@
 define [
   'cs!App'
   'cs!Router'
-  'i18n!modules/files/nls/language.js'
+  'i18n!../nls/language.js'
   'marionette'
   'tpl!../templates/preview.html'
   'tpl!../templates/preview-item.html'

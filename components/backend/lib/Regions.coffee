@@ -3,11 +3,10 @@ define [
   'i18n!modules/publish/nls/language.js'
   'jquery'
   'jquery.tinymce'
-  'minicolors'
+  'jquery.minicolors'
   'bootstrap'
 ], (App, i18n, $, tinymce, minicolors, bootstrap) ->
 
-  tinyMCE.baseURL = '/components/backend/vendor/tinymce'
 
   App.addRegions
     navigationRegion:"#navigation"
@@ -35,6 +34,7 @@ define [
     # tinymce
     App.contentRegion.currentView.$el.find(".wysiwyg").tinymce
       theme: "modern"
+      baseURL: '/vendor/tinymce'
       menubar : false
       language: i18n.langCode
       convert_urls: true,

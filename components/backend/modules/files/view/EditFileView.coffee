@@ -4,7 +4,7 @@ define [
   "cs!Router"
   'marionette'
   'tpl!../templates/editfile.html'
-  'css!vendor/jcrop/css/jquery.Jcrop.css'
+  'css!style/jquery.Jcrop.css'
 ], ($, Jcrop, Router, Marionette, Template) ->
 
   class EditFileView extends Marionette.ItemView
