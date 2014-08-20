@@ -20,18 +20,6 @@ module.exports.setup = (app, config)->
   app.get "/user", (req, res)->
     res.send app.user
 
-  #admin route
-  app.get '/admin', auth, (req, res)->
-    Setting.find name:'General', (e, a)->
-      # if setting doesnt exists start in development mode
-      if a.length is 0 || a[0].settings.backend_development.value
-        console.log "Starting backend in development mode"
-        app.use '/components', express.static process.cwd()+'/components'
-        res.sendfile process.cwd()+'/components/backend/index.html'
-      else
-        console.log "Starting backend in production mode"
-        app.use '/components', express.static process.cwd()+'/cache/build'
-        res.sendfile process.cwd()+'/cache/build/backend/index.html'
   # create default admin user if no user exists
   User.count {}, (err, count)->
     if count == 0

@@ -5,6 +5,7 @@
     "cs!modules/files/FileModule",
     "cs!modules/user/UserModule",
     "cs!modules/pages/PageModule",
+    "cs!modules/testcases/TestcaseModule",
     "cs!modules/static/StaticModule",
     "cs!modules/article/ArticleModule",
     "cs!modules/messages/MessageModule"

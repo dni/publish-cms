@@ -1,6 +1,6 @@
 config = require "./configuration.json"
 
-port = process.argv[2] || config.developmentPort
+port = process.argv[2] || config.port
 sessionSecret = 'publish#crossplattform#app'
 
 express = require 'express.io'
@@ -11,9 +11,9 @@ mongoose = require "mongoose"
 db = mongoose.connect 'mongodb://localhost/'+config.dbname
 fs = require 'fs'
 User = require(__dirname+"/components/backend/lib/model/Schema")("users")
+auth = require "./components/backend/utilities/auth"
 
 app.http().io()
-
 app.configure ->
 
   #authentication
@@ -41,6 +41,12 @@ app.configure ->
   app.use passport.initialize()
   app.use passport.session()
 
+#admin route
+app.get '/admin', auth, (req, res)->
+  dir = '/components'
+  dir = '/cache/build' if port is config.port
+  app.use '/components', express.static process.cwd()+dir
+  res.sendfile process.cwd()+dir+'/backend/index.html'
 
 
 # load/setup components

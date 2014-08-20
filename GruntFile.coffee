@@ -5,8 +5,6 @@ db = mongoose.connect 'mongodb://localhost/'+config.dbname
 Magazine = require __dirname+"/components/backend/modules/magazine/model/MagazineSchema"
 HpubGenerator = require __dirname + "/components/backend/modules/magazine/generators/HpubGenerator"
 fs = require "fs-extra"
-forever = require 'forever-monitor'
-
 
 module.exports = (grunt)->
   grunt.initConfig
@@ -273,41 +271,6 @@ module.exports = (grunt)->
         console.log('Error: while restoreDatabase, code: ' + code)
       done()
 
-
-
-  grunt.registerTask 'start', 'Start the server', ->
-    production = new forever.Monitor "server.coffee",
-      max: 3
-      silent: true
-      options: [
-        max: 2 # Sets the maximum number of times a given script should run
-        command: "coffee" # Binary to run (default: 'node')
-        options: [config.productionPort]
-        logFile: "cache/production-log.txt" # Path to log output from forever process (when daemonized)
-        outFile: "cache/production-out.txt" # Path to log output from child stdout
-        errFile: "cache/production-err.txt" # Path to log output from child stderr
-      ]
-
-    development = new forever.Monitor "server.coffee",
-      max: 3
-      silent: true
-      options: [
-        max: 2 # Sets the maximum number of times a given script should run
-        command: "coffee" # Binary to run (default: 'node')
-        options: [ config.developmentPort ]
-        logFile: "cache/development-log.txt" # Path to log output from forever process (when daemonized)
-        outFile: "cache/development-out.txt" # Path to log output from child stdout
-        errFile: "cache/development-err.txt" # Path to log output from child stderr
-      ]
-    production.start()
-    development.start()
-
-  grunt.registerTask 'stop', 'Stop the server', ->
-    # production.stop()
-    # development.stop()
-
-  grunt.registerTask 'restart', 'Restart the server', [ "stop", "start" ]
-
   grunt.registerTask 'install', 'Install the App', [
     'bower:install'
     'gitclone:baker:clone'
@@ -318,7 +281,6 @@ module.exports = (grunt)->
     'clean:lib' #workaround ;()
     'fixLibs' # https://github.com/requirejs/i18n/issues/21
     'build'
-    #'forever:production:start'
   ]
 
   grunt.registerTask 'reinstall', 'Reinstalling the App', [
@@ -350,11 +312,6 @@ module.exports = (grunt)->
     'jsonlint'
     'coffeelint'
     'jasmine'
-  ]
-
-  grunt.registerTask 'restart', 'Restart the app daemon', [
-    # 'forever:production:stop'
-    # 'forever:production:start'
   ]
 
   grunt.registerTask 'reloadSettings', 'Reloading for settings', [
