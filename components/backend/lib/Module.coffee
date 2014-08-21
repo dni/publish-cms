@@ -1,9 +1,8 @@
 define [
     'cs!App'
     'cs!Router'
-    'cs!Utils'
     'cs!lib/controller/Controller'
-], ( App, Router, Utils, Controller) ->
+], ( App, Router, Controller) ->
   class Module
     constructor: (args)->
       @[key] = arg for key, arg of args
@@ -28,7 +27,7 @@ define [
         App[@Config.collectionName].url = @Config.url
         App[@Config.collectionName].fetch
           success:->
-            Utils.Vent.trigger config.name+":collection:ready"
+            App.vent.trigger config.name+":collection:ready"
 
       unless @disableRoutes
         # Routes from Controller
@@ -40,7 +39,7 @@ define [
         Router.processAppRoutes @Controller, routes
 
       if config.settings
-        Utils.Vent.trigger 'SettingsModule:addSetting', config, @i18n
+        App.vent.trigger 'SettingsModule:addSetting', config, @i18n
 
       if config.navigation is true
-        Utils.Vent.trigger 'publish:addNavItem', {button:config.navigationButton, route:config.name}, @i18n
+        App.vent.trigger 'publish:addNavItem', {button:config.navigationButton, route:config.name}, @i18n

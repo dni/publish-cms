@@ -12,11 +12,7 @@ require.config({
     'jquery.tinymce': 'tinymce/jquery.tinymce.min',
   },
   shim: {
-    'jquery.ui':['jquery'],
-    'jquery.form':['jquery'],
-    'jquery.jcrop':['jquery'],
     'jquery.tinymce':['jquery', 'tinymce'],
-    'bootstrap':['jquery'],
     'minicolors':['jquery'],
   }
 });

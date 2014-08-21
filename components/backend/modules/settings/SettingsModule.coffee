@@ -2,11 +2,10 @@ define [
   'cs!App'
   'cs!Publish'
   "text!./configuration.json"
-  "cs!Utils"
   "i18n!./nls/language.js"
   'cs!./controller/SettingsController'
   'cs!./view/TopView'
-], ( App, Publish, Config, Utils, i18n, Controller, TopView ) ->
+], ( App, Publish, Config, i18n, Controller, TopView ) ->
 
   module = new Publish.Module
     Controller: Controller
@@ -18,12 +17,12 @@ define [
   settingsready = false
   settingsToAdd = []
 
-  Utils.Vent.on "SettingsModule:collection:ready", ->
+  App.vent.on "SettingsModule:collection:ready", ->
     settingsready = true
     for setting in settingsToAdd
       createSettings setting
 
-  Utils.Vent.on "SettingsModule:addSetting", (config, lang)->
+  App.vent.on "SettingsModule:addSetting", (config, lang)->
     for key, value of lang.attributes
       module.i18n.attributes[key] = value
 

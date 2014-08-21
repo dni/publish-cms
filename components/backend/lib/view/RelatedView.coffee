@@ -1,11 +1,13 @@
 define [
-  'cs!Publish'
+  'cs!lib/Publish'
+  'tpl!lib/templates/related.html'
   'marionette'
-  'tpl!../templates/layout.html'
-  'cs!modules/files/view/PreviewView'
-], (Publish, Marionette, Template, PreviewView) ->
+], (Publish, Template, Marionette) ->
 
-  class RelatedItemView extends Marionette.Item.View
+  class RelatedItemView extends Marionette.ItemView
+    template: Template
+    initialize:->
+      console.log @model
 
-  class RelatedView extends Marionette.Collection.View
-    childView: RelatedView
+  class RelatedView extends Marionette.CollectionView
+    childView: RelatedItemView

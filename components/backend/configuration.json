@@ -4,9 +4,9 @@
     "cs!modules/settings/SettingsModule",
     "cs!modules/files/FileModule",
     "cs!modules/user/UserModule",
+    "cs!modules/messages/MessageModule",
     "cs!modules/pages/PageModule",
     "cs!modules/static/StaticModule",
-    "cs!modules/article/ArticleModule",
-    "cs!modules/messages/MessageModule"
+    "cs!modules/article/ArticleModule"
   ]
 }

@@ -196,14 +196,16 @@ module.exports = (grunt)->
           dir: "cache/build/backend"
           optimizeAllPluginResources: true,
           findNestedDependencies: true,
-          stubModules: ['less', 'cs'],
+          stubModules: ['less', 'css', 'cs', 'coffee-script'],
           modules: [{
             name: 'config'
             include: backend_modules
             exclude: ['coffee-script', 'css', 'less']
           }]
           # out : './components/backend/build.min.js'
-          optimize : 'none',
+          optimize : 'uglify2',
+          shim:
+            'jquery.tinymce':['jquery', 'tinymce']
           paths:
             main: '../main'
             config: '../config'
@@ -215,6 +217,7 @@ module.exports = (grunt)->
             Router: '../utilities/Router'
             Utils: '../utilities/Utilities'
             tinymce: 'tinymce/tinymce',
+            plugins: 'tinymce/tinymce/plugins',
             'jquery.tinymce': 'tinymce/jquery.tinymce.min',
 
   grunt.loadNpmTasks 'grunt-contrib-copy'
@@ -241,10 +244,6 @@ module.exports = (grunt)->
         if err then console.log err else console.log 'Successfully dropped database'
         mongoose.connection.close done
 
-
-  # fix libs
-  grunt.registerTask 'fixLibs', ->
-    fs.copySync "./fixes/i18n.js", "./components/backend/vendor/i18n.js"
 
   # generate Magazine
   grunt.registerTask 'generateMagazine', 'generate hpub and print', ->
@@ -293,7 +292,6 @@ module.exports = (grunt)->
     'bowercopy'
     'copy:tinymce' # translations for tinymce
     'clean:lib' #workaround ;()
-    'fixLibs' # https://github.com/requirejs/i18n/issues/21
     'build'
   ]
 
@@ -326,11 +324,6 @@ module.exports = (grunt)->
     'jsonlint'
     'coffeelint'
     'jasmine'
-  ]
-
-  grunt.registerTask 'reloadSettings', 'Reloading for settings', [
-    #'build'
-    # 'forever:server1:restart'
   ]
 
   return grunt

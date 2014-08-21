@@ -13,7 +13,7 @@ define [
   # show navigation
   App.navigationRegion.show new NavigationView collection: NavigationItems
 
-  Publish.Utils.Vent.on "publish:addNavItem", (config, i18n)->
+  App.vent.on "publish:addNavItem", (config, i18n)->
     config.label = i18n.navigation if i18n
     NavigationItems.add new NavigationItem config
     App.NavigationItems = NavigationItems

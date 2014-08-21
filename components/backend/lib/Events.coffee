@@ -1,7 +1,6 @@
 define [
   'cs!App'
-  'cs!Utils'
   'jquery'
-], ( App, Utils, $ ) ->
+], ( App, $ ) ->
   $("body").on "overlay:ok", ->
     App.vent.trigger "overlay:ok"

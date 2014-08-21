@@ -1,5 +1,5 @@
 define [
-  'cs!Publish'
+  'cs!lib/Publish'
   'marionette'
   'tpl!../templates/layout.html'
 ], (Publish, Marionette, Template) ->
@@ -12,17 +12,16 @@ define [
       'relatedRegion': '.related'
 
     initialize:(args)->
+      @RelatedView = args.relatedView
       @DetailView = args.detailView
-      @model = @DetailView.model
-      @RelatedViews = args.RelatedViews
-      @on "render", @afterRender
+      @on 'render', @afterRender
 
-    showRelatedViews: =>
-      @relatedRegion.show new RelatedView
-        collection: new Publish.Collection @RelatedViews
+    showRelatedView: =>
+      @relatedRegion.show @RelatedView
 
     afterRender:->
       @detailRegion.show @DetailView
       # dont create subviews if model is new and there is no _id for the relation
-      if !@model.isNew() then @showRelatedViews() else @model.on "sync", @showRelatedViews, @
+      if !@DetailView.model.isNew() then @showRelatedView()
+      else @DetailView.model.on "sync", @showRelatedView, @
 
