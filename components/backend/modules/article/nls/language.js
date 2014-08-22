@@ -10,6 +10,7 @@ define({
       "category": "Category",
       "tags": "Tags",
       "layout": "Layout",
+      "desc": "Beschreibung",
     },
     "emptyMessage": "The article does not exist anymore",
     "newModel": "created new article",

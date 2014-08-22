@@ -62,7 +62,6 @@ module.exports.setup = (app, cfg)->
 
   #create new copy of the file
   app.on cfg.moduleName+":after:post", (req, res, file) ->
-    console.log file
     oldFileName = file.fields.title.value
     newFileName = 'new_'+Date.now()+oldFileName
     fs.writeFileSync dir+newFileName, fs.readFileSync dir+oldFileName

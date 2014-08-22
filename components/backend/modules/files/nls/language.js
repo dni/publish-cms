@@ -18,9 +18,10 @@ define({
       "info": "Info",
       "name": "Name",
       "title": "Name",
-      "description": "Description",
+      "desc": "Description",
       "alt": "Alt",
-      "filetype": "Filetype",
+      "key": "Key",
+      "type": "Filetype",
     },
   },
   "de": true

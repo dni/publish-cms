@@ -15,7 +15,7 @@
           "mongooseType": "String"
         },
         "link" : {
-          "type": "text",
+          "type": "hidden",
           "mongooseType": "String"
         },
         "type" : {
@@ -47,15 +47,15 @@
           "mongooseType": "String"
         },
         "thumbnail" : {
-          "type": "text",
+          "type": "hidden ",
           "mongooseType": "String"
         },
         "smallPic" : {
-          "type": "text",
+          "type": "hidden",
           "mongooseType": "String"
         },
         "bigPic" : {
-          "type": "text",
+          "type": "hidden",
           "mongooseType": "String"
         }
     },
