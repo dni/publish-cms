@@ -1,8 +1,8 @@
 define [
     'cs!Publish'
-    'cs!modules/files/view/PreviewView'
-], ( Publish, PreviewView ) ->
+    'cs!modules/files/view/RelatedFileView'
+], ( Publish, FileView ) ->
   class ArticleController extends Publish.Controller.LayoutController
     RelatedViews:
-      fileView: PreviewView
+      fileView: FileView
 

@@ -7,9 +7,13 @@ define [
   'cs!../view/TopView'
   'cs!../view/ShowFileView'
   'cs!../view/EditFileView'
-], ( App, Publish, $, ListView, BrowseView, TopView, ShowFileView, EditFileView) ->
+  'cs!../view/PreviewView'
+], ( App, Publish, $, ListView, BrowseView, TopView, ShowFileView, EditFileView, PreviewView) ->
 
-  class FileController extends Publish.Controller.Controller
+  class FileController extends Publish.Controller.LayoutController
+
+    RelatedViews:
+      preview: PreviewView
 
     routes:
       "showfile/:id": "showfile"
