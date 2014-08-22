@@ -1,13 +1,11 @@
 define [
   'cs!lib/Publish'
-  'tpl!lib/templates/related.html'
   'marionette'
-], (Publish, Template, Marionette) ->
+], (Publish, Marionette) ->
 
   class RelatedItemView extends Marionette.ItemView
-    template: Template
-    initialize:->
-      console.log @model
+    render:->
+      @$el.append @model.get "html"
 
   class RelatedView extends Marionette.CollectionView
     childView: RelatedItemView
