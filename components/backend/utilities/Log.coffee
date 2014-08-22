@@ -1,17 +1,20 @@
 define [
-  'cs!utilities/App'
+  'require'
   'cs!lib/model/Model'
   'text!modules/messages/configuration.json'
   'notify'
   'jquery'
-], (App, Model, Config, notify, $) ->
+], (require, Model, Config, notify, $) ->
   config = JSON.parse Config
   (log, type, additionalinfo)->
     if !additionalinfo? then additionalinfo = ''
     if !type? then type = 'log'
 
+    App = require "cs!App"
+    username = App.User.attributes.fields.title.value
+
     config.model.message.value =  log
-    config.model.name.value = App.User.attributes.fields.title.value
+    config.model.name.value = username
     config.model.type.value = type
     config.model.additionalinfo.value = additionalinfo
 

@@ -41,7 +41,7 @@ define [
       if not @ui.message.val() then return
 
       config.model.message.value =  @ui.message.val()
-      config.model.name.value = App.User.get "name"
+      config.model.name.value = App.User.getValue "title"
       config.model.type.value = 'message'
 
       message = new Publish.Model
