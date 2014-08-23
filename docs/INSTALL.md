@@ -2,41 +2,35 @@
 
 ## Software Requirements
 
-```js
+```sh
 apt-get install npm phantomjs git mongodb imagemagick graphicsmagick zip
 ```
-On Mac OSX use Homebrew
-```js
+
+On Mac OSX use [Homebrew](http://brew.sh/)
+```sh
 brew install npm phantomjs git mongodb imagemagick graphicsmagick
 ```
+
 Install node.js modules
-```js
-npm install -g bower grunt-cli coffee-script
+```sh
+npm i -g bower grunt-cli coffee-script
 ```
-Make sure mongod process is running, start it with mongod
+
+Make sure mongod process is running, you can start it with mongod
+
 
 ## Dowload and Install
-```js
-git clone https://github.com/dni/publish-cms
-cd publish- && npm install
+```sh
+git clone https://github.com/dni/publish-cms && cd publish-cms && npm i
 ```
+requirejs:buildBackend can take 4-5 minutes :(
 
+## Configuration
+You can specify your database name and production port in this [config](configuration.json)
 
 ## Enjoy the App
-
 Before you visit the Frontend you should
-
 * create a new admin user
 * go through the settings
 * customize your staticblocks
-* add some article
-
-##### Frontend
-
-http://localhost:1666/
-
-##### Backend
-
-http://localhost:1666/admin/ <br>
-**User:** admin <br>
-**Password:** password
+* add some articles

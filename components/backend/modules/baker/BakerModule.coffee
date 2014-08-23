@@ -1,9 +1,9 @@
 define [
-    'jquery'
-    'cs!Utils'
-    "text!./configuration.json"
-    "i18n!modules/baker/nls/language.js"
+  "cs!Publish"
+  "text!./configuration.json"
+  "i18n!./nls/language.js"
 ],
-( $, Utils, Config, i18n ) ->
-  $("body").on "downloadApp", -> window.open(window.location.origin + '/downloadApp','_blank')
-  Utils.addModule Config, i18n
+( Publish, Config, i18n ) ->
+  new Publish.Module
+    i18n: i18n
+    Config: Config
