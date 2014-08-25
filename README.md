@@ -1,10 +1,5 @@
-# Publish! Crossplattform Publishing
-Publish your data on all channels!
-
-## Documentation
-  * [Installation](docs/INSTALL.md)
-  * [Write your own Module](docs/create-a-backend-module.md)
-  * [Grunt Tasks](docs/grunt-tasks.md)
+# Publish! CMS
+A lightweight Javascript Content Managment System, which allows Users to easily publish any Content on any channels!
 
 ## Support
 The project was supported by aws - austria wirtschaftsservice

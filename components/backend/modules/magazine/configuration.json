@@ -1,28 +1,87 @@
 {
-    "config": {
-        "name": "Magazines",
-        "namespace": "magazine"
-    },
-    "navigation": {
-        "button": 0,
-        "route": "magazines",
-        "classNames": "magazines"
-    },
+  "name": "MagazineModule",
+  "moduleName": "MagazineModule",
+  "modelName": "Magazine",
+  "collectionName": "Magazines",
+  "url": "/magazines/",
+  "urlRoot": "magazines",
+  "dbTable": "magazines",
+  "navigation": true,
 
-    "settings": {
-		"layouts" : {
-          "description": "Comma seperated list of layout keys",
-          "value": "default, fullsize",
-          "type": "text"
-        },
-        "theme" : {
-          "description": "Comma seperated list of theme keys",
-          "value": "default",
-          "type": "text"
-        },
-		"print" : {
-	      "value": false,
-	      "type": "checkbox"
-		}
-	}
+  "settings": {
+    "categories" : {
+      "value": "Webdevelopment, Interactive, Webdesign",
+      "type": "text"
+    },
+    "layouts" : {
+      "description": "Comma seperated list of layout keys",
+      "value": "default, fullsize",
+      "type": "text"
+    },
+    "theme" : {
+      "description": "Comma seperated list of theme keys",
+      "value": "default",
+      "type": "text"
+    },
+    "print" : {
+      "value": false,
+      "type": "checkbox"
+    }
+  },
+  "model": {
+    "title" : {
+      "type": "text",
+      "mongooseType": "String"
+    },
+    "author" : {
+      "type": "text",
+      "mongooseType": "String"
+    },
+    "info" : {
+      "type": "text",
+      "mongooseType": "String"
+    },
+    "product_id" : {
+      "type": "text",
+      "mongooseType": "String"
+    },
+    "theme" : {
+      "type": "text",
+      "mongooseType": "String"
+    },
+    "files" : {
+      "type": "hidden",
+      "mongooseType": "Object"
+    },
+    "editorial" : {
+      "type": "wysiwyg",
+      "mongooseType": "String"
+    },
+    "impressum" : {
+      "type": "wysiwyg",
+      "mongooseType": "String"
+    },
+    "magazine" : {
+      "type": "text",
+      "mongooseType": "String"
+    },
+    "orientation" : {
+      "type": "select",
+      "mongooseType": "String",
+      "condition": "isPrint()"
+    },
+    "papersize" : {
+      "type": "select",
+      "mongooseType": "String",
+      "condition": "isPrint()"
+    },
+    "layout" : {
+      "type": "text",
+      "mongooseType": "String"
+    },
+    "number":{
+      "type": "text",
+      "mongooseType": "String"
+    }
+  }
 }

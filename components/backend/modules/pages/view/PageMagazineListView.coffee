@@ -39,20 +39,19 @@ define [
   class PageMagazineListView extends Marionette.CompositeView
 
     template: Template
-    templateHelpers:t:i18n
-    itemView: PageMagazineListItemView
-    itemViewContainer: ".page-list"
+    childView: PageMagazineListItemView
+    childViewContainer: ".page-list"
 
     events:
       "click #addPage": 'addPage'
 
     addPage: ->
-      page = new Publish.Model
-        number: @collection.length+1
-        magazine: @magazine
-        article: App.Articles.first()
-
-      @collection.create page
+      Router.navigate "Magazine/"+@model.get("_id")+"/addPage"
+      # page = new Publish.Model
+      #   number: @collection.length+1
+      #   magazine: @magazine
+      #   article: App.Articles.first()
+      # @collection.create page
 
     initialize:(args)->
       @magazine = args['magazine']
@@ -77,7 +76,3 @@ define [
         model.save()
 
       @collection.sort()
-
-
-
-
