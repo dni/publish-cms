@@ -9,7 +9,7 @@ define [
   'jquery.ui'
 ], (App, Publish, Utils, i18n, Marionette, Template, ItemTemplate, jqueryui) ->
 
-  class PageMagazineListItemView extends Marionette.ItemView
+  class RelatedPageChildView extends Marionette.ItemView
     template: ItemTemplate
     templateHelpers:
       getArticles: -> App.Articles.toJSON()
@@ -36,10 +36,10 @@ define [
       @model.destroy
         success: ->
 
-  class PageMagazineListView extends Marionette.CompositeView
+  class RelatedPageView extends Marionette.CompositeView
 
     template: Template
-    childView: PageMagazineListItemView
+    childView: RelatedPageChildView
     childViewContainer: ".page-list"
 
     events:

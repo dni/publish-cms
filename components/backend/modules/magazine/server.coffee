@@ -13,7 +13,7 @@ module.exports.setup = (app, config) ->
         res.statusCode = 500
         res.end()
       spawn = require("child_process").spawn
-      zip = spawn("zip", ["-r", "-", "hpub"], cwd: "./public/books/" + magazine.name)
+      zip = spawn("zip", ["-r", "-", "hpub"], cwd: "./public/books/" + magazine.fields.title.value)
       res.contentType "zip"
       zip.stdout.on "data", (data) -> res.write data
       zip.on "exit", (code) ->
@@ -22,16 +22,18 @@ module.exports.setup = (app, config) ->
         res.end()
 
   app.on config.moduleName+":after:post", auth, (req, res, model) ->
-    createMagazineFiles model, model.name, model.theme
+    createMagazineFiles model
 
   app.on config.moduleName+":after:put", (req, res, model)->
-    removeMagazine req.body.name, ->
-      createMagazineFiles model, model.name, model.theme
+    removeMagazine req.body.title, ->
+      createMagazineFiles model
 
-  app.on config.moduleName+":after:delete", (req, res, model, cb)->
-    removeMagazine model.name, cb
+  app.on config.moduleName+":after:delete", (req, res, model)->
+    removeMagazine model.fields.title.value
 
-createMagazineFiles = (magazine, folder, theme) ->
+createMagazineFiles = (magazine) ->
+  folder = magazine.fields.title.value
+  theme = magazine.fields.theme.value
   fs.mkdirSync "./public/books/" + folder
   fs.copySync "./components/magazine/" + theme + "/gfx", "./public/books/" + folder + "/hpub/gfx"
   fs.copySync "./components/magazine/" + theme + "/css", "./public/books/" + folder + "/hpub/css"
@@ -39,14 +41,10 @@ createMagazineFiles = (magazine, folder, theme) ->
   fs.copySync "./components/magazine/" + theme + "/images", "./public/books/" + folder + "/hpub/images"
   HpubGenerator.generate magazine
 
-removeMagazine = (dirname, cb)->
+removeMagazine = (dirname)->
   child_process = require("child_process").spawn
   spawn = child_process("rm", ["-r", dirname], cwd: "./public/books/")
   spawn.on "exit", (code) ->
-    if code is 0
-      cb() if cb
-    else
+    if code isnt 0
       res.send a
       console.log "remove Magazine " + dirname + " exited with code " + code
-
-

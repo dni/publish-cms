@@ -78,10 +78,6 @@
     "layout" : {
       "type": "text",
       "mongooseType": "String"
-    },
-    "number":{
-      "type": "text",
-      "mongooseType": "String"
     }
   }
 }

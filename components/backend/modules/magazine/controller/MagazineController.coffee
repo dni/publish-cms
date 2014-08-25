@@ -5,5 +5,4 @@ define [
 ], ( Publish, RelatedPageView, RelatedFileView ) ->
   class MagazineController extends Publish.Controller.LayoutController
     RelatedViews:
-      PageView: RelatedPageView
       FileView: RelatedFileView

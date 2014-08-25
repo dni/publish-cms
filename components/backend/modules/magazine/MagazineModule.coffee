@@ -1,7 +1,9 @@
 define [
   'cs!Publish'
+  'text!./configuration.json'
+  'i18n!./nls/language'
   'cs!./controller/MagazineController'
-], (Publish, Controller) ->
+], (Publish, Config, i18n, Controller) ->
   new Publish.Module
     Controller: Controller
     Config: Config
