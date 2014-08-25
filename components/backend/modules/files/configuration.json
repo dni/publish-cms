@@ -19,7 +19,7 @@
           "mongooseType": "String"
         },
         "type" : {
-          "type": "text",
+          "type": "hidden",
           "mongooseType": "String"
         },
         "info" : {
