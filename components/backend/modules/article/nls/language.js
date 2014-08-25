@@ -5,12 +5,15 @@ define({
     "attributes":  {
       "title": "Title",
       "author": "Author",
+      "defaultAuthor": "DefaultAuthor",
       "teaser": "Teaser",
       "article": "Article",
       "category": "Category",
+      "categories": "Categories",
       "tags": "Tags",
       "layout": "Layout",
-      "desc": "Beschreibung",
+      "desc": "Description",
+      "magazine": "Magazine"
     },
     "emptyMessage": "The article does not exist anymore",
     "newModel": "created new article",

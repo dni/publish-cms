@@ -8,22 +8,35 @@ define [
 ], (App, Publish, Utils, Router, Marionette, Template) ->
 
   class DetailView extends Marionette.ItemView
+        
+    template: Template
 
     initialize:(args)->
       @ui = {}
       @ui[key] = "[name="+key+"]" for key, arg of args.Config.model
       @bindUIElements()
+      @on "render", @afterRender, @
 
-    template: Template
+    afterRender:->
+      @$el.find('[data-toggle=tooltip]').tooltip
+        placement: 'right'
+        container: 'body'
 
     templateHelpers: ->
       vhs: Utils.Viewhelpers
       t: @options.i18n
+      self: @
       foreachAttribute: (fields, cb)->
-        for key, attribute of fields
-          cb key, attribute
+        options = @.self.options.Config.model
 
-    getAttributes:->
+        for key, arg of options
+          c.l key
+          if fields[key]?
+            cb key, fields[key]
+        # for key, attribute of fields
+        #   cb key, attribute
+
+    getAttributes: ->
       attr = {}
       if @model.get("name") is "Setting"
         options = @options.Config.settings
@@ -33,10 +46,12 @@ define [
       else
         options = @options.Config.model
 
+
       for key, arg of options
         attr[key] =
           value: @ui[key].val()
           type: arg.type
+        c.l attr, key, arg
 
       return attr
 
@@ -72,5 +87,5 @@ define [
     deleteModel: ->
       Utils.Log @options.i18n.deleteModel, 'delete', text: @model.get '_id'
       @model.destroy
-        success:->
+        success: ->
       App.contentRegion.empty()

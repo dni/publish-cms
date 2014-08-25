@@ -47,7 +47,7 @@
           "mongooseType": "String"
         },
         "thumbnail" : {
-          "type": "hidden ",
+          "type": "hidden",
           "mongooseType": "String"
         },
         "smallPic" : {

@@ -4,8 +4,7 @@ define [
   "text!./configuration.json"
   "i18n!./nls/language.js"
   'cs!./controller/SettingsController'
-  'cs!./view/TopView'
-], ( App, Publish, Config, i18n, Controller, TopView ) ->
+], ( App, Publish, Config, i18n, Controller ) ->
 
   module = new Publish.Module
     Controller: Controller

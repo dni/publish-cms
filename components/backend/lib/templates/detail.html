@@ -15,13 +15,16 @@
                 <input type="hidden" name="<%= key %>" class="form-control" value="<%= attribute.value %>" />
              <% } %>
 
-
              <% if (attribute.type === "wysiwyg") { %>
                 <textarea name="<%= key %>" class="form-control wysiwyg"><%= attribute.value %></textarea>
              <% } %>
 
              <% if (attribute.type === "textarea") { %>
                 <input type="text" class="form-control" value="<%= attribute.value %>"  name="<%= key %>" >
+             <% } %>
+
+             <% if (attribute.type === "checkbox") { %>
+                <input type="checkbox" class="form-control" value="<%= attribute.value %>" checked="<%= attribute.value %>" name="<%= key %>" >
              <% } %>
 
             <% if (attribute.type === "range") { %>
