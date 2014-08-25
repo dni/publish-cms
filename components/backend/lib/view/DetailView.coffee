@@ -25,16 +25,9 @@ define [
     templateHelpers: ->
       vhs: Utils.Viewhelpers
       t: @options.i18n
-      self: @
       foreachAttribute: (fields, cb)->
-        options = @.self.options.Config.model
-
-        for key, arg of options
-          c.l key
-          if fields[key]?
-            cb key, fields[key]
-        # for key, attribute of fields
-        #   cb key, attribute
+        for key, arg of fields
+          cb key, fields[key]
 
     getAttributes: ->
       attr = {}
@@ -46,13 +39,11 @@ define [
       else
         options = @options.Config.model
 
-
-      for key, arg of options
+      keys = Object.keys(options).reverse()
+      for key, i in keys
         attr[key] =
           value: @ui[key].val()
-          type: arg.type
-        c.l attr, key, arg
-
+          type: options[key].type
       return attr
 
     events:
