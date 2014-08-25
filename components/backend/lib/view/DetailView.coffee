@@ -8,7 +8,7 @@ define [
 ], (App, Publish, Utils, Router, Marionette, Template) ->
 
   class DetailView extends Marionette.ItemView
-        
+
     template: Template
 
     initialize:(args)->
@@ -67,7 +67,7 @@ define [
             Utils.Log that.options.i18n.newModel, 'new',
               text: res.attributes._id
               href: route
-            Router.navigate route, false
+            Router.navigate route, trigger:false
       else
         Utils.Log @options.i18n.updateModel, 'update',
           text: @model.get '_id'
