@@ -3,7 +3,7 @@ auth = require './../../utilities/auth'
 PrintGenerator = require(__dirname + "/generators/PrintGenerator")
 HpubGenerator = require(__dirname + "/generators/HpubGenerator")
 
-module.exports.setup = (app) ->
+module.exports.setup = (app, config) ->
   Magazine = require("./../../lib/model/Schema")(config.dbTable)
 
   app.get "/downloadPrint/:name", auth, PrintGenerator.download
@@ -25,12 +25,10 @@ module.exports.setup = (app) ->
     createMagazineFiles model, model.name, model.theme
 
   app.on config.moduleName+":after:put", (req, res, model)->
-    createMagazineFiles model, model.name, model.theme
+    removeMagazine req.body.name, ->
+      createMagazineFiles model, model.name, model.theme
 
-  app.on config.moduleName+":before:put", (req, res, model, cb)->
-    removeMagazine model.name, cb
-
-  app.on config.moduleName+":before:delete", (req, res, model, cb)->
+  app.on config.moduleName+":after:delete", (req, res, model, cb)->
     removeMagazine model.name, cb
 
 createMagazineFiles = (magazine, folder, theme) ->
