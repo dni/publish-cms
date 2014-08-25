@@ -47,7 +47,9 @@ define [
       model = new @Model
       model.set
         fields: fields
+        fieldorder: Object.keys(@Config.model)
         name: @Config.modelName
+
       model.urlRoot = @Config.urlRoot
       model.collectionName = @Config.collectionName
       return model

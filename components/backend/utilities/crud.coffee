@@ -11,6 +11,7 @@ module.exports = (app, config)->
     schema.date = new Date()
     schema.name = req.body.name
     schema.fields = req.body.fields
+    schema.fieldorder = req.body.fieldorder
     schema.save ->
       app.emit config.moduleName+':after:post', req, res, schema
       res.send schema

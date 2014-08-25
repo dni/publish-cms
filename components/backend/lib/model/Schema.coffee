@@ -6,6 +6,7 @@ module.exports = (dbTable)->
   unless collections[dbTable]?
     collections[dbTable] = mongoose.model dbTable, new Schema
       sortorder: Number
+      fieldorder: Array
       user: String
       crdate: Date
       date: Date

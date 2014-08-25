@@ -41,6 +41,7 @@ define [
         mongooseType: "String"
 
       setting.set "name", pConfig.modelName
+      setting.set "fieldorder", Object.keys(config.settings)
       setting.set "fields", config.settings
       App.Settings.create setting
 

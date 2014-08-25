@@ -7,7 +7,7 @@ define [
   class LayoutController extends Controller
 
     constructor: (args)->
-      unless @RelatedViews? then return c.l "no related Views, try DetailController"
+      unless @RelatedViews? then return c.l "no related Views, try to specify RelatedViews, or simply use the Standard Controller"
       unless args.LayoutView? then @LayoutView = LayoutView
       unless args.RelatedView? then @RelatedView = RelatedView
       super args
@@ -29,4 +29,3 @@ define [
       new @LayoutView
         detailView: detailView
         relatedView: relatedView
-

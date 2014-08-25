@@ -12,8 +12,10 @@ define [
     template: Template
 
     initialize:(args)->
+      @model = args.model
+      c.l @model
       @ui = {}
-      @ui[key] = "[name="+key+"]" for key, arg of args.Config.model
+      @ui[key] = "[name="+key+"]" for key, arg of @model.get "fields"
       @bindUIElements()
       @on "render", @afterRender, @
 
@@ -26,25 +28,14 @@ define [
       vhs: Utils.Viewhelpers
       t: @options.i18n
       foreachAttribute: (fields, cb)->
-        for key, arg of fields
+        for key in @fieldorder
           cb key, fields[key]
 
-    getAttributes: ->
-      attr = {}
-      if @model.get("name") is "Setting"
-        options = @options.Config.settings
-        options['title'] =
-          value: @options.Config.moduleName
-          type: "hidden"
-      else
-        options = @options.Config.model
-
-      keys = Object.keys(options).reverse()
-      for key, i in keys
-        attr[key] =
-          value: @ui[key].val()
-          type: options[key].type
-      return attr
+    getValuesFromUi: ()->
+      fields = @model.get "fields"
+      for key, field of fields
+        field.value = @ui[key].val()
+      return fields
 
     events:
       "click .save": "save"
@@ -56,8 +47,7 @@ define [
       Router.navigate @Config?.collectionName
 
     save: ->
-      @model.set "name", @options.Config.modelName
-      @model.set "fields", @getAttributes()
+      @model.set "fields", @getValuesFromUi()
       that = @
       if @model.isNew()
         App[that.options.Config.collectionName].create @model,
@@ -79,4 +69,4 @@ define [
       Utils.Log @options.i18n.deleteModel, 'delete', text: @model.get '_id'
       @model.destroy
         success: ->
-      App.contentRegion.empty()
+          App.contentRegion.empty()
