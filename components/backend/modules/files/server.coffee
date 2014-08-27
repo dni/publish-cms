@@ -1,14 +1,16 @@
 File = require('./../../lib/model/Schema')("files")
 Setting = require('./../../lib/model/Schema')("settings")
 async = require "async"
-moduleSetting = ''
 auth = require './../../utilities/auth'
+utils = require './../../utilities/utils'
 gm = require 'gm'
 multiparty = require "multiparty"
 fs = require "fs"
-dir = "./public/files/";
 
 module.exports.setup = (app, cfg)->
+
+  moduleSetting = ''
+  dir = "./public/files/"
 
   Setting.findOne("fields.title.value": cfg.moduleName).exec (err, setting) ->
     moduleSetting = setting
@@ -45,11 +47,8 @@ module.exports.setup = (app, cfg)->
           title = title.replace ".", Date.now()+"_copy."
         fs.renameSync srcFile.path, dir+title
 
-        file = new File
-        file.name = cfg.modelName
-        file.fields = cfg.model
+        file = utils.createModel File, cfg
         file.fields.type.value = srcFile.headers['content-type']
-        file.fields.link.value = title
         file.fields.title.value = title
 
         if srcFile.headers['content-type'].split("/")[0] is "image"
@@ -73,9 +72,9 @@ module.exports.setup = (app, cfg)->
 
   # clean up files after model is deleted
   app.on cfg.moduleName+':after:delete', (req, res, file)->
-    types = ["thumbnail", "smallPic", "bigPic", "link"]
-    for type in types
-      if fs.existsSync "./public/files/"+file.fields[type].value
+    types = ["thumbnail", "smallPic", "bigPic", "title"]
+    async.map types, fs.exists, (err, files)->
+      for file in files
         fs.unlink "./public/files/"+file.fields[type].value
 
   createImages = (file, req) ->
