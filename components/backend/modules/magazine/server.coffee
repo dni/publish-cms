@@ -34,7 +34,9 @@ module.exports.setup = (app, config) ->
         res.end()
 
 createMagazineFiles = (magazine) ->
+  console.log "createMagazineFiles"
   folder = magazine.fields.name.value
+  if folder.length<=0 then console.log "i do not allow empty name/title"; folder = "emptyName"
   theme = magazine.fields.theme.value || "default"
   fs.mkdirSync "./public/books/" + folder
   fs.copySync "./components/magazine/" + theme + "/gfx", "./public/books/" + folder + "/hpub/gfx"

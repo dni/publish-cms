@@ -9,10 +9,11 @@ Settings = require("./../../../lib/model/Schema")("settings")
 Page = require("./../../../lib/model/Schema")("pages")
 
 module.exports.generate = (magazine) ->
-  Settings.find(name: "Magazines").execFind (err, file) ->
+  Settings.find("fields.title.value": "magazine").execFind (err, file) ->
+    console.log "magazineSettings ", file
     print = false#if file[0].settings.print.value then true else false
     theme = magazine.fields.theme.value || "default"
-    title = magazine.fields.title.value 
+    title = magazine.fields.name.value 
     console.log("level 0")
     File.find(relation: "magazine:" + magazine._id).execFind (err, files) ->
       magazinefiles = {}
