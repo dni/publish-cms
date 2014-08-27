@@ -24,7 +24,7 @@ module.exports = (grunt)->
         options:
           spawn: false
       magazine:
-        files: ['components/magazine/**/*']
+        files: ['components/magazine/**/*'],
         tasks: ['generateMagazine']
         options:
           spawn: false

@@ -6,6 +6,8 @@
 // find the mixins, variables here
 // http://twitter.github.com/bootstrap/less.html
 @import "../../vendor/style/bootstrap.less";
+@import "../../vendor/style/jquery.minicolors.css";
+@import "../../vendor/style/jquery.Jcrop.css";
 @icon-font-path:"/public/fonts/";
 @screen-lg-min:1400px;
 .dropdown-menu {text-align:left;}
@@ -43,22 +45,17 @@ html {
   height:100%;
 }
 
-
-
 body {margin:0;padding:0;height:100%;background:#b3b3b3;}
-
-
 
 img {
   max-width: 100%;
-width: 100%;
-height: auto;
+  width: 100%;
+  height: auto;
 }
 
 .flex {
   padding:12px;
   max-height:100%;
-
   box-sizing: border-box
 }
 
@@ -89,7 +86,6 @@ height: auto;
 
 
 #list, #list-top, #content > * {
-
   padding:24px;
   background:rgba(200,200,200, 0.9);
   background: rgb(255,255,255); /* Old browsers */
@@ -99,16 +95,11 @@ height: auto;
   background: -o-linear-gradient(-45deg,  rgba(255,255,255,1) 0%,rgba(243,243,243,1) 50%,rgba(237,237,237,1) 51%,rgba(255,255,255,1) 100%); /* Opera 11.10+ */
   background: -ms-linear-gradient(-45deg,  rgba(255,255,255,1) 0%,rgba(243,243,243,1) 50%,rgba(237,237,237,1) 51%,rgba(255,255,255,1) 100%); /* IE10+ */
   background: linear-gradient(135deg,  rgba(255,255,255,1) 0%,rgba(243,243,243,1) 50%,rgba(237,237,237,1) 51%,rgba(255,255,255,1) 100%); /* W3C */
-
 }
-
-
-
 
 .navbar-nav {float:none;}
 /* LOGIN */
 #login > div {display:none;}
-
 
 .list-btns {
   display: block;
@@ -168,7 +159,6 @@ height: auto;
     cursor: pointer;
     height:32px;
   }
-
 }
 
 .page {margin-bottom:12px;}

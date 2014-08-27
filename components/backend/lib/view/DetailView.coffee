@@ -6,14 +6,11 @@ define [
   'marionette'
   'tpl!lib/templates/detail.html'
 ], (App, Publish, Utils, Router, Marionette, Template) ->
-
   class DetailView extends Marionette.ItemView
 
     template: Template
 
     initialize:(args)->
-      @model = args.model
-      c.l @model
       @ui = {}
       @ui[key] = "[name="+key+"]" for key, arg of @model.get "fields"
       @bindUIElements()

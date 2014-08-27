@@ -33,6 +33,10 @@
       "type": "text",
       "mongooseType": "String"
     },
+  "name" : {
+      "type": "hidden",
+      "mongooseType": "String"
+    },
     "author" : {
       "type": "text",
       "mongooseType": "String"

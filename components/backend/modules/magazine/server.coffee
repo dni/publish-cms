@@ -5,6 +5,19 @@ HpubGenerator = require(__dirname + "/generators/HpubGenerator")
 
 module.exports.setup = (app, config) ->
   Magazine = require("./../../lib/model/Schema")(config.dbTable)
+
+  app.on config.moduleName+":after:post", (req, res, model) ->
+    createMagazineFiles model
+
+  app.on config.moduleName+":after:put", (req, res, model)->
+    createMagazineFiles model
+
+  app.on config.moduleName+":before:put", (req, res, model)->
+    removeMagazine model.fields.name.value
+
+  app.on config.moduleName+":after:delete", (req, res, model)->
+    removeMagazine model.fields.name.value
+
   app.get "/downloadPrint/:name", auth, PrintGenerator.download
   app.get "/downloadHpub/:id", auth, (req,res)->
     Magazine.findOne(_id: req.params.id).exec (err, magazine)->
@@ -20,25 +33,8 @@ module.exports.setup = (app, config) ->
           res.statusCode = 500
         res.end()
 
-  app.on config.moduleName+":after:post", auth, (req, res, model) ->
-    console.log "after:post"
-    createMagazineFiles model
-
-  app.on config.moduleName+":after:put", (req, res, model)->
-    console.log "after:put"
-    newName = model.fields.title.value.replace(/[^a-z0-9]/gi, '_').toLowerCase()
-    oldName = null#req.body.title.value
-    ## should remove oldName
-    removeMagazine newName, ->
-      createMagazineFiles model
-
-  app.on config.moduleName+":after:delete", (req, res, model)->
-    console.log "after:delete"
-    removeMagazine model.fields.title.value
-
 createMagazineFiles = (magazine) ->
-  magazine.fields.title.value = magazine.fields.title.value.replace(/[^a-z0-9]/gi, '_').toLowerCase()
-  folder = magazine.fields.title.value
+  folder = magazine.fields.name.value
   theme = magazine.fields.theme.value || "default"
   fs.mkdirSync "./public/books/" + folder
   fs.copySync "./components/magazine/" + theme + "/gfx", "./public/books/" + folder + "/hpub/gfx"
@@ -55,4 +51,5 @@ removeMagazine = (dirname, cb)->
     if code isnt 0
       #res.end()
       console.log "remove Magazine " + dirname + " exited with code " + code
-    if cb? then cb()
+
+parseSaveName = (name)-> name.replace(/[^a-z0-9]/gi, '_').toLowerCase()
