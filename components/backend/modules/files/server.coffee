@@ -10,8 +10,8 @@ dir = "./public/files/";
 
 module.exports.setup = (app, cfg)->
 
-  Setting.findOne("fields.title.value": cfg.moduleName).exec (err, setting) ->
-    moduleSetting = setting
+  Setting.find("fields.title.value": cfg.moduleName).exec (err, setting) ->
+    moduleSetting = setting[0]
 
   app.on cfg.moduleName+':after:put', (req, res, file)->
     if req.params.crop

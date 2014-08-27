@@ -20,7 +20,9 @@ module.exports = (app, config)->
     Schema.find().limit(20).execFind (arr,data)-> res.send data
 
   app.put '/'+config.urlRoot+'/:id', auth, (req, res)->
+    return
     Schema.findById req.params.id, (e, schema)->
+      app.emit config.moduleName+':before:put', req, res, schema
       schema.date = new Date()
       schema.fields = req.body.fields
       schema.save ->
@@ -30,6 +32,7 @@ module.exports = (app, config)->
 
   app.delete '/'+config.urlRoot+'/:id', auth, (req, res)->
     Schema.findById req.params.id, (e, schema)->
+      
       schema.remove ->
         app.emit config.moduleName+':after:delete', req, res, schema
         res.send 'deleted'

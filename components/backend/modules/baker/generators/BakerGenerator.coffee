@@ -22,7 +22,9 @@ module.exports.download = (req, res) ->
         if code is 0 then console.log "download app zip done" else console.log "download app zip exited with code " + code
         res.end()
 
-  Settings.findOne(name: "Baker").exec (error, setting) ->
+  Settings.find(name: "Baker").exec (err, setting) ->
+    if err then console.log "setting:baker", err
+    console.log Settings
 
     # delete dirty baker project
     spawn = require("child_process").spawn("rm", ["-rf", "-", "publish-baker"], cwd: process.cwd() + "/cache")
