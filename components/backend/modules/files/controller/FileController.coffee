@@ -9,7 +9,6 @@ define [
   'cs!../view/EditFileView'
   'cs!../view/PreviewView'
 ], ( App, Publish, $, ListView, BrowseView, TopView, ShowFileView, EditFileView, PreviewView) ->
-
   class FileController extends Publish.Controller.LayoutController
 
     RelatedViews:
@@ -44,21 +43,13 @@ define [
       that = @
       App.vent.once 'overlay:ok', ->
         files = collection.where selected:true
-        if !files.length then return $('.modal').modal('hide')
         $('.modal').modal('hide')
-        eachFile = (file)->
+        return unless files.length
+        files.forEach (file)->
           fields = file.get "fields"
-          fields.parent.value = file.attributes._id
+          fields.parent.value = file.get "_id"
           fields.relation.value = id
-          fields.key.value = 'default'
-
+          fields.key.value = "default"
           newfile = that.createNewModel()
-          newfile.set "name", that.Config.modelName
           newfile.set "fields", fields
-
-          App.Files.create newfile,
-            wait:true
-            success: (res) ->
-              if files.length
-                eachFile files.pop()
-        eachFile(files.pop())
+          App.Files.create newfile

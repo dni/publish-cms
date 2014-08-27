@@ -12,6 +12,7 @@
     "model": {
         "title" : {
           "type": "text",
+          "required": true,
           "mongooseType": "String"
         },
         "data" : {

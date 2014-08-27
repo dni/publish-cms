@@ -72,12 +72,12 @@
     "orientation" : {
       "type": "select",
       "mongooseType": "String",
-      "condition": "isPrint()"
+      "condition": "isPrint"
     },
     "papersize" : {
       "type": "select",
       "mongooseType": "String",
-      "condition": "isPrint()"
+      "condition": "isPrint"
     },
     "layout" : {
       "type": "text",
