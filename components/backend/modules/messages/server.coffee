@@ -11,4 +11,3 @@ module.exports.setup = (app, config) ->
   app.on config.moduleName+":after:post", (req, res, message)->
     req.io.broadcast "updateCollection", config.collectionName
     req.io.broadcast "message", message
-

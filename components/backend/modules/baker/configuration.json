@@ -2,16 +2,12 @@
   "name": "BakerModule",
   "moduleName": "BakerModule",
   "modelName": "Baker",
-  "collectionName": "Baker",
-  "url": "/baker/",
-  "urlRoot": "baker",
-  "dbTable": "baker",
-  "navigation": true,
+  "navigation": false,
 
   "settings": {
     "fileView" : true
   },
-  "model": {
+  "settings": {
   	"apptype" : {
 	      "value": "standalone",
 	      "type": "select",

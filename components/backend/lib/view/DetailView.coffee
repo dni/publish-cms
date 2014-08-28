@@ -63,6 +63,6 @@ define [
 
     deleteModel: ->
       Utils.Log @options.i18n.deleteModel, 'delete', text: @model.get '_id'
+      App.contentRegion.empty()
       @model.destroy
         success: ->
-          App.contentRegion.empty()

@@ -8,4 +8,4 @@ define [
 
     changeName:->
       title = @ui.title.val()
-      @model.set "name", title.replace(/[^a-z0-9]/gi, '_').toLowerCase()
+      @ui.name.val title.replace(/[^a-z0-9]/gi, '_').toLowerCase()

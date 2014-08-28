@@ -3,7 +3,8 @@ define [
   'jquery'
   'marionette'
   'tpl!../templates/browse-item.html'
-], (App, $, Marionette, Template) ->
+  'tpl!../templates/upload.html'
+], (App, $, Marionette, Template, UploadTemplate) ->
 
   class ItemView extends Marionette.ItemView
     template: Template
@@ -18,16 +19,8 @@ define [
     childView: ItemView
 
     initialize: ->
-      App.Files.on "sync", @sync, @
-
-      @$el.prepend '''
-        <form class="form-inline form-plugin" action="/uploadFile" method="POST" id="uploadFile" enctype="multipart/form-data">
-          <div class="btn btn-default fileinput-button">
-              <span class="glyphicon glyphicon-cloud-upload"></span>
-              <input id="upload" type="file" name="files[]" multiple="multiple">
-          </div>
-        </form>
-      '''
+      @listenTo App.Files, "sync", @sync
+      @$el.prepend UploadTemplate
 
     events:
       "change #upload": "uploadFile"
@@ -36,7 +29,7 @@ define [
       @$el.find("#uploadFile").ajaxForm (response) ->
       @$el.find("#uploadFile").submit()
 #
-    sync: ->
+    sync: =>
       files = App.Files.where parent:undefined
       files.forEach (model)->
         model.set 'selected', false

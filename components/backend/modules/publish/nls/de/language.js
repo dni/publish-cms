@@ -1,6 +1,8 @@
 define({
-	"langCode": "de",
-	"domain": "Domain",
+    "attributes": {
+      "title": "Title",
+      "domain": "Standard Url"
+    },
 	"development": "Entwicklung",
 	"backend_development": "Backend im Entwicklungsmodus",
 	"frontend_development": "Frontend im Entwicklungsmodus",
@@ -29,5 +31,4 @@ define({
     "october": "Oktober",
     "november": "November",
     "december": "Dezember"
-
 });

@@ -22,18 +22,21 @@ module.exports.setup = (app, cfg)->
       crop = req.body.crop
       gmImg.size (err, size)->
         return if err
-        ratio = size.width / crop.origSize.w
-        gmImg.crop(crop.w*ratio, crop.h*ratio, crop.x*ratio, crop.y*ratio)
-        gmImg.write dir+filename, ->
-          createImages file, req
+        Setting.findOne("fields.title.value": cfg.moduleName).exec (err, setting) ->
+          moduleSetting = setting
+          ratio = size.width / crop.origSize.w
+          gmImg.crop(crop.w*ratio, crop.h*ratio, crop.x*ratio, crop.y*ratio)
+          gmImg.write dir+filename, ->
+            createImages file, req
     else
       title = file.fields.title.value
       link = file.fields.link.value
       if title != link
         fs.renameSync dir+link, dir+title
         file.fields.link.value = title
-        file.save ->
-          req.io.broadcast 'updateCollection', cfg.collectionName
+      file.save ->
+        console.log file
+        req.io.broadcast 'updateCollection', cfg.collectionName
 
 
   app.post "/uploadFile", auth, (req,res)->
@@ -51,8 +54,11 @@ module.exports.setup = (app, cfg)->
         file.fields.type.value = srcFile.headers['content-type']
         file.fields.title.value = title
 
+
         if srcFile.headers['content-type'].split("/")[0] is "image"
-           createImages file, req
+          Setting.findOne("fields.title.value": cfg.moduleName).exec (err, setting) ->
+            moduleSetting = setting
+            createImages file, req
         else
           file.save ->
             req.io.broadcast "updateCollection", cfg.collectionName
@@ -61,11 +67,17 @@ module.exports.setup = (app, cfg)->
 
   #create new copy of the file
   app.on cfg.moduleName+":after:post", (req, res, file) ->
+    console.log req.body
     oldFileName = file.fields.title.value
     newFileName = 'new_'+Date.now()+oldFileName
     fs.writeFileSync dir+newFileName, fs.readFileSync dir+oldFileName
+
+
+
     if file.fields.type.value.split("/")[0] is "image"
-      createImages file, req
+      Setting.findOne("fields.title.value": cfg.moduleName).exec (err, setting) ->
+        moduleSetting = setting
+        createImages file, req
     else
       file.save ->
         req.io.broadcast "updateCollection", "Files"
@@ -73,9 +85,8 @@ module.exports.setup = (app, cfg)->
   # clean up files after model is deleted
   app.on cfg.moduleName+':after:delete', (req, res, file)->
     types = ["thumbnail", "smallPic", "bigPic", "title"]
-    async.map types, fs.exists, (err, files)->
-      for file in files
-        fs.unlink "./public/files/"+file.fields[type].value
+    for type in types
+      fs.unlink "./public/files/"+file.fields[type].value
 
   createImages = (file, req) ->
     filename = file.fields.title.value
@@ -84,7 +95,7 @@ module.exports.setup = (app, cfg)->
     image = gm(dir+filename).size (err, size) ->
       if err then return console.error "createWebPic getSize err=", err
       portrait = true if size.width < size.height
-      async.each types, (type, cb)->
+      addFile = (type, cb)->
         maxSize = moduleSetting.fields[type].value
         targetName = filename.replace '.', type+'.'
         file.fields[type].value = targetName
@@ -93,5 +104,6 @@ module.exports.setup = (app, cfg)->
         else image.resize maxSize
         image.write dir+targetName, (err) ->
           file.save ->
-            req.io.broadcast "updateCollection", cfg.collectionName
             cb()
+      async.each types, addFile, ->
+        req.io.broadcast "updateCollection", cfg.collectionName

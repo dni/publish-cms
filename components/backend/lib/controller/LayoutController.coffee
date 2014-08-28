@@ -20,7 +20,7 @@ define [
       relatedViews = []
       for viewName, RelatedView of @RelatedViews
         relatedView = new RelatedView model:model
-        relatedViews.push viewName:viewName, html: relatedView.render().el
+        relatedViews.push relatedView
       new @RelatedView collection: new @Collection relatedViews
 
     newLayoutView:(model)->

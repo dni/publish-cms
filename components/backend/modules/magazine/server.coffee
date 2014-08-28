@@ -7,15 +7,19 @@ module.exports.setup = (app, config) ->
   Magazine = require("./../../lib/model/Schema")(config.dbTable)
 
   app.on config.moduleName+":after:post", (req, res, model) ->
+    console.log(":after:post")
     createMagazineFiles model
 
   app.on config.moduleName+":after:put", (req, res, model)->
+    console.log(":after:put")
     createMagazineFiles model
 
   app.on config.moduleName+":before:put", (req, res, model)->
+    console.log(":before:put")
     removeMagazine model.fields.name.value
 
   app.on config.moduleName+":after:delete", (req, res, model)->
+    console.log(":after:delete")
     removeMagazine model.fields.name.value
 
   app.get "/downloadPrint/:name", auth, PrintGenerator.download
@@ -34,9 +38,8 @@ module.exports.setup = (app, config) ->
         res.end()
 
 createMagazineFiles = (magazine) ->
-  console.log "createMagazineFiles"
-  folder = magazine.fields.name.value
-  if folder.length<=0 then console.log "i do not allow empty name/title"; folder = "emptyName"
+  folder = magazine.getFieldValue "name"
+  #if folder.length<=0 then console.log "i do not allow empty name/title"; folder = "emptyName"
   theme = magazine.fields.theme.value || "default"
   fs.mkdirSync "./public/books/" + folder
   fs.copySync "./components/magazine/" + theme + "/gfx", "./public/books/" + folder + "/hpub/gfx"
@@ -53,5 +56,3 @@ removeMagazine = (dirname, cb)->
     if code isnt 0
       #res.end()
       console.log "remove Magazine " + dirname + " exited with code " + code
-
-parseSaveName = (name)-> name.replace(/[^a-z0-9]/gi, '_').toLowerCase()

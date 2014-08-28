@@ -1,11 +1,11 @@
 define({
 	"root": {
 		"navigation": "Settings",
-		"deleteSetting": "deleted setting",
 		"attributes": {
       "title": "No Title"
     },
-		"updateSetting": "updated setting"
+    "updateModel": "updated setting",
+    "deleteModel": "deleted setting"
 	},
 	"de": true
 });

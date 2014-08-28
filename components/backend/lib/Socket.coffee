@@ -10,10 +10,10 @@ define [
     msg = msg.fields
     msgType = ""
     msgText = msg.name.value+" "+msg.message.value
-    if msg.type is "update" or msg.type.value is "message" then msgType = "info"
+    if msg.type.value is "update" or msg.type.value is "message" then msgType = "info"
     else if msg.type.value is "delete" then msgType = "warn"
     else if msg.type.value is "new" then msgType = "success"
-    #else if msgType is "update" then msgType = "error"
+    #else if msgType is "error" then msgType = "error"
     $.notify msgText,
       className: msgType
       position:"right bottom"

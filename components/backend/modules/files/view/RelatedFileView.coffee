@@ -27,7 +27,15 @@ define [
       Router.navigate 'filebrowser/'+@model.get("_id"), {trigger:true}
 
     initialize:(args)->
+      c.l "@coll", @collection
+      c.l "arg.coll", args
+      @listenTo App.Files, "sync", @sync
       @modelId = args['modelId']
       @namespace = args['namespace']
       @description = args['description']
       @templateHelpers = _.extend @templateHelpers, description:args['description']
+
+    sync: =>
+      files = App.Files.where "fields.parent.value":undefined
+      @collection.reset files
+      @render()

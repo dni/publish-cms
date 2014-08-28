@@ -4,6 +4,10 @@ define [
 ], (Publish, Marionette) ->
 
   class RelatedItemView extends Marionette.ItemView
+    
+    initialize:->
+      @listenTo @model.collection, 'sync', @render
+
     render:->
       @$el.append @model.get "html"
 

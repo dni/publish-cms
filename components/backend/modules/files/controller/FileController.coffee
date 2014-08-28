@@ -2,7 +2,7 @@ define [
   'cs!App'
   'cs!Publish'
   'jquery'
-  'cs!../view/ListView'
+  'cs!../view/FileListView'
   'cs!../view/BrowseView'
   'cs!../view/TopView'
   'cs!../view/ShowFileView'
@@ -34,14 +34,13 @@ define [
 
     filebrowser: (id)->
       collection = new @Collection App.Files.where parent:undefined
-      collection.each (model)->
-        model.set "selected", false
+
 
       App.overlayRegion.show new BrowseView
         collection: collection
 
       that = @
-      App.vent.once 'overlay:ok', ->
+      @listenTo App.vent, 'overlay:ok', ->
         files = collection.where selected:true
         $('.modal').modal('hide')
         return unless files.length
