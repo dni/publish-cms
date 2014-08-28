@@ -29,7 +29,7 @@ define({
             "bakerColorsetLoadingLabelColor": "Loading Label Color",
             "bakerColorsetLoadingSpinnerColor" :"Loading Spinner Color",
             "bakerColorsetProgressbarTintColor": "Progressbar Tint Color",
-            "download": "Download App",
+            "downloadApp": "Download App",
             "standalone": "Standalone App",
             "newsstand": "Newsstand App",
             "paid": "Newsstand App with paid subscriptions"

@@ -8,7 +8,7 @@ define({
         "title": "Titel",
         "details": "Artikel Details",
         "author": "Autor",
-        "defaultAuthor": "Standart Author",
+        "defaultAuthor": "Standard Author",
         "article": "Artikel",
         "category": "Kategorie",
         "categories": "Kategorien",
