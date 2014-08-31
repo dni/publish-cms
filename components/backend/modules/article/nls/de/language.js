@@ -13,7 +13,7 @@ define({
         "category": "Kategorie",
         "categories": "Kategorien",
         "tags": "Tags",
-        "desc": "Beschreibung",
+        "description": "Beschreibung",
         "teaser": "Einleitungstext",
         "categories": "Kategories",
         "magazine": "Magazin"

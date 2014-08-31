@@ -12,7 +12,7 @@ define({
       "categories": "Categories",
       "tags": "Tags",
       "layout": "Layout",
-      "desc": "Description",
+      "description": "Description",
       "magazine": "Magazine"
     },
     "emptyMessage": "The article does not exist anymore",

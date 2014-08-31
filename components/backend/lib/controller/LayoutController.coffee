@@ -2,7 +2,7 @@ define [
   'cs!App'
   'cs!lib/controller/Controller'
   'cs!lib/view/LayoutView'
-  'cs!lib/view/RelatedView'
+  'cs!lib/view/RelatedListView'
 ], ( App, Controller, LayoutView, RelatedView ) ->
   class LayoutController extends Controller
 
@@ -20,7 +20,7 @@ define [
       relatedViews = []
       for viewName, RelatedView of @RelatedViews
         relatedView = new RelatedView model:model
-        relatedViews.push relatedView
+        relatedViews.push view: relatedView, viewName: viewName
       new @RelatedView collection: new @Collection relatedViews
 
     newLayoutView:(model)->

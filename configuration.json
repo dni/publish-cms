@@ -1,4 +1,5 @@
 {
     "port": "2000",
-    "dbname": "publish"
+    "dbname": "publish",
+    "adminroute": "admin"
 }

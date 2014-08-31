@@ -42,7 +42,7 @@
       "type": "hidden",
       "mongooseType": "Object"
     },
-    "desc" : {
+   "description" : {
       "type": "wysiwyg",
       "mongooseType": "String"
     },

@@ -37,7 +37,6 @@ define [
         success: ->
 
   class RelatedPageView extends Marionette.CompositeView
-
     template: Template
     childView: RelatedPageChildView
     childViewContainer: ".page-list"

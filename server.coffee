@@ -42,11 +42,19 @@ app.configure ->
   app.use passport.session()
 
 #admin route
-app.get '/admin', auth, (req, res)->
+app.get '/'+config.adminroute,  auth, (req, res)->
   dir = '/components/backend/'
   dir = '/cache/build/backend/' if port is config.port
   app.use '/', express.static process.cwd()+dir
   res.sendfile process.cwd()+dir+'/index.html'
+
+#frontend route
+app.get '/', (req, res)->
+  dir = '/components/frontend/'
+  dir = '/cache/build/frontend/' if port is config.port
+  app.use '/', express.static process.cwd()+dir
+  res.sendfile process.cwd()+dir+'/index.html'
+
 
 
 # load/setup components
@@ -59,7 +67,7 @@ fs.readdir componentsDir, (err, files)->
         fs.exists componentsDir+file+'/server.coffee', (exists)->
           if exists
             component = require componentsDir+file+'/server.coffee'
-            component.setup app
+            component.setup app, config
 
 
 app.listen port
