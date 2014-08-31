@@ -13,7 +13,6 @@ define [
 
     initialize:(args)->
       @model = args.model
-      c.l @model
       @ui = {}
       @ui[key] = "[name="+key+"]" for key, arg of @model.get "fields"
       @bindUIElements()
@@ -69,4 +68,4 @@ define [
       Utils.Log @options.i18n.deleteModel, 'delete', text: @model.get '_id'
       @model.destroy
         success: ->
-          App.contentRegion.empty()
+      App.contentRegion.empty()

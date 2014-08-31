@@ -1,6 +1,7 @@
 define [
   'cs!App'
   'cs!Publish'
+  'cs!Router'
   'jquery'
   'cs!../view/ListView'
   'cs!../view/BrowseView'
@@ -8,7 +9,7 @@ define [
   'cs!../view/ShowFileView'
   'cs!../view/EditFileView'
   'cs!../view/PreviewView'
-], ( App, Publish, $, ListView, BrowseView, TopView, ShowFileView, EditFileView, PreviewView) ->
+], ( App, Publish, Router, $, ListView, BrowseView, TopView, ShowFileView, EditFileView, PreviewView) ->
 
   class FileController extends Publish.Controller.LayoutController
 
@@ -37,10 +38,9 @@ define [
       collection = new @Collection App.Files.where parent:undefined
       collection.each (model)->
         model.set "selected", false
-
       App.overlayRegion.show new BrowseView
         collection: collection
-
+      $('.modal').modal 'show'
       that = @
       App.vent.once 'overlay:ok', ->
         files = collection.where selected:true
@@ -53,7 +53,6 @@ define [
           fields.key.value = 'default'
 
           newfile = that.createNewModel()
-          newfile.set "name", that.Config.modelName
           newfile.set "fields", fields
 
           App.Files.create newfile,

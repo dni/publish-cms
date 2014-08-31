@@ -24,7 +24,7 @@ define [
       "click #files": "add"
 
     add:->
-      Router.navigate 'filebrowser/'+@model.get("_id"), {trigger:true}
+      Router.navigate 'filebrowser/'+@model.get("_id"), trigger:true
 
     initialize:(args)->
       @modelId = args['modelId']
