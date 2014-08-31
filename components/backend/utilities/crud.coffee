@@ -20,7 +20,6 @@ module.exports = (app, config)->
     Schema.find().limit(20).execFind (arr,data)-> res.send data
 
   app.put '/'+config.urlRoot+'/:id', auth, (req, res)->
-    return
     Schema.findById req.params.id, (e, schema)->
       app.emit config.moduleName+':before:put', req, res, schema
       schema.date = new Date()

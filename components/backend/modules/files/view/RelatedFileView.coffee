@@ -25,7 +25,7 @@ define [
       "click #files": "add"
 
     add:->
-      Router.navigate 'filebrowser/'+@model.get("_id"), {trigger:true}
+      Router.navigate 'filebrowser/'+@model.get("_id"), trigger:true
 
     initialize:(args)->
       @collection = new Publish.Collection App.Files.where "fields.parent.parent":undefined

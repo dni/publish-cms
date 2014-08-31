@@ -10,6 +10,7 @@ define [
     template: Template
 
     initialize:(args)->
+      @model = args.model
       @ui = {}
       @ui[key] = "[name="+key+"]" for key, arg of @model.get "fields"
       @bindUIElements()

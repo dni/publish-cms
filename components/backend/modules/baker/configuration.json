@@ -68,6 +68,10 @@
 		"shelfNavigationTitle" : {
 	      "value": "Baker Shelf",
 	      "type": "text"
+		},
+		"downloadApp" : {
+	      "value": "downloadApp",
+	      "type": "button"
 		}
   }
 }

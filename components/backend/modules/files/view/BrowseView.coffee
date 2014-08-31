@@ -17,7 +17,6 @@ define [
 
   class BrowseView extends Marionette.CollectionView
     childView: ItemView
-
     initialize: ->
       @listenTo App.Files, "sync", @sync
       @$el.prepend UploadTemplate
@@ -28,8 +27,8 @@ define [
     uploadFile: ->
       @$el.find("#uploadFile").ajaxForm (response) ->
       @$el.find("#uploadFile").submit()
-#
-    sync: =>
+
+    sync: ->
       files = App.Files.where parent:undefined
       files.forEach (model)->
         model.set 'selected', false

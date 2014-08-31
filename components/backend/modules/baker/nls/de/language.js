@@ -28,7 +28,7 @@ define({
 		"bakerColorsetLoadingLabelColor": "Loading Label Farbe",
 		"bakerColorsetLoadingSpinnerColor" :"Loading Spinner Farbe",
 		"bakerColorsetProgressbarTintColor": "Progressbar Tint Farbe",
-		"download": "App downloaden",
+		"downloadApp": "App downloaden",
 		"standalone": "Standalone App",
 		"newsstand": "Newsstand App",
 		"paid": "Newsstand App mit Bezahlung"

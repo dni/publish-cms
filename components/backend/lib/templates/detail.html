@@ -7,7 +7,11 @@
   <div class="form-group <% if (attribute.type === "hidden") { %>hidden<% } %>">
     <% if (attribute.condition) {cond = this[attribute.condition]();} else { cond = true; } %>
     <% if (cond) { %>
-      <label><%= t.attributes[key] %></label>
+      <%if (attribute.type === "button") { %>
+        <a target="_blank" class="form-control" href="<%= attribute.value %>" ><%= t.attributes[key] %></a>
+      <% } else { %>
+        <label><%= t.attributes[key] %></label>
+      <% } %>
       <% if (attribute.type === "text") { %>
       <input<% if (attribute.required) {%> required<% } %> type="text" name="<%= key %>" class="form-control" value="<%= attribute.value %>" />
       <% } %>
