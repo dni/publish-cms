@@ -1,52 +1,58 @@
 <h1><%= t.details %></h1>
 <div class="buttons-top">
-    <%= vhs.renderButtons %>
+  <%= vhs.renderButtons %>
 </div>
 <div class="form-fields">
-    <% foreachAttribute(fields, function(key, attribute){ %>
-    <div class="form-group <% if (attribute.type === "hidden") { %>hidden<% } %>">
-    	    <label><%= t.attributes[key] %></label>
+  <% foreachAttribute(fields, function(key, attribute){ %>
+  <div class="form-group <% if (attribute.type === "hidden") { %>hidden<% } %>">
+    <% if (attribute.condition) {cond = this[attribute.condition]();} else { cond = true; } %>
+    <% if (cond) { %>
+      <%if (attribute.type === "button") { %>
+        <a target="_blank" class="form-control" href="<%= attribute.value %>" ><%= t.attributes[key] %></a>
+      <% } else { %>
+        <label><%= t.attributes[key] %></label>
+      <% } %>
+      <% if (attribute.type === "text") { %>
+      <input<% if (attribute.required) {%> required<% } %> type="text" name="<%= key %>" class="form-control" value="<%= attribute.value %>" />
+      <% } %>
 
-            <% if (attribute.type === "text") { %>
-                <input type="text" name="<%= key %>" class="form-control" value="<%= attribute.value %>" />
-             <% } %>
+      <% if (attribute.type === "hidden") { %>
+      <input type="hidden" name="<%= key %>" class="form-control" value="<%= attribute.value %>" />
+      <% } %>
 
-            <% if (attribute.type === "hidden") { %>
-                <input type="hidden" name="<%= key %>" class="form-control" value="<%= attribute.value %>" />
-             <% } %>
+      <% if (attribute.type === "wysiwyg") { %>
+      <textarea name="<%= key %>" class="form-control wysiwyg"><%= attribute.value %></textarea>
+      <% } %>
 
-             <% if (attribute.type === "wysiwyg") { %>
-                <textarea name="<%= key %>" class="form-control wysiwyg"><%= attribute.value %></textarea>
-             <% } %>
+      <% if (attribute.type === "textarea") { %>
+      <textarea class="form-control" value="<%= attribute.value %>"  name="<%= key %>" ></textarea>
+      <% } %>
 
-             <% if (attribute.type === "textarea") { %>
-                <input type="text" class="form-control" value="<%= attribute.value %>"  name="<%= key %>" >
-             <% } %>
+      <% if (attribute.type === "checkbox") { %>
+      <input type="checkbox" class="form-control" value="<%= attribute.value %>" checked="<%= attribute.value %>" name="<%= key %>" >
+      <% } %>
 
-             <% if (attribute.type === "checkbox") { %>
-                <input type="checkbox" class="form-control" value="<%= attribute.value %>" checked="<%= attribute.value %>" name="<%= key %>" >
-             <% } %>
+      <% if (attribute.type === "range") { %>
+      <input type="range" class="form-control range" step="<%= attribute.step %>" min="<%= attribute.min %>" max="<%= attribute.max %>" name="<%= attribute.key %>" value="<%= attribute.value %>">
+      <% } %>
 
-            <% if (attribute.type === "range") { %>
-                <input type="range" class="form-control range" step="<%= attribute.step %>" min="<%= attribute.min %>" max="<%= attribute.max %>" name="<%= attribute.key %>" value="<%= attribute.value %>">
-            <% } %>
+      <% if (attribute.type === "color") { %>
+      <input type="text" class="form-control colorpicker" value="<%= attribute.value %>"  name="<%= key %>" >
+      <% } %>
 
-            <% if (attribute.type === "color") { %>
-                <input type="text" class="form-control colorpicker" value="<%= attribute.value %>"  name="<%= key %>" >
-            <% } %>
+      <% if (attribute.type=="select") { %>
+      <select class="form-control" name="<%= key %>" >
+        <% for (option in attribute.options) { %>
+        <% if (attribute.value == option) { %>
+        <option selected value="<%= option %>"><%= attribute.options[option] %></option>
+        <% } else { %>
+        <option value="<%= option %>"><%= attribute.options[option] %></option>
+        <% } %>
+        <% } %>
+      </select>
+      <% } %>
 
-            <% if (attribute.type=="select") { %>
-                <select class="form-control" name="<%= key %>" >
-                    <% for (option in attribute.options) { %>
-                        <% if (attribute.value == option) { %>
-                            <option selected value="<%= option %>"><%= attribute.options[option] %></option>
-                        <% } else { %>
-                            <option value="<%= option %>"><%= attribute.options[option] %></option>
-                        <% } %>
-                    <% } %>
-                </select>
-            <% } %>
-
-    	</div>
-    <% }); %>
+    <%}%>
+  </div>
+  <% }); %>
 </div>

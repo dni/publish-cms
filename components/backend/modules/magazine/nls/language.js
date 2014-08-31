@@ -24,8 +24,10 @@ define({
       "info": "Info",
       "impressum": "Impressum",
       "editorial": "Editorial",
+      "magazine": "Magazine",
       "papersize": "Select Papersize (Print)",
       "orientation": "Select Orientation (Print)",
+      "layout": "Layout"
     },
     "fileDescription": "Use 'cover' and 'back' templates keys",
     "newModel": "created new magazine",

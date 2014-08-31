@@ -3,7 +3,7 @@ backend_modules = require("./components/backend/configuration.json").backend_mod
 
 mongoose = require "mongoose"
 db = mongoose.connect 'mongodb://localhost/'+config.dbname
-Magazine = require __dirname+"/components/backend/modules/magazine/model/MagazineSchema"
+#Magazine = require __dirname+"/components/backend/modules/magazine/model/MagazineSchema"
 HpubGenerator = require __dirname + "/components/backend/modules/magazine/generators/HpubGenerator"
 fs = require "fs-extra"
 
@@ -24,7 +24,7 @@ module.exports = (grunt)->
         options:
           spawn: false
       magazine:
-        files: ['components/magazine/**/*']
+        files: ['components/magazine/**/*'],
         tasks: ['generateMagazine']
         options:
           spawn: false
@@ -246,23 +246,23 @@ module.exports = (grunt)->
 
 
   # generate Magazine
-  grunt.registerTask 'generateMagazine', 'generate hpub and print', ->
-    #remake all magazines and pages
-    child_process = require("child_process").spawn
-    spawn = child_process("rm", ["-r", 'books'], cwd: "./public/")
-    spawn.on "exit", (code) ->
-      if code isnt 0
-        console.log "remove Magazines  exited with code " + code
-      else
-        fs.mkdirSync "./public/books"
-        Magazine.find().execFind (err, data) ->
-          for d in data
-            fs.mkdirSync "./public/books/" + d.name
-            fs.copySync "./components/" + d.theme + "/magazine/gfx", "./public/books/" +  d.name + "/hpub/gfx"
-            fs.copySync "./components/" + d.theme + "/magazine/css", "./public/books/" +  d.name + "/hpub/css"
-            fs.copySync "./components/" + d.theme + "/magazine/js", "./public/books/" +  d.name + "/hpub/js"
-            fs.copySync "./components/" + d.theme + "/magazine/images", "./public/books/" +  d.name + "/hpub/images"
-            HpubGenerator.generate d
+  # grunt.registerTask 'generateMagazine', 'generate hpub and print', ->
+  #   #remake all magazines and pages
+  #   child_process = require("child_process").spawn
+  #   spawn = child_process("rm", ["-r", 'books'], cwd: "./public/")
+  #   spawn.on "exit", (code) ->
+  #     if code isnt 0
+  #       console.log "remove Magazines  exited with code " + code
+  #     else
+  #       fs.mkdirSync "./public/books"
+  #       Magazine.find().execFind (err, data) ->
+  #         for d in data
+  #           fs.mkdirSync "./public/books/" + d.name
+  #           fs.copySync "./components/" + d.theme + "/magazine/gfx", "./public/books/" +  d.name + "/hpub/gfx"
+  #           fs.copySync "./components/" + d.theme + "/magazine/css", "./public/books/" +  d.name + "/hpub/css"
+  #           fs.copySync "./components/" + d.theme + "/magazine/js", "./public/books/" +  d.name + "/hpub/js"
+  #           fs.copySync "./components/" + d.theme + "/magazine/images", "./public/books/" +  d.name + "/hpub/images"
+  #           HpubGenerator.generate d
 
   grunt.registerTask 'backupDatabase', 'backup the database', ->
     done = this.async()

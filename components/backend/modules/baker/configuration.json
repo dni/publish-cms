@@ -1,16 +1,14 @@
 {
-    "config": {
-        "name": "Baker",
-        "namespace": "baker"
-    },
+  "name": "BakerModule",
+  "moduleName": "BakerModule",
+  "modelName": "Baker",
+  "navigation": false,
 
-    "settings": {
-    	"fileView" : true,
-		"appid" : {
-	      "value": "org.publish.com.magazines",
-	      "type": "text"
-		},
-		"apptype" : {
+  "settings": {
+    "fileView" : true
+  },
+  "settings": {
+  	"apptype" : {
 	      "value": "standalone",
 	      "type": "select",
 	      "options": {
@@ -19,32 +17,10 @@
 	      	"paid": "Paid"
 	      }
 		},
-
-		"orientation" : {
-	      "type": "header"
+		"appid" : {
+	      "value": "org.publish.com.magazines",
+	      "type": "text"
 		},
-
-		"orPortrait" : {
-	      "value": true,
-	      "type": "checkbox"
-		},
-		"orUpsidedown" : {
-	      "value": true,
-	      "type": "checkbox"
-		},
-		"orLandscapeleft" : {
-	      "value": true,
-	      "type": "checkbox"
-		},
-		"orLandscaperight" : {
-	      "value": true,
-	      "type": "checkbox"
-		},
-
-		"uiconstants" : {
-	      "type": "header"
-		},
-
 		"bakerColorsetCoverBg" : {
 	      "value": "#ffffff",
 	      "type": "color"
@@ -93,9 +69,9 @@
 	      "value": "Baker Shelf",
 	      "type": "text"
 		},
-		"download" : {
-	      "type": "button",
-	      "event": "downloadApp"
+		"downloadApp" : {
+	      "value": "downloadApp",
+	      "type": "button"
 		}
-	}
+  }
 }

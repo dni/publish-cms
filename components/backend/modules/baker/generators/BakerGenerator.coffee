@@ -6,7 +6,7 @@ fs = require("fs-extra")
 Emitter = require("events").EventEmitter
 EE = new Emitter
 
-module.exports.download = (req, res) ->
+module.exports.download = (req, res, settings) ->
 
   EE.removeAllListeners "ready"
   tasks = ["icon", "build", "constants"]
@@ -22,7 +22,8 @@ module.exports.download = (req, res) ->
         if code is 0 then console.log "download app zip done" else console.log "download app zip exited with code " + code
         res.end()
 
-  Settings.findOne(name: "Baker").exec (error, setting) ->
+  Settings.findOne("fields.title.value": "BakerModule").exec (err, setting) ->
+    if err then console.log "setting:baker", err
 
     # delete dirty baker project
     spawn = require("child_process").spawn("rm", ["-rf", "-", "publish-baker"], cwd: process.cwd() + "/cache")
@@ -41,7 +42,7 @@ module.exports.download = (req, res) ->
         renderConstants setting, -> EE.emit "ready", "constants"
 
         # if standalone copy all hpubs into baker project
-        if setting.settings.apptype.value is "standalone"
+        if setting.fields.apptype.value is "standalone"
           files = fs.readdirSync("./public/books")
           for key of files
             file = files[key]

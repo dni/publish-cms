@@ -8,6 +8,7 @@
     "cs!modules/pages/PageModule",
     "cs!modules/static/StaticModule",
     "cs!modules/article/ArticleModule",
-    "cs!modules/magazine/MagazineModule"
+    "cs!modules/magazine/MagazineModule",
+    "cs!modules/baker/BakerModule"
   ]
 }

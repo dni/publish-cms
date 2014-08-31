@@ -33,6 +33,10 @@
       "type": "text",
       "mongooseType": "String"
     },
+  "name" : {
+      "type": "hidden",
+      "mongooseType": "String"
+    },
     "author" : {
       "type": "text",
       "mongooseType": "String"
@@ -68,12 +72,12 @@
     "orientation" : {
       "type": "select",
       "mongooseType": "String",
-      "condition": "isPrint()"
+      "condition": "isPrint"
     },
     "papersize" : {
       "type": "select",
       "mongooseType": "String",
-      "condition": "isPrint()"
+      "condition": "isPrint"
     },
     "layout" : {
       "type": "text",

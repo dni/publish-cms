@@ -6,9 +6,7 @@ define [
   'marionette'
   'tpl!lib/templates/detail.html'
 ], (App, Publish, Utils, Router, Marionette, Template) ->
-
   class DetailView extends Marionette.ItemView
-
     template: Template
 
     initialize:(args)->
@@ -66,6 +64,6 @@ define [
 
     deleteModel: ->
       Utils.Log @options.i18n.deleteModel, 'delete', text: @model.get '_id'
+      App.contentRegion.empty()
       @model.destroy
         success: ->
-      App.contentRegion.empty()

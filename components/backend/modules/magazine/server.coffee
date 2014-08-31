@@ -6,6 +6,22 @@ HpubGenerator = require(__dirname + "/generators/HpubGenerator")
 module.exports.setup = (app, config) ->
   Magazine = require("./../../lib/model/Schema")(config.dbTable)
 
+  app.on config.moduleName+":after:post", (req, res, model) ->
+    console.log(":after:post")
+    createMagazineFiles model
+
+  app.on config.moduleName+":after:put", (req, res, model)->
+    console.log(":after:put")
+    createMagazineFiles model
+
+  app.on config.moduleName+":before:put", (req, res, model)->
+    console.log(":before:put")
+    removeMagazine model.fields.name.value
+
+  app.on config.moduleName+":after:delete", (req, res, model)->
+    console.log(":after:delete")
+    removeMagazine model.fields.name.value
+
   app.get "/downloadPrint/:name", auth, PrintGenerator.download
   app.get "/downloadHpub/:id", auth, (req,res)->
     Magazine.findOne(_id: req.params.id).exec (err, magazine)->
@@ -21,19 +37,10 @@ module.exports.setup = (app, config) ->
           res.statusCode = 500
         res.end()
 
-  app.on config.moduleName+":after:post", auth, (req, res, model) ->
-    createMagazineFiles model
-
-  app.on config.moduleName+":after:put", (req, res, model)->
-    removeMagazine req.body.title, ->
-      createMagazineFiles model
-
-  app.on config.moduleName+":after:delete", (req, res, model)->
-    removeMagazine model.fields.title.value
-
 createMagazineFiles = (magazine) ->
-  folder = magazine.fields.title.value
-  theme = magazine.fields.theme.value
+  folder = magazine.getFieldValue "name"
+  #if folder.length<=0 then console.log "i do not allow empty name/title"; folder = "emptyName"
+  theme = magazine.fields.theme.value || "default"
   fs.mkdirSync "./public/books/" + folder
   fs.copySync "./components/magazine/" + theme + "/gfx", "./public/books/" + folder + "/hpub/gfx"
   fs.copySync "./components/magazine/" + theme + "/css", "./public/books/" + folder + "/hpub/css"
@@ -41,10 +48,11 @@ createMagazineFiles = (magazine) ->
   fs.copySync "./components/magazine/" + theme + "/images", "./public/books/" + folder + "/hpub/images"
   HpubGenerator.generate magazine
 
-removeMagazine = (dirname)->
+removeMagazine = (dirname, cb)->
+  console.log "removeMagazine"
   child_process = require("child_process").spawn
   spawn = child_process("rm", ["-r", dirname], cwd: "./public/books/")
   spawn.on "exit", (code) ->
     if code isnt 0
-      res.send a
+      #res.end()
       console.log "remove Magazine " + dirname + " exited with code " + code

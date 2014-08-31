@@ -3,9 +3,9 @@ define [
   'cs!Publish'
 ], (App, Publish ) ->
 
-  class ListView extends Publish.View.ListView
+  class FileListView extends Publish.View.ListView
     initialize: ->
-      App.Files.on "sync", @sync, @
+      @listenTo App.Files, "sync", @sync, @
 
     sync: ->
       files = App.Files.where "fields.parent.value":undefined

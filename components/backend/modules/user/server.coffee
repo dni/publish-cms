@@ -1,6 +1,7 @@
 Setting = require('./../../lib/model/Schema')("settings")
 express = require 'express'
 auth = require "../../utilities/auth"
+utils = require "../../utilities/utils"
 passport = require 'passport'
 
 module.exports.setup = (app, config)->
@@ -23,21 +24,13 @@ module.exports.setup = (app, config)->
   # create default admin user if no user exists
   User.count {}, (err, count)->
     if count == 0
-      admin = new User
-      admin.name = config.modelName
-      admin.fields =
-        email:
-          type:"text"
-          value:"admin@publish.org"
-        username:
-          type:"text"
-          value:"admin"
-        password:
-          type:"text"
-          value:"password"
-        title:
-          type:"text"
-          value:"administrator"
+      admin = utils.createModel User, config
+
+      admin.setFieldValue 
+        'email': "admin@publish.org"
+        'username': "admin"
+        'password': "password"
+        'title': "administrator"
 
       admin.save()
       console.log "admin user was created"

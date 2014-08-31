@@ -1,11 +1,9 @@
 define({
   "root": {
-    "langCode": "en",
     "attributes": {
       "title": "Title",
       "domain": "Base Url"
     },
-    "domain": "Domain",
     "development": "Development",
     "backend_development": "Backend in Development Mode",
     "frontend_development": "Frontend in Development Mode",

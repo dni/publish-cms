@@ -3,7 +3,7 @@ define [
   'jquery'
   'marionette'
   'tpl!../templates/browse-item.html'
-  'tpl!../templates/upload-file.html'
+  'tpl!../templates/upload.html'
 ], (App, $, Marionette, Template, UploadTemplate) ->
 
   class ItemView extends Marionette.ItemView
@@ -18,7 +18,7 @@ define [
   class BrowseView extends Marionette.CollectionView
     childView: ItemView
     initialize: ->
-      @collection.on "sync", @sync, @
+      @listenTo App.Files, "sync", @sync
       @$el.prepend UploadTemplate
 
     events:

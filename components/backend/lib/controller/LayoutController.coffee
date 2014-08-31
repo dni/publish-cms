@@ -7,10 +7,10 @@ define [
   class LayoutController extends Controller
 
     constructor: (args)->
-      unless @RelatedViews? then return c.l "no related Views, try to specify RelatedViews, or simply use the Standard Controller"
-      unless args.LayoutView? then @LayoutView = LayoutView
-      unless args.RelatedView? then @RelatedView = RelatedView
       super args
+      unless @RelatedViews? then return c.l "no related Views, try to specify RelatedViews, or simply use the Standard Controller"
+      unless @LayoutView? then @LayoutView = LayoutView
+      unless @RelatedView? then @RelatedView = RelatedView
 
     getContentView:(model)->
       model = @createNewModel() unless model?
@@ -20,7 +20,7 @@ define [
       relatedViews = []
       for viewName, RelatedView of @RelatedViews
         relatedView = new RelatedView model:model
-        relatedViews.push viewName:viewName, html: relatedView.render().el
+        relatedViews.push relatedView
       new @RelatedView collection: new @Collection relatedViews
 
     newLayoutView:(model)->
