@@ -8,7 +8,7 @@
     "urlRoot": "staticblocks",
     "dbTable": "staticblocks",
     "navigation": true,
-
+    "notpublishable": true,
     "model": {
         "title" : {
           "type": "text",

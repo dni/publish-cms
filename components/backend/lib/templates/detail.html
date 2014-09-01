@@ -1,7 +1,8 @@
 <h1><%= t.details %></h1>
 <div class="buttons-top">
-  <%= vhs.renderButtons %>
+  <%= vhs.renderButtons(notpublishable) %>
 </div>
+
 <div class="form-fields">
   <% foreachAttribute(fields, function(key, attribute){ %>
   <div class="form-group <% if (attribute.type === "hidden") { %>hidden<% } %>">

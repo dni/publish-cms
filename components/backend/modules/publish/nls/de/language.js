@@ -11,6 +11,8 @@ define({
 	"navigation": "Allgemein",
 	"save": "Speichern",
     "date": "Datum",
+    "publish": "Veröffentlichen",
+    "unpublish": "Unveröffentlichen",
     "dateformat": "%d.%m.%y %H:%m:%S",
     "sunday": "Sonntag",
     "monday": "Montag",

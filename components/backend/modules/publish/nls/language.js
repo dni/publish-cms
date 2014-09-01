@@ -10,6 +10,8 @@ define({
     "cancel": "Cancel",
     "deleteModel": "Delete",
     "save": "Save",
+    "publish": "Publish",
+    "unpublish": "Unpublish",
     "navigation": "General",
     "date": "Date",
     "dateformat": "%d.%m.%y %H:%m:%S",

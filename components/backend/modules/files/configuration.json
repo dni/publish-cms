@@ -7,6 +7,7 @@
     "url": "/files/",
     "urlRoot": "files",
     "dbTable": "files",
+    "notpublishable":true,
     "navigation": true,
     "navigationButton": "cloud-upload",
     "model": {

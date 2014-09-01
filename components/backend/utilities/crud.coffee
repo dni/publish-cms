@@ -9,6 +9,7 @@ module.exports = (app, config)->
     schema.user = app.user._id
     schema.crdate = new Date()
     schema.date = new Date()
+    schema.published = req.body.published
     schema.name = req.body.name
     schema.fields = req.body.fields
     schema.fieldorder = req.body.fieldorder
@@ -24,14 +25,13 @@ module.exports = (app, config)->
       app.emit config.moduleName+':before:put', req, res, schema
       schema.date = new Date()
       schema.fields = req.body.fields
+      schema.published = req.body.published
       schema.save ->
         app.emit config.moduleName+':after:put', req, res, schema
         res.send schema
 
-
   app.delete '/'+config.urlRoot+'/:id', auth, (req, res)->
     Schema.findById req.params.id, (e, schema)->
-      
       schema.remove ->
         app.emit config.moduleName+':after:delete', req, res, schema
         res.send 'deleted'

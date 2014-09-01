@@ -11,6 +11,7 @@ define [
 
     initialize:(args)->
       @model = args.model
+      @notpublishable = unless args.Config.notpublishable? then false else true
       @ui = {}
       @ui[key] = "[name="+key+"]" for key, arg of @model.get "fields"
       @bindUIElements()
@@ -23,6 +24,7 @@ define [
 
     templateHelpers: ->
       vhs: Utils.Viewhelpers
+      notpublishable: @notpublishable
       t: @options.i18n
       foreachAttribute: (fields, cb)->
         for key in @fieldorder
@@ -38,6 +40,11 @@ define [
       "click .save": "save"
       "click .cancel": "cancel"
       "click .delete": "deleteModel"
+      "click .publish": "togglePublish"
+
+    togglePublish: ->
+      # change text to 
+      @model.togglePublish()
 
     cancel: ->
       App.contentRegion.empty()

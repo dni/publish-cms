@@ -8,6 +8,7 @@ module.exports = (dbTable)->
     schema = new Schema
       sortorder: Number
       fieldorder: Array
+      published: Boolean
       user: String
       crdate: Date
       date: Date
@@ -15,7 +16,6 @@ module.exports = (dbTable)->
       fields: Object
 
     schema.methods.setFieldValue = (field, value)->
-      console.log field
       if _.isObject field
         for key, value of field
           @fields[key]?.value = value
@@ -23,7 +23,6 @@ module.exports = (dbTable)->
         @fields[field]?.value = value
 
     schema.methods.getFieldValue = (field)->
-      console.log field
       @fields[field].value
 
     collections[dbTable] = mongoose.model dbTable, schema

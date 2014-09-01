@@ -1,6 +1,6 @@
 define [
   'underscore'
-  'i18n!modules/publish/nls/language.js'
+  'i18n!modules/publish/nls/language'
   'text!lib/templates/buttons.html'
 ], (_, i18n, buttonTemplate) ->
 
@@ -9,5 +9,6 @@ define [
       if date not typeof Date then new Date(date)
       date.format()
 
-    renderButtons: _.template buttonTemplate, i18n
+    renderButtons: (notpublishable)->
+      _.template buttonTemplate, _.extend i18n, notpublishable: notpublishable
 

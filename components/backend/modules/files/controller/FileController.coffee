@@ -19,7 +19,7 @@ define [
     routes:
       "showfile/:id": "showfile"
       "editfile/:id": "editfile"
-      "filebrowser/:id": "filebrowser"
+      "browsefile/:id": "browsefile"
 
     showfile: (id) ->
       App.overlayRegion.show new ShowFileView
@@ -34,11 +34,10 @@ define [
       App.listRegion.show new ListView
         collection: new @Collection App.Files.where parent:undefined
 
-    filebrowser: (id)->
+    browsefile: (id)->
       collection = new @Collection App.Files.where parent:undefined
       collection.each (model)->
         model.set "selected", false
-
       App.overlayRegion.show new BrowseView
         collection: collection
       $('.modal').modal 'show'

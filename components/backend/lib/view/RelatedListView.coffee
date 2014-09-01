@@ -7,7 +7,8 @@ define [
     initialize:->
       @viewName = @model.get "viewName"
       @view = @model.get "view"
-      @listenTo @view.collection, 'sync', @render
+      if @view.collection?
+        @listenTo @view.collection, 'sync', @render
     render:->
       @$el.append @view.render().el
 

@@ -1,5 +1,11 @@
 <div class="buttons">
-	<button class="save btn btn-success"><%= save %></button>
+  <% if (!notpublishable) { %>
+    <button class="publish btn">
+      <span class="published"><%= publish %></span>
+      <span class="unpublished"><%= unpublish %></span>
+    </button>
+  <% } %>
+  <button class="save btn btn-success"><%= save %></button>
 	<button class="delete btn btn-danger"><%= deleteModel %></button>
 	<button class="cancel btn"><%= cancel %></button>
 </div>
