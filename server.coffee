@@ -52,7 +52,7 @@ app.get '/'+config.adminroute,  auth, (req, res)->
 app.get '/', (req, res)->
   dir = '/components/frontend/'
   dir = '/cache/build/frontend/' if port is config.port
-  app.use '/', express.static process.cwd()+dir
+  app.use '/frontend', express.static process.cwd()+dir
   res.sendfile process.cwd()+dir+'/index.html'
 
 

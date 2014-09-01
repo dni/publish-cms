@@ -28,10 +28,10 @@ define [
       Router.navigate 'filebrowser/'+@model.get("_id"), trigger:true
 
     initialize:(args)->
-      @collection = new Publish.Collection App.Files.where "fields.parent.parent":undefined
+      @collection = new Publish.Collection App.Files.where "fields.relation.value":@model.get "_id"
       @listenTo App.Files, "sync", @sync
 
     sync: =>
-      files = App.Files.where "fields.parent.value":undefined
+      files = App.Files.where "fields.relation.value": @model.get "_id"
       @collection.reset files
       @render()

@@ -150,29 +150,36 @@ module.exports = (grunt)->
           "style/jquery.minicolors.css": "jquery-minicolors/jquery.minicolors.css"
           "style/jquery.minicolors.png": "jquery-minicolors/jquery.minicolors.png"
 
-
-
       libsFrontend:
         options:
           destPrefix: "components/frontend/vendor"
         files:
           "jquery.js": "jquery/dist/jquery.js"
+          "fancybox.js": "fancybox/source/jquery.fancybox.js"
+          "io.js": "socket.io-client/dist/socket.io.js"
           "require.js": "requirejs/require.js"
+          "underscore.js": "underscore/underscore.js"
+          "wreqr.js": "backbone.wreqr/lib/backbone.wreqr.js"
+          "babysitter.js": "backbone.babysitter/lib/backbone.babysitter.js"
           "backbone.js": "backbone/backbone.js"
           "marionette.js": "marionette/lib/backbone.marionette.js"
-          "babysitter.js": "backbone.babysitter/lib/backbone.babysitter.js"
-          "wreqr.js": "backbone.wreqr/lib/backbone.wreqr.js"
-          "coffee-script.js": 'coffee-script/extras/coffee-script.js'
-          "underscore.js": 'underscore/underscore.js'
           "text.js": 'requirejs-text/text.js'
           "tpl.js": 'requirejs-tpl/tpl.js'
           "cs.js": 'require-cs/cs.js'
           "i18n.js": 'requirejs-i18n/i18n.js'
-          # Folders
-          "css": 'require-css'
-          "fancybox": "fancybox/source"
-          "bootstrap": "bootstrap"
-          "require-less": 'require-less'
+          "coffee-script.js": 'coffee-script/extras/coffee-script.js'
+          "bootstrap.js": "bootstrap/dist/js/bootstrap.js"
+          "less.js": "require-less/less.js"
+          "less-builder.js": "require-less/less-builder.js"
+          "css.js": "require-css/css.js"
+          "css-builder.js": "require-css/css-builder.js"
+          "normalize.js": "require-css/normalize.js"
+          "lessc.js": "require-less/lessc.js"
+          # style
+          "style": "bootstrap/less"
+          "style/boostrap.css": "bootstrap/dist/css/bootstrap.css"
+          "style/jquery.fancybox.css": "fancybox/source/jquery.fancybox.css"
+
 
       libsMagazine:
         options:
@@ -188,6 +195,27 @@ module.exports = (grunt)->
         expand: true
 
     requirejs:
+      frontend:
+        options:
+          appDir: 'components/frontend'
+          baseUrl: 'vendor'
+          fileExclusionRegExp: /^(server|spec)/
+          dir: "cache/build/frontend"
+          optimizeAllPluginResources: true,
+          findNestedDependencies: true,
+          stubModules: ['less', 'css', 'cs', 'coffee-script'],
+          modules: [{
+            name: 'config'
+            include: backend_modules
+            exclude: ['coffee-script', 'css', 'less']
+          }]
+          optimize : 'uglify2',
+          shim:
+            'jquery.fancybox':['jquery', 'fancybox']
+          paths:
+            config: '../config'
+            utilities: '../utilities'
+            modules: '../modules'
       backend:
         options:
           appDir: 'components/backend'
@@ -202,12 +230,10 @@ module.exports = (grunt)->
             include: backend_modules
             exclude: ['coffee-script', 'css', 'less']
           }]
-          # out : './components/backend/build.min.js'
           optimize : 'uglify2',
           shim:
             'jquery.tinymce':['jquery', 'tinymce']
           paths:
-            main: '../main'
             config: '../config'
             lib: '../lib'
             utilities: '../utilities'
