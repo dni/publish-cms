@@ -9,6 +9,6 @@ define [
       if date not typeof Date then new Date(date)
       date.format()
 
-    renderButtons: (notpublishable)->
-      _.template buttonTemplate, _.extend i18n, notpublishable: notpublishable
+    renderButtons: (notpublishable, published)->
+      _.template buttonTemplate, _.extend i18n, "notpublishable": notpublishable
 

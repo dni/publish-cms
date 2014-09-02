@@ -18,6 +18,7 @@ define [
       @on "render", @afterRender, @
 
     afterRender:->
+      @chPublishBtn()
       @$el.find('[data-toggle=tooltip]').tooltip
         placement: 'right'
         container: 'body'
@@ -45,6 +46,12 @@ define [
     togglePublish: ->
       # change text to 
       @model.togglePublish()
+      @chPublishBtn()
+
+    chPublishBtn: ->
+      @$el.find(".publish.btn span").hide()
+      if @model.get("published") is true then @$el.find("span.published").show()
+      else @$el.find("span.unpublished").show()
 
     cancel: ->
       App.contentRegion.empty()

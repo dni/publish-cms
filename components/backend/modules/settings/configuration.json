@@ -8,5 +8,6 @@
     "dbTable": "settings",
     "navigation": true,
     "navigationButton": "cog",
-    "model": true
+    "model": true,
+    "notpublishable": true
 }

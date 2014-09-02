@@ -72,12 +72,21 @@
     "orientation" : {
       "type": "select",
       "mongooseType": "String",
-      "condition": "isPrint"
+      "condition": "isPrint",
+      "options": {
+        "landscape": "Landscape",
+        "portrait": "Portrait"
+      }
     },
     "papersize" : {
       "type": "select",
       "mongooseType": "String",
-      "condition": "isPrint"
+      "condition": "isPrint",
+      "options": {
+        "A4": "A4",
+        "A5": "A5",
+        "A6": "A6"
+      }
     },
     "layout" : {
       "type": "text",
