@@ -11,7 +11,9 @@ require.config({
 
 require([
   'backbone',
+  'jquery',
   'cs!modules/blog/BlogModule'
-], function(Backbone){
+], function(Backbone, $){
   Backbone.history.start();
+  $(document).off('.data-api');
 });

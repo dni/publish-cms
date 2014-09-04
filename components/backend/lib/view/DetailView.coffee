@@ -17,8 +17,9 @@ define [
       @bindUIElements()
       @on "render", @afterRender, @
 
+
     afterRender:->
-      @chPublishBtn()
+      @changePublishButton()
       @$el.find('[data-toggle=tooltip]').tooltip
         placement: 'right'
         container: 'body'
@@ -41,17 +42,22 @@ define [
       "click .save": "save"
       "click .cancel": "cancel"
       "click .delete": "deleteModel"
-      "click .publish": "togglePublish"
+      "click .publish-btn": "togglePublish"
 
     togglePublish: ->
-      # change text to 
       @model.togglePublish()
-      @chPublishBtn()
+      @save()
+      @changePublishButton()
 
-    chPublishBtn: ->
-      @$el.find(".publish.btn span").hide()
-      if @model.get("published") is true then @$el.find("span.published").show()
-      else @$el.find("span.unpublished").show()
+    changePublishButton:->
+      button = @$el.find ".publish-btn"
+      button.find("span").hide()
+      if @model.get("published") is true
+        button.find("span.unpublish").show()
+        button.removeClass "btn-success"
+      else
+        button.find("span.publish").show()
+        button.addClass "btn-success"
 
     cancel: ->
       App.contentRegion.empty()

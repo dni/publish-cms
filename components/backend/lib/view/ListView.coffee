@@ -6,7 +6,7 @@ define [
   class ListItemView extends Marionette.ItemView
     template: Template
     initialize: ->
-      @model.on 'change', @render, @
+      @listenTo @model, 'change', @render
 
   class ListView extends Marionette.CollectionView
    childView: ListItemView

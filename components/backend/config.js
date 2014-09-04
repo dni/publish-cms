@@ -16,8 +16,8 @@ require.config({
     'minicolors':['jquery'],
   }
 });
-require(['text!../configuration.json', 'backbone'], function(configJSON, Backbone){
-
+require(['text!../configuration.json', 'backbone', 'jquery'], function(configJSON, Backbone, $){
+    $(document).off('.data-api');
     setTimeout(function(){
       Backbone.history.start();
     }, 3000);

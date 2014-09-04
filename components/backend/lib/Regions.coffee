@@ -7,21 +7,19 @@ define [
   'bootstrap'
 ], (App, i18n, $, tinymce, minicolors, bootstrap) ->
 
-
   App.addRegions
     navigationRegion:"#navigation"
     contentRegion:"#content"
     infoRegion:"#info"
-    overlayRegion: ".modal-body"
+    overlayRegion: "#overlay"
     listTopRegion: "#list-top"
     listRegion:"#list"
+
+
 
   # close detailview if now listview is shown
   App.listRegion.on "show", ->
     if App.contentRegion.currentView? then App.contentRegion.currentView.destroy()
-
-  App.contentRegion.on "close", ->
-    clearInterval()
 
   App.contentRegion.on "show", ->
     # colorpicker

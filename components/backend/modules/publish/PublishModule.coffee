@@ -13,6 +13,9 @@ define [
   # show navigation
   App.navigationRegion.show new NavigationView collection: NavigationItems
 
+  # overlay view
+  App.overlayRegion.show new Publish.View.OverlayView
+
   App.vent.on "publish:addNavItem", (config, i18n)->
     config.label = i18n.navigation if i18n
     NavigationItems.add new NavigationItem config

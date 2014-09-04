@@ -6,7 +6,8 @@ define [
   'marionette'
   'tpl!../templates/related.html'
   'tpl!../templates/related-item.html'
-], (App, Publish, Router, i18n, Marionette, Template, ItemTemplate) ->
+  'cs!./BrowseView'
+], (App, Publish, Router, i18n, Marionette, Template, ItemTemplate, BrowseView) ->
 
   class ItemView extends Marionette.ItemView
     template: ItemTemplate
@@ -25,13 +26,22 @@ define [
       "click #files": "add"
 
     add:->
-      Router.navigate 'filebrowser/'+@model.get("_id"), trigger:true
+      collection = new Publish.Collection App.Files.where parent:undefined
+      collection.each (model)->
+        model.set "selected", false
+      App.overlayRegion.currentView.childRegion.show new BrowseView
+        model: @model
+        collection: collection
 
     initialize:(args)->
-      @collection = new Publish.Collection App.Files.where "fields.relation.value":@model.get "_id"
+      @collection = new Publish.Collection
+      files = App.Files.filter (file)=>
+        return file.attributes.fields.relation.value == @model.get "_id"
+      @collection.reset files
       @listenTo App.Files, "sync", @sync
 
-    sync: =>
-      files = App.Files.where "fields.relation.value": @model.get "_id"
+    sync: ->
+      files = App.Files.filter (file)=>
+        return file.attributes.fields.relation.value == @model.get "_id"
       @collection.reset files
       @render()

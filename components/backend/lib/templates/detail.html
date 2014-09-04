@@ -37,6 +37,10 @@
       <input type="range" class="form-control range" step="<%= attribute.step %>" min="<%= attribute.min %>" max="<%= attribute.max %>" name="<%= attribute.key %>" value="<%= attribute.value %>">
       <% } %>
 
+      <% if (attribute.type === "file") { %>
+        renderRelatedFileView(attribute);
+      <% } %>
+
       <% if (attribute.type === "color") { %>
       <input type="text" class="form-control colorpicker" value="<%= attribute.value %>"  name="<%= key %>" >
       <% } %>
@@ -44,11 +48,11 @@
       <% if (attribute.type=="select") { %>
       <select class="form-control" name="<%= key %>" >
         <% for (option in attribute.options) { %>
-        <% if (attribute.value == option) { %>
-        <option selected value="<%= option %>"><%= attribute.options[option] %></option>
-        <% } else { %>
-        <option value="<%= option %>"><%= attribute.options[option] %></option>
-        <% } %>
+          <% if (attribute.value == option) { %>
+            <option selected value="<%= option %>"><%= attribute.options[option] %></option>
+          <% } else { %>
+            <option value="<%= option %>"><%= attribute.options[option] %></option>
+          <% } %>
         <% } %>
       </select>
       <% } %>

@@ -67,14 +67,13 @@ module.exports.setup = (app, cfg)->
 
   #create new copy of the file
   app.on cfg.moduleName+":after:post", (req, res, file) ->
-    console.log req.body
-    oldFileName = file.fields.title.value
+    oldFileName = file.getFieldValue "title"
     newFileName = 'new_'+Date.now()+oldFileName
     fs.writeFileSync dir+newFileName, fs.readFileSync dir+oldFileName
 
+    file.setFieldValue 'title', newFileName
 
-
-    if file.fields.type.value.split("/")[0] is "image"
+    if file.getFieldValue('type').split("/")[0] is "image"
       Setting.findOne("fields.title.value": cfg.moduleName).exec (err, setting) ->
         moduleSetting = setting
         createImages file, req
@@ -89,7 +88,7 @@ module.exports.setup = (app, cfg)->
       fs.unlink "./public/files/"+file.fields[type].value
 
   createImages = (file, req) ->
-    filename = file.fields.title.value
+    filename = file.getFieldValue "title"
     portrait = false
     types = ["thumbnail","smallPic","bigPic"]
     image = gm(dir+filename).size (err, size) ->
@@ -97,8 +96,8 @@ module.exports.setup = (app, cfg)->
       portrait = true if size.width < size.height
       addFile = (type, cb)->
         maxSize = moduleSetting.fields[type].value
-        targetName = filename.replace '.', type+'.'
-        file.fields[type].value = targetName
+        targetName = filename.replace '.', '_'+type+'.'
+        file.setFieldValue type, targetName
         image.quality parseInt(moduleSetting.fields.quality.value)
         if portrait then image.resize null, maxSize
         else image.resize maxSize

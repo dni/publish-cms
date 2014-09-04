@@ -19,7 +19,6 @@ define [
     routes:
       "showfile/:id": "showfile"
       "editfile/:id": "editfile"
-      "browsefile/:id": "browsefile"
 
     showfile: (id) ->
       App.overlayRegion.show new ShowFileView
@@ -31,26 +30,10 @@ define [
 
     list: ->
       App.listTopRegion.show new TopView
+      @collection = new Publish.Collection
+      files = App.Files.filter (file)=>
+        return file.attributes.fields.parent.value?
+      @collection.reset files
+      @listenTo App.Files, "sync", @sync
       App.listRegion.show new ListView
-        collection: new @Collection App.Files.where parent:undefined
-
-    browsefile: (id)->
-      collection = new @Collection App.Files.where parent:undefined
-      collection.each (model)->
-        model.set "selected", false
-      App.overlayRegion.show new BrowseView
-        collection: collection
-      $('.modal').modal 'show'
-      that = @
-      @listenTo App.vent, 'overlay:ok', ->
-        files = collection.where selected:true
-        $('.modal').modal('hide')
-        return unless files.length
-        files.forEach (file)->
-          fields = file.get "fields"
-          fields.parent.value = file.get "_id"
-          fields.relation.value = id
-          fields.key.value = "default"
-          newfile = that.createNewModel()
-          newfile.set "fields", fields
-          App.Files.create newfile
+        collection: @collection

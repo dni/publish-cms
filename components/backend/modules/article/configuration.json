@@ -31,7 +31,8 @@
       "mongooseType": "String"
     },
     "category" : {
-      "type": "text",
+      "type": "select",
+      "setting": "categories",
       "mongooseType": "String"
     },
     "tags" : {
