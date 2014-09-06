@@ -1,22 +1,24 @@
 define [
   'cs!App'
   'cs!Publish'
+  'cs!lib/model/Collection'
   'cs!Utils'
   'cs!Router'
   'marionette'
   'tpl!lib/templates/detail.html'
-], (App, Publish, Utils, Router, Marionette, Template) ->
+  'cs!modules/files/view/RelatedFileView'
+], (App, Publish, Collection, Utils, Router, Marionette, Template, RelatedFileView) ->
   class DetailView extends Marionette.ItemView
     template: Template
 
     initialize:(args)->
       @model = args.model
+      @checkRelatedViews()
       @notpublishable = unless args.Config.notpublishable? then false else true
       @ui = {}
       @ui[key] = "[name="+key+"]" for key, arg of @model.get "fields"
       @bindUIElements()
       @on "render", @afterRender, @
-
 
     afterRender:->
       @changePublishButton()
@@ -26,6 +28,7 @@ define [
 
     templateHelpers: ->
       vhs: Utils.Viewhelpers
+      RelatedViews: @RelatedViews
       notpublishable: @notpublishable
       t: @options.i18n
       foreachAttribute: (fields, cb)->
@@ -37,6 +40,19 @@ define [
       for key, field of fields
         field.value = @ui[key].val()
       return fields
+
+    checkRelatedViews: ->
+      fields = @model.get "fields"
+      @RelatedViews = {}
+      for key, field of fields
+        if field.type is "file"
+          RelatedView = new RelatedFileView
+            model: @model
+            collection : new Collection
+            multiple: field.multiple
+          RelatedView.render()
+          @on "close", => RelatedView.destroy()
+          @RelatedViews[key] = RelatedView.el.outerHTML
 
     events:
       "click .save": "save"

@@ -19,7 +19,7 @@ define [
     newRelatedView:(model)->
       relatedViews = []
       for viewName, RelatedView of @RelatedViews
-        relatedView = new RelatedView model:model
+        relatedView = new RelatedView model:model, collection: new @Collection
         relatedViews.push view: relatedView, viewName: viewName
       new @RelatedView collection: new @Collection relatedViews
 

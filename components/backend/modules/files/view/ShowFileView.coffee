@@ -5,31 +5,28 @@ define [
 ], ($, Marionette, Template) ->
 
   class ShowFileView extends Marionette.ItemView
-
     template: Template
-
     ui:
-      name: 'input[name=name]'
+      title: 'input[name=title]'
       info: 'textarea[name=info]'
-      desc: 'textarea[name=desc]'
+      description: 'textarea[name=description]'
       key: 'input[name=key]'
       alt: 'input[name=alt]'
 
     events:
       "click .deleteFile": "deleteFile"
       "click .editFile": "editFile"
-      "blur .form-control": "save"
 
     deleteFile: ->
       $('.modal').modal('hide')
       @model.destroy
         success:->
 
-    save: ->
+    ok: ->
       @model.set
-        name: @ui.name.val()
+        title: @ui.title.val()
         info: @ui.info.val()
         alt: @ui.alt.val()
-        desc: @ui.desc.val()
+        description: @ui.description.val()
         key: @ui.key.val()
       @model.save()

@@ -26,11 +26,11 @@ define [
       "click .cancel": "cancel"
 
     ok:->
-      @childRegion.currentView?.ok()
+      @childRegion.currentView?.ok?()
       @childRegion.empty()
       $(".modal").modal "hide"
 
     cancel:->
-      @childRegion.currentView?.cancel()
+      @childRegion.currentView?.cancel?()
       @childRegion.empty()
       $(".modal").modal "hide"

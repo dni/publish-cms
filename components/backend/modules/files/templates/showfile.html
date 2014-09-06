@@ -2,34 +2,34 @@
 	<div class="col-md-6">
 		<div class="form-group">
 		    <label>Name</label>
-		    <input type="text" name="name" class="form-control" value="<%= name %>" />
+		    <input type="text" name="title" class="form-control" value="<%= fields.title.value %>" />
 		</div>
 		<div class="form-group">
-		    <label>Template Key</label>
-		    <input type="text" name="key" class="form-control" value="<%= key %>" />
+		    <label>Name</label>
+		    <input type="text" name="key" class="form-control" value="<%= fields.key.value %>" />
 		</div>
 		<div class="form-group">
 		    <label>Info</label>
-		    <textarea class="form-control" name="info"><%= info %></textarea>
+		    <textarea class="form-control" name="info"><%= fields.info.value %></textarea>
 		</div>
 		<div class="form-group">
 		    <label>Description</label>
-		    <textarea class="form-control" name="desc"><%= desc %></textarea>
+		    <textarea class="form-control" name="desc"><%= fields.desc.value %></textarea>
 		</div>
 		<div class="form-group">
 		    <label>Alt</label>
-		    <input class="form-control" type="text" name="alt" value="<%= alt %>" />
+		    <input class="form-control" type="text" name="alt" value="<%= fields.alt.value %>" />
 		</div>
 
 	</div>
 	<div class="col-md-6">
-		<% if(type.split("/")[0]=="image") { %>
-			<img src="./public/files/<%= smallPic %>" alt="<%= name %>" />
+		<% if(fields.type.value.split("/")[0]=="image") { %>
+			<img src="./public/files/<%= fields.smallPic.value %>" alt="<%= fields.title.value %>" />
 		<% } else { %>
-			<p width="100"><%= name %><p>
+			<p width="100"><%= fields.title.value %><p>
 		<% } %>
-		<p><%= type %></p>
+		<p><%= fields.type.value %></p>
 	</div>
 </div>
-<a href="#editfile/<%= _id %>" class="btn btn-primary">Edit</a>
+<button class="editFile btn btn-primary">Edit</button>
 <button class="deleteFile btn btn-danger">Delete</button>

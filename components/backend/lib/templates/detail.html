@@ -38,7 +38,7 @@
       <% } %>
 
       <% if (attribute.type === "file") { %>
-        renderRelatedFileView(attribute);
+      <%= RelatedViews[key] %>
       <% } %>
 
       <% if (attribute.type === "color") { %>

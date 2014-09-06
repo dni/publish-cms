@@ -1,11 +1,12 @@
 define [
   'cs!App'
   'cs!Publish'
+  'cs!lib/model/Model'
   'jquery'
   'marionette'
   'tpl!../templates/browse-item.html'
   'tpl!../templates/upload.html'
-], (App, Publish,$, Marionette, Template, UploadTemplate) ->
+], (App, Publish, Model, $, Marionette, Template, UploadTemplate) ->
 
   class ItemView extends Marionette.ItemView
     template: Template
@@ -35,8 +36,6 @@ define [
       @render()
 
     cancel:->
-      @files.forEach (file)->
-        file.set 'selected', false
 
     ok:->
       files = @collection.where selected:true
@@ -48,7 +47,8 @@ define [
         attributes.fields.relation.value = that.model.get "_id"
         attributes.fields.key.value = "default"
         delete attributes._id
-        newfile = new Publish.Model
+        newfile = new Model
         newfile.urlRoot = file.urlRoot
         newfile.attributes = attributes
+        file.set "selected", false
         App.Files.create newfile

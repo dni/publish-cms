@@ -3,10 +3,6 @@
   "moduleName": "BakerModule",
   "modelName": "Baker",
   "navigation": false,
-
-  "settings": {
-    "fileView" : true
-  },
   "settings": {
   	"apptype" : {
 	      "value": "standalone",
@@ -16,6 +12,9 @@
 	      	"newsstand": "Newsstand",
 	      	"paid": "Paid"
 	      }
+		},
+		"cover" : {
+	      "type": "file"
 		},
 		"appid" : {
 	      "value": "org.publish.com.magazines",
