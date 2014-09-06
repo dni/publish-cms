@@ -20,7 +20,7 @@ require(['text!../configuration.json', 'backbone', 'jquery'], function(configJSO
     $(document).off('.data-api');
     setTimeout(function(){
       Backbone.history.start();
-    }, 5000);
+    }, 2000);
 
     var config = JSON.parse(configJSON);
     require(config.backend_modules, function(){

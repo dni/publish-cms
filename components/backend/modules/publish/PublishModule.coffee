@@ -6,7 +6,8 @@ define [
   'cs!./model/NavigationItem'
   'cs!./model/NavigationItems'
   'cs!./view/NavigationView'
-  "less!lib/style/main"
+  "css!lib/style/main"
+  # "less!lib/style/main"
 ],
 ( App, Publish, i18n, Config, NavigationItem, NavigationItems, NavigationView)->
 
