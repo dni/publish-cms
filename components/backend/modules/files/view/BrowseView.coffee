@@ -42,9 +42,9 @@ define [
         newfile.urlRoot = @Config.urlRoot
         newfile.collectionName = @Config.collectionName
         newfile.set _.clone file.attributes
+        delete newfile.attributes._id
         newfile.setValue 'parent', file.get "_id"
         newfile.setValue 'relation', @model.get "_id"
         newfile.setValue 'fieldrelation', @fieldrelation
         newfile.setValue 'key', 'default'
-        c.l App.Files
         App.Files.create newfile
