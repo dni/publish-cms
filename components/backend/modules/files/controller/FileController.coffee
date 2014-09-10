@@ -13,8 +13,12 @@ define [
 
   class FileController extends Publish.Controller.LayoutController
 
+    TopView: TopView
     RelatedViews:
       preview: PreviewView
+
+    filterFunction: (file)->
+      file.getValue('parent')?
 
     routes:
       "showfile/:id": "showfile"
@@ -27,13 +31,3 @@ define [
     editfile: (id) ->
       App.overlayRegion.show new EditFileView
         model: App.Files.findWhere _id: id
-
-    list: ->
-      App.listTopRegion.show new TopView
-      @collection = new Publish.Collection
-      files = App.Files.filter (file)=>
-        return file.attributes.fields.parent.value?
-      @collection.reset files
-      @listenTo App.Files, "sync", @sync
-      App.listRegion.show new ListView
-        collection: @collection

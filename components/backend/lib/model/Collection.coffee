@@ -1,7 +1,8 @@
 define [
   "backbone"
   "underscore"
-], (Backbone, _) ->
+  "cs!./Model"
+], (Backbone, _, Model) ->
   class Collection extends Backbone.Collection
     findSetting:(moduleName)->
       arr = _.filter @.models, (model)->

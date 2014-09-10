@@ -1,5 +1,11 @@
-<h2><%= t.headline %></h2>
+<% if (!field) { %>
+  <h2><%= t.headline %></h2>
+<% } %>
 <div class="file-list sortable"></div>
 <a id="files" class="btn btn-primary">
-	<i class="glyphicon glyphicon-plus"></i> <%= t.addFiles %>
+  <% if (!field) { %>
+      <i class="glyphicon glyphicon-plus"></i> <%= t.addFiles %>
+    <% } else { %>
+      <i class="glyphicon glyphicon-plus"></i> <%= t.addFile %>
+    <% } %>
 </a>

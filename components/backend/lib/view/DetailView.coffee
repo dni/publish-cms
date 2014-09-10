@@ -10,10 +10,8 @@ define [
 ], (App, Publish, Collection, Utils, Router, Marionette, Template, RelatedFileView) ->
   class DetailView extends Marionette.ItemView
     template: Template
-
     initialize:(args)->
       @model = args.model
-      @checkRelatedViews()
       @notpublishable = unless args.Config.notpublishable? then false else true
       @ui = {}
       @ui[key] = "[name="+key+"]" for key, arg of @model.get "fields"
@@ -22,13 +20,13 @@ define [
 
     afterRender:->
       @changePublishButton()
+      @renderRelatedViews()
       @$el.find('[data-toggle=tooltip]').tooltip
         placement: 'right'
         container: 'body'
 
     templateHelpers: ->
       vhs: Utils.Viewhelpers
-      RelatedViews: @RelatedViews
       notpublishable: @notpublishable
       t: @options.i18n
       foreachAttribute: (fields, cb)->
@@ -41,18 +39,19 @@ define [
         field.value = @ui[key].val()
       return fields
 
-    checkRelatedViews: ->
+    renderRelatedViews: ->
       fields = @model.get "fields"
       @RelatedViews = {}
       for key, field of fields
         if field.type is "file"
-          RelatedView = new RelatedFileView
+          @RelatedViews[key] = new RelatedFileView
             model: @model
+            field: key
             collection : new Collection
             multiple: field.multiple
-          RelatedView.render()
-          @on "close", => RelatedView.destroy()
-          @RelatedViews[key] = RelatedView.el.outerHTML
+          @RelatedViews[key].render()
+          @on "close", => @RelatedViews[key].destroy()
+          @$el.find('#'+key).append @RelatedViews[key].el
 
     events:
       "click .save": "save"

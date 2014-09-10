@@ -13,7 +13,7 @@
 	      	"paid": "Paid"
 	      }
 		},
-		"cover" : {
+		"icon" : {
 	      "type": "file"
 		},
 		"appid" : {

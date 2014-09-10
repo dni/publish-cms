@@ -13,7 +13,7 @@ define [
       @set "fields", fields
 
     getValue: (fieldname)->
-      fields = @.get "fields"
+      fields = @get "fields"
       return fields[fieldname].value
 
     togglePublish: ->

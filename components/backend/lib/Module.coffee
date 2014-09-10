@@ -22,7 +22,6 @@ define [
       # collection
       if @Config.collectionName
         App[@Config.collectionName] = new @Controller.Collection
-
         App[@Config.collectionName].model = @Controller.Model
         App[@Config.collectionName].url = @Config.url
         App[@Config.collectionName].fetch

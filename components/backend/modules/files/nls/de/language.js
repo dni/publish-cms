@@ -1,7 +1,8 @@
 define({
   "previewview": "Files",
   "description": "add and edit files",
-  "addFiles": "Add files...",
+  "addFiles": "Dateien hinzufügen...",
+  "addFile": "Datei hinzufügen...",
   "headline": "Files",
   "navigation": "Files",
   "emptyMessage": "The file does not exist anymore",

@@ -26,7 +26,7 @@
       <% } %>
 
       <% if (attribute.type === "textarea") { %>
-      <textarea class="form-control" value="<%= attribute.value %>"  name="<%= key %>" ></textarea>
+      <textarea class="form-control" rows="4" value="<%= attribute.value %>"  name="<%= key %>" ></textarea>
       <% } %>
 
       <% if (attribute.type === "checkbox") { %>
@@ -38,7 +38,7 @@
       <% } %>
 
       <% if (attribute.type === "file") { %>
-      <%= RelatedViews[key] %>
+      <div id="<%= key %>" class="related-file-container"></div>
       <% } %>
 
       <% if (attribute.type === "color") { %>

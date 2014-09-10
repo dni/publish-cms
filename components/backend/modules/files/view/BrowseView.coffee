@@ -1,12 +1,15 @@
 define [
   'cs!App'
   'cs!Publish'
+  'text!../configuration.json'
+  'cs!utilities/Utilities'
   'cs!lib/model/Model'
   'jquery'
+  'underscore'
   'marionette'
   'tpl!../templates/browse-item.html'
   'tpl!../templates/upload.html'
-], (App, Publish, Model, $, Marionette, Template, UploadTemplate) ->
+], (App, Publish, Config, Utilities, Model, $, _, Marionette, Template, UploadTemplate) ->
 
   class ItemView extends Marionette.ItemView
     template: Template
@@ -18,7 +21,11 @@ define [
     childView: ItemView
     initialize: (args)->
       @model = args.model
-      @listenTo App.Files, "sync", @sync
+      @Config = JSON.parse Config
+      @fieldrelation = args.fieldrelation
+      @collection = Utilities.FilteredCollection App.Files
+      @collection.filter (file)->
+        !file.getValue('parent')?
       @$el.prepend UploadTemplate
 
     events:
@@ -28,27 +35,16 @@ define [
       @$el.find("#uploadFile").ajaxForm (response) ->
       @$el.find("#uploadFile").submit()
 
-    sync: ->
-      @files = App.Files.where parent:undefined
-      @files.forEach (model)->
-        model.set 'selected', false
-      @collection.reset @files
-      @render()
-
-    cancel:->
-
     ok:->
-      files = @collection.where selected:true
-      return unless files.length
-      that = @
-      files.forEach (file)->
-        attributes = file.attributes
-        attributes.fields.parent.value = file.get "_id"
-        attributes.fields.relation.value = that.model.get "_id"
-        attributes.fields.key.value = "default"
-        delete attributes._id
+      @collection.forEach (file)=>
+        return if file.get "selected" is false
         newfile = new Model
-        newfile.urlRoot = file.urlRoot
-        newfile.attributes = attributes
-        file.set "selected", false
+        newfile.urlRoot = @Config.urlRoot
+        newfile.collectionName = @Config.collectionName
+        newfile.set _.clone file.attributes
+        newfile.setValue 'parent', file.get "_id"
+        newfile.setValue 'relation', @model.get "_id"
+        newfile.setValue 'fieldrelation', @fieldrelation
+        newfile.setValue 'key', 'default'
+        c.l App.Files
         App.Files.create newfile

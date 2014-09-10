@@ -30,12 +30,9 @@ module.exports.setup = (app, cfg)->
             createImages file, req
     else
       title = file.fields.title.value
-      link = file.fields.link.value
       if title != link
         fs.renameSync dir+link, dir+title
-        file.fields.link.value = title
       file.save ->
-        console.log file
         req.io.broadcast 'updateCollection', cfg.collectionName
 
 
@@ -70,22 +67,23 @@ module.exports.setup = (app, cfg)->
     oldFileName = file.getFieldValue "title"
     newFileName = 'new_'+Date.now()+oldFileName
     fs.writeFileSync dir+newFileName, fs.readFileSync dir+oldFileName
-
     file.setFieldValue 'title', newFileName
-
-    if file.getFieldValue('type').split("/")[0] is "image"
-      Setting.findOne("fields.title.value": cfg.moduleName).exec (err, setting) ->
-        moduleSetting = setting
-        createImages file, req
-    else
-      file.save ->
-        req.io.broadcast "updateCollection", "Files"
+    copyImages file
+    file.save ->
+      req.io.broadcast "updateCollection", "Files"
 
   # clean up files after model is deleted
   app.on cfg.moduleName+':after:delete', (req, res, file)->
     types = ["thumbnail", "smallPic", "bigPic", "title"]
     for type in types
       fs.unlink "./public/files/"+file.fields[type].value
+
+  copyImages = (file)->
+    for type in types
+      newName = file.getFieldValue type
+      newName = newName.replace '\$.', '_copy_'+Date.now()+'.'
+      fs.writeFileSync dir+newName, fs.readFileSync dir+file.getFieldValue type
+      file.setFieldValue type, newName
 
   createImages = (file, req) ->
     filename = file.getFieldValue "title"

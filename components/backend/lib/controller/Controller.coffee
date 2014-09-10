@@ -1,5 +1,6 @@
 define [
   'cs!App'
+  'cs!utilities/Utilities'
   'marionette'
   "cs!../model/Model"
   "cs!../model/Collection"
@@ -8,7 +9,7 @@ define [
   "cs!../view/ListView"
   "cs!../view/DetailView"
 
-], ( App, Marionette, Model, Collection, EmptyView, TopView, ListView, DetailView) ->
+], ( App, Utilities, Marionette, Model, Collection, EmptyView, TopView, ListView, DetailView) ->
   class Controller extends Marionette.Controller
 
     constructor: (args)->
@@ -19,6 +20,11 @@ define [
       unless @ListView? then @ListView = ListView
       unless @TopView? then @TopView = TopView
       unless @EmptyView? then @EmptyView = EmptyView
+      # why?!?!
+      # @Model::urlRoot = @Config.urlRoot
+      # @Model::collectionName = @Config.collectionName
+      # @Collection::url = => @Config.url
+      # @Collection::model = @Model
 
     newDetailView:(model)->
       new @DetailView
@@ -46,14 +52,12 @@ define [
           type: field.type
           options: field.options
       model = new @Model
+      model.urlRoot = @Config.urlRoot
+      model.collectionName = @Config.collectionName
       model.set
         fields: fields
         fieldorder: Object.keys(@Config.model)
         name: @Config.modelName
-
-
-      model.urlRoot = @Config.urlRoot
-      model.collectionName = @Config.collectionName
       return model
 
     details: (id) ->
@@ -62,7 +66,6 @@ define [
         view = @getContentView model
       else
         view = new @EmptyView message: @i18n.emptyMessage
-
       view.i18n = @i18n
       App.contentRegion.show view
 
@@ -73,4 +76,6 @@ define [
       App.listTopRegion.show new @TopView
         navigation: @i18n.navigation
         newRoute: 'new'+@Config.modelName
-      App.listRegion.show new @ListView collection: App[@Config.collectionName]
+      FilteredCollection = Utilities.FilteredCollection App[@Config.collectionName]
+      FilteredCollection.filter @filterFunc
+      App.listRegion.show new @ListView collection: FilteredCollection

@@ -12,6 +12,19 @@ define [
     Vent: Vent
     Log: Log
     Debug: Debug
+    FilteredCollection: (original)->
+      filtered = new original.constructor
+      filtered._callbacks = {}
+      filtered.filter = (filterFunc)->
+        if filterFunc
+          items = original.filter filterFunc
+        else
+          items = original.models
+        filtered.filterFunc = filterFunc
+        filtered.reset items
+      original.on "sync", ->
+        filtered.filter filtered.filterFunc
+      filtered
 
     safeString: (str)->
       str.toLowerCase().split(" ").join("-")

@@ -32,6 +32,7 @@ define({
             "downloadApp": "Download App",
             "standalone": "Standalone App",
             "newsstand": "Newsstand App",
+            "icon": "App Icon",
             "paid": "Newsstand App with paid subscriptions"
         }
     },

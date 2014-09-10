@@ -35,6 +35,10 @@
           "type": "wysiwyg",
           "mongooseType": "String"
         },
+        "fieldrelation" : {
+          "type": "hidden",
+          "mongooseType": "String"
+        },
         "relation" : {
           "type": "hidden",
           "mongooseType": "String"

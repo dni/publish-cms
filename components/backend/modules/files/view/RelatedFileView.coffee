@@ -1,6 +1,7 @@
 define [
   'cs!App'
   'cs!Publish'
+  'cs!utilities/Utilities'
   'cs!lib/model/Collection'
   'cs!Router'
   'i18n!../nls/language.js'
@@ -9,7 +10,7 @@ define [
   'tpl!../templates/related-item.html'
   'cs!./BrowseView'
   'cs!./ShowFileView'
-], (App, Publish, Collection, Router, i18n, Marionette, Template, ItemTemplate, BrowseView, ShowFileView) ->
+], (App, Publish, Utilities, Collection, Router, i18n, Marionette, Template, ItemTemplate, BrowseView, ShowFileView) ->
 
   class ItemView extends Marionette.ItemView
     template: ItemTemplate
@@ -28,26 +29,19 @@ define [
     template: Template
     templateHelpers:
       t:i18n
+      field: @field
     events:
       "click #files": "add"
 
     add:->
-      collection = new Collection App.Files.where parent:undefined
-      collection.each (model)->
-        model.set "selected", false
       App.overlayRegion.currentView.childRegion.show new BrowseView
         model: @model
-        collection: collection
 
     initialize:(args)->
-      @multiple = true if args.multiple is true
-      @collection.reset @getFiles()
-      @listenTo App.Files, "sync", @sync
+      @multiple = args.multiple
+      @fieldrelation = args.fieldrelation # if relatedfileview is shown in model
+      @collection = Utilities.FilteredCollection App.Files
+      @collection.filter (file)=>
+        @model.get '_id' is file.getValue('relation') and
+        @fieldrelation and file.getValue('fieldrelation') is @fieldrelation
 
-    sync: ->
-      @collection.reset @getFiles()
-      @render()
-
-    getFiles: ->
-      files = App.Files.filter (file)=>
-        file.attributes.fields.relation.value is @model.get "_id"
