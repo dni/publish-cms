@@ -7,10 +7,11 @@ gm = require 'gm'
 multiparty = require "multiparty"
 fs = require "fs-extra"
 
-fs.move = (oldName, newName, cb)->
-  fs.copy oldName, newName, (err)->
+fs.move = (oldLink, newLink, cb)->
+  console.log("move ", oldLink, newLink)
+  fs.copy oldLink, newLink, (err)->
     if err? then return console.log err
-    fs.unlink oldName, (err)->
+    fs.unlink oldLink, (err)->
       if err? then return console.log err
       cb?()
 
@@ -24,6 +25,7 @@ module.exports.setup = (app, cfg)->
 
   app.on cfg.moduleName+':after:put', (req, res, file)->
     title = file.getFieldValue "title"
+    console.log "put", title
     if req.params.crop
       gmImg = gm(dir+title)
       crop = req.body.crop
@@ -39,15 +41,16 @@ module.exports.setup = (app, cfg)->
       link = file.getFieldValue "link"
       if title != link
         if fs.existsSync(dir+title) is true
-          title = title.replace ".", "_"+Date.now()+"_copy."
+          title = title.replace /\.(?=[^.]*$)/, "_"+Date.now()+"_copy."
           file.setFieldValue "title", title
         copyImages file, true # move = true, only moving
-        file.setFieldValue "link", title
       file.save ->
+        console.log("saveFile")
         req.io.broadcast 'updateCollection', cfg.collectionName
 
 
   app.post "/uploadFile", auth, (req,res)->
+    console.log("uploadFile")
     form = new multiparty.Form
     form.parse req, (err, fields, files)->
       if err then return console.log 'formparse error', err
@@ -55,7 +58,7 @@ module.exports.setup = (app, cfg)->
 
         title = srcFile.originalFilename
         if fs.existsSync(dir+title) is true
-          title = title.replace ".", "_"+Date.now()+"_copy."
+          title = title.replace /\.(?=[^.]*$)/, "_"+Date.now()+"_copy."
         fs.move srcFile.path, dir+title, ->
           file = utils.createModel File, cfg
           file.setFieldValue
@@ -73,12 +76,13 @@ module.exports.setup = (app, cfg)->
 
   #create new copy of the file
   app.on cfg.moduleName+":after:post", (req, res, file) ->
+    console.log("afterPost")
     oldFileName = file.getFieldValue "title"
-    newFileName = 'new_'+Date.now()+oldFileName
+    newFileName = oldFileName.replace /\.(?=[^.]*$)/, "_"+Date.now()+"_copy."
     fs.writeFileSync dir+newFileName, fs.readFileSync dir+oldFileName
-    file.setFieldValue 'title', newFileName
     file.setFieldValue 'link', newFileName
-    copyImages file
+    createImages file, req
+    file.setFieldValue 'title', newFileName
     file.save ->
       req.io.broadcast "updateCollection", "Files"
 
@@ -93,29 +97,32 @@ module.exports.setup = (app, cfg)->
         if err then throw err
 
   copyImages = (file, move)->
-    oldName = file.getFieldValue("title").split(".")[0]
-    newName = file.getFieldValue("link").split(".")[0]
+    oldName = file.getFieldValue("title").split(/\.(?=[^.]*$)/)[0]
+    newName = file.getFieldValue("link").split(/\.(?=[^.]*$)/)[0]
     for type in types
       newLink = file.getFieldValue(type).replace newName, oldName
       oldLink = file.getFieldValue type
       if move
         fs.move dir+oldLink, dir+newLink
       else
-        newLink = newLink.replace '\$.', '_copy_'+Date.now()+'.'
-        fs.writeFileSync dir+newLink, fs.readFileSync dir+file.getFieldValue type
+        #newLink = newLink.replace '\$.', '_copy_'+Date.now()+'.'
+        fs.writeFileSync dir+newLink, fs.readFileSync(dir+oldLink)
 
       file.setFieldValue type, newLink
+      console.log(type, newLink)
+
 
   createImages = (file, req) ->
-    filename = file.getFieldValue "title"
+    filename = file.getFieldValue "link"
     portrait = false
-    types = ["thumbnail","smallPic","bigPic"]
+    thumbTypes = ["thumbnail", "smallPic", "bigPic"]
     image = gm(dir+filename).size (err, size) ->
       if err then return console.error "createWebPic getSize err=", err
       portrait = true if size.width < size.height
       addFile = (type, cb)->
-        maxSize = moduleSetting.fields[type].value
+        maxSize = moduleSetting.getFieldValue type
         targetName = filename.replace '.', '_'+type+'.'
+        console.log targetName
         file.setFieldValue type, targetName
         image.quality parseInt(moduleSetting.fields.quality.value)
         if portrait then image.resize null, maxSize
@@ -123,5 +130,5 @@ module.exports.setup = (app, cfg)->
         image.write dir+targetName, (err) ->
           file.save ->
             cb()
-      async.each types, addFile, ->
+      async.each thumbTypes, addFile, ->
         req.io.broadcast "updateCollection", cfg.collectionName

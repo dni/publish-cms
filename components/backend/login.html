@@ -91,10 +91,14 @@
 				<div class="userlogin">
 					<h1>Publish! Admin Login</h1>
 					<div id="login">
-						<form role="form" action="/login" method="post">
-						  <div class="form-group"><span class="glyphicon glyphicon-user"></span>
-						    <input type="text" name="username" class="form-control" id="exampleInputEmail1" placeholder="Username">
-						  </div>
+						<form id="loginform" role="form" action="/login" method="post">
+              <input type="hidden" class name="realurl" class="form-control" id="realurl" placeholder="url" value="url">
+
+              <div class="form-group"><span class="glyphicon glyphicon-user"></span>
+                <input type="text" name="username" class="form-control" id="exampleInputEmail1" placeholder="Username">
+              </div>
+
+
 						  <div class="form-group"><span class="glyphicon glyphicon-lock"></span>
 						    <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
 						  </div>
@@ -105,8 +109,10 @@
 				<div class="thanks">
 					<p><a href="https://publish.dnilabs.com/">Publish!</a> Crossplattform publishing, visit <a href="https://github.com/">github</a> for documentation and bug reporting. For further questions contact us in IRC #dnilabs at freenode</p>
 				</div>
-			</div>
+			</div>1
 		</div>
 	</body>
-
+  <script>
+  window.onload = function(){ document.getElementById("loginform").action = location.href; }
+  </script>
 </html>
