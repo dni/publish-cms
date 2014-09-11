@@ -8,7 +8,6 @@ multiparty = require "multiparty"
 fs = require "fs-extra"
 
 fs.move = (oldName, newName, cb)->
-  console.log("move", oldName, newName)
   fs.copy oldName, newName, (err)->
     if err? then return console.log err
     fs.unlink oldName, (err)->
@@ -24,7 +23,6 @@ module.exports.setup = (app, cfg)->
     moduleSetting = setting
 
   app.on cfg.moduleName+':after:put', (req, res, file)->
-    console.log("afterPut file")
     title = file.getFieldValue "title"
     if req.params.crop
       gmImg = gm(dir+title)
