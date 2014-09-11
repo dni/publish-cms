@@ -5,10 +5,16 @@ auth = require './../../utilities/auth'
 utils = require './../../utilities/utils'
 gm = require 'gm'
 multiparty = require "multiparty"
-fs = require "fs"
+fs = require "fs-extra"
+
+fs.move = (oldName, newName, cb)->
+  fs.copy oldName, newName, (err)->
+    if err? then return console.log err
+    fs.unlink oldName, (err)->
+      if err? then return console.log err
+      cb?()
 
 module.exports.setup = (app, cfg)->
-
   moduleSetting = ''
   dir = "./public/files/"
   types = ["thumbnail", "smallPic", "bigPic", "link"]
@@ -50,20 +56,18 @@ module.exports.setup = (app, cfg)->
         title = srcFile.originalFilename
         if fs.existsSync(dir+title) is true
           title = title.replace ".", "_"+Date.now()+"_copy."
-        fs.renameSync srcFile.path, dir+title
+        fs.move srcFile.path, dir+title, ->
+          file = utils.createModel File, cfg
+          file.setFieldValue
+            title: title
+            link: title
+            type: srcFile.headers['content-type']
 
-        file = utils.createModel File, cfg
-        file.setFieldValue
-          title: title
-          link: title
-          type: srcFile.headers['content-type']
-
-
-        if srcFile.headers['content-type'].split("/")[0] is "image"
-          createImages file, req
-        else
-          file.save ->
-            req.io.broadcast "updateCollection", cfg.collectionName
+          if srcFile.headers['content-type'].split("/")[0] is "image"
+            createImages file, req
+          else
+            file.save ->
+              req.io.broadcast "updateCollection", cfg.collectionName
 
     res.send "success"
 
