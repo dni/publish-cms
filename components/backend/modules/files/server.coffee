@@ -8,6 +8,7 @@ multiparty = require "multiparty"
 fs = require "fs-extra"
 
 fs.move = (oldName, newName, cb)->
+  console.log("move", oldName, newName)
   fs.copy oldName, newName, (err)->
     if err? then return console.log err
     fs.unlink oldName, (err)->
@@ -23,6 +24,7 @@ module.exports.setup = (app, cfg)->
     moduleSetting = setting
 
   app.on cfg.moduleName+':after:put', (req, res, file)->
+    console.log("afterPut file")
     title = file.getFieldValue "title"
     if req.params.crop
       gmImg = gm(dir+title)
@@ -41,8 +43,8 @@ module.exports.setup = (app, cfg)->
         if fs.existsSync(dir+title) is true
           title = title.replace ".", "_"+Date.now()+"_copy."
           file.setFieldValue "title", title
-        file.setFieldValue "link", title
         copyImages file, true # move = true, only moving
+        file.setFieldValue "link", title
       file.save ->
         req.io.broadcast 'updateCollection', cfg.collectionName
 
@@ -84,19 +86,27 @@ module.exports.setup = (app, cfg)->
 
   # clean up files after model is deleted
   app.on cfg.moduleName+':after:delete', (req, res, file)->
+    fs.unlink "./public/files/"+file.getFieldValue "link"
     for type in types
-      fs.unlink "./public/files/"+file.fields[type].value
+      # TODO sometimes he doesnt want to remove all files, and i dont know why :S
+      # maybe to fast created+deleted ????
+      # console.log "DEBUG removeFile: "+file.getFieldValue type
+      fs.unlink "./public/files/"+file.getFieldValue(type), (err)->
+        if err then throw err
 
   copyImages = (file, move)->
+    oldName = file.getFieldValue("title").split(".")[0]
+    newName = file.getFieldValue("link").split(".")[0]
     for type in types
-      newName = file.getFieldValue type
-      newName = newName.replace '\$.', '_copy_'+Date.now()+'.'
+      newLink = file.getFieldValue(type).replace newName, oldName
+      oldLink = file.getFieldValue type
       if move
-        fs.renameSync dir+newName, dir+file.getFieldValue(type)
+        fs.move dir+oldLink, dir+newLink
       else
-        fs.writeFileSync dir+newName, fs.readFileSync dir+file.getFieldValue type
+        newLink = newLink.replace '\$.', '_copy_'+Date.now()+'.'
+        fs.writeFileSync dir+newLink, fs.readFileSync dir+file.getFieldValue type
 
-      file.setFieldValue type, newName
+      file.setFieldValue type, newLink
 
   createImages = (file, req) ->
     filename = file.getFieldValue "title"
