@@ -43,14 +43,14 @@ module.exports.setup = (app, cfg)->
         if fs.existsSync(dir+title) is true
           title = title.replace /\.(?=[^.]*$)/, "_"+Date.now()+"_copy."
           file.setFieldValue "title", title
-        copyImages file, true # move = true, only moving
+        file = copyImages file, true # move = true, only moving
+        file.setFieldValue "link", title
       file.save ->
-        console.log("saveFile")
+        console.log("saveFile", file)
         req.io.broadcast 'updateCollection', cfg.collectionName
 
 
   app.post "/uploadFile", auth, (req,res)->
-    console.log("uploadFile")
     form = new multiparty.Form
     form.parse req, (err, fields, files)->
       if err then return console.log 'formparse error', err
@@ -81,8 +81,8 @@ module.exports.setup = (app, cfg)->
     newFileName = oldFileName.replace /\.(?=[^.]*$)/, "_"+Date.now()+"_copy."
     fs.writeFileSync dir+newFileName, fs.readFileSync dir+oldFileName
     file.setFieldValue 'link', newFileName
-    createImages file, req
     file.setFieldValue 'title', newFileName
+    file = createImages file, req
     file.save ->
       req.io.broadcast "updateCollection", "Files"
 
@@ -97,19 +97,15 @@ module.exports.setup = (app, cfg)->
         if err then throw err
 
   copyImages = (file, move)->
-    oldName = file.getFieldValue("title").split(/\.(?=[^.]*$)/)[0]
-    newName = file.getFieldValue("link").split(/\.(?=[^.]*$)/)[0]
     for type in types
-      newLink = file.getFieldValue(type).replace newName, oldName
       oldLink = file.getFieldValue type
+      newLink = file.getFieldValue('title').replace /\.(?=[^.]*$)/, '_'+type+'.'
       if move
         fs.move dir+oldLink, dir+newLink
       else
-        #newLink = newLink.replace '\$.', '_copy_'+Date.now()+'.'
         fs.writeFileSync dir+newLink, fs.readFileSync(dir+oldLink)
-
-      file.setFieldValue type, newLink
-      console.log(type, newLink)
+      file.setFieldValue type, newLink unless type is "link"
+    file
 
 
   createImages = (file, req) ->
@@ -121,8 +117,7 @@ module.exports.setup = (app, cfg)->
       portrait = true if size.width < size.height
       addFile = (type, cb)->
         maxSize = moduleSetting.getFieldValue type
-        targetName = filename.replace '.', '_'+type+'.'
-        console.log targetName
+        targetName = filename.replace /\.(?=[^.]*$)/, '_'+type+'.'
         file.setFieldValue type, targetName
         image.quality parseInt(moduleSetting.fields.quality.value)
         if portrait then image.resize null, maxSize
