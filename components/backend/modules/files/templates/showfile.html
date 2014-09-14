@@ -5,22 +5,13 @@
 		    <input type="text" name="title" class="form-control" value="<%= fields.title.value %>" />
 		</div>
 		<div class="form-group">
-		    <label>Name</label>
+		    <label>Template Key</label>
 		    <input type="text" name="key" class="form-control" value="<%= fields.key.value %>" />
-		</div>
-		<div class="form-group">
-		    <label>Info</label>
-		    <textarea class="form-control" name="info"><%= fields.info.value %></textarea>
 		</div>
 		<div class="form-group">
 		    <label>Description</label>
 		    <textarea class="form-control" name="desc"><%= fields.desc.value %></textarea>
 		</div>
-		<div class="form-group">
-		    <label>Alt</label>
-		    <input class="form-control" type="text" name="alt" value="<%= fields.alt.value %>" />
-		</div>
-
 	</div>
 	<div class="col-md-6">
 		<% if(fields.type.value.split("/")[0]=="image") { %>
@@ -31,5 +22,7 @@
 		<p><%= fields.type.value %></p>
 	</div>
 </div>
-<button class="editFile btn btn-primary">Edit</button>
-<button class="deleteFile btn btn-danger">Delete</button>
+<div class="model-footer">
+  <button class="editFile btn btn-primary">Edit</button>
+  <button class="deleteFile btn btn-danger">Delete</button>
+</div>
