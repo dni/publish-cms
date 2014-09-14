@@ -1,14 +1,13 @@
 define [
-  'cs!lib/Publish'
   'marionette'
-], (Publish, Marionette) ->
-
-  class RelatedListItemView extends Marionette.ItemView
-    initialize:->
-      @viewName = @model.get "viewName"
-      @view = @model.get "view"
+], (Marionette) ->
+  class RelatedListView extends Marionette.LayoutView
+    initialize: (args)->
+      @RelatedViews = args.RelatedViews
     render:->
-      @$el.append @view.render().el
+      for name, RelatedView of @RelatedViews
+        @$el.append('<div class="'+name+'"></div>')
+        @addRegion name, '.'+name
+        @[name].show new RelatedView
+          model: @model
 
-  class RelatedListView extends Marionette.CollectionView
-    childView: RelatedListItemView

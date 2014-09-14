@@ -11,14 +11,14 @@ define [
   'tpl!../templates/upload.html'
 ], (App, Publish, Config, Utilities, Model, $, _, Marionette, Template, UploadTemplate) ->
 
-  class ItemView extends Marionette.ItemView
+  class BrowseItemView extends Marionette.ItemView
     template: Template
     events:
       "click input": 'toggleSelect'
     toggleSelect: -> @model.set "selected", !@model.get "selected"
 
   class BrowseView extends Marionette.CollectionView
-    childView: ItemView
+    childView: BrowseItemView
     initialize: (args)->
       @model = args.model
       @Config = JSON.parse Config
@@ -38,7 +38,7 @@ define [
     ok:->
       @collection.forEach (file)=>
         return unless file.get("selected")?
-
+        c.l file
         newfile = new Model
         newfile.urlRoot = @Config.urlRoot
         newfile.collectionName = @Config.collectionName

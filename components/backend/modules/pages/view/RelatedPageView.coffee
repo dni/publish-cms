@@ -1,17 +1,18 @@
 define [
   'cs!App'
-  'cs!Utils'
+  'cs!utilities/Utilities'
   'cs!Publish'
-  "i18n!modules/pages/nls/language.js"
+  "i18n!../nls/language.js"
   'marionette'
   'tpl!../templates/page.html',
   'tpl!../templates/page-item.html',
   'jquery.ui'
-], (App, Publish, Utils, i18n, Marionette, Template, ItemTemplate, jqueryui) ->
+], (App, Utilities, Publish, i18n, Marionette, Template, ItemTemplate, jqueryui) ->
 
   class RelatedPageChildView extends Marionette.ItemView
     template: ItemTemplate
     templateHelpers:
+      t:i18n
       getArticles: -> App.Articles.toJSON()
       getLayouts: -> App.Settings.findWhere({name: "Magazines"}).getValue("layouts").split(",")
       getMagazineName: (magazine)-> App.Magazines.findWhere(_id:magazine).get "name"
@@ -38,25 +39,27 @@ define [
 
   class RelatedPageView extends Marionette.CompositeView
     template: Template
+    templateHelpers:
+      t:i18n
     childView: RelatedPageChildView
     childViewContainer: ".page-list"
 
     events:
-      "click #addPage": 'addPage'
+      "click .addPage": 'addPage'
 
     addPage: ->
-      Router.navigate "Magazine/"+@model.get("_id")+"/addPage"
-      # page = new Publish.Model
-      #   number: @collection.length+1
-      #   magazine: @magazine
-      #   article: App.Articles.first()
-      # @collection.create page
+      page = new @collection.model
+        number: @collection.length+1
+        magazine: @model
+        article: App.Articles.first()
+      @collection.create page
 
     initialize:(args)->
-      @magazine = args['magazine']
-      @listenTo @collection, 'reset', @render
+      @collection = Utilities.FilteredCollection App.Pages
+      @collection.filter (model)=>
+        @model.get("_id") is model.get("relation")
       @listenTo @collection, 'sort', @render
-      @listenTo @, "render", @_sortAble
+      # @listenTo @, "render", @_sortAble
 
     _sortAble:->
       @$el.find(".page-list").sortable(
@@ -73,5 +76,4 @@ define [
         model = that.collection.findWhere number: parseInt elNumber
         model.set "number", i+1
         model.save()
-
       @collection.sort()

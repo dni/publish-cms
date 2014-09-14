@@ -20,7 +20,6 @@ define [
     initialize:->
       @listenTo @model, 'destroy', @close
     showFile: ->
-      c.l @model
       App.overlayRegion.currentView.childRegion.show new ShowFileView
         model: @model
 

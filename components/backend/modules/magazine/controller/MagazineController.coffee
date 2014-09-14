@@ -6,13 +6,8 @@ define [
 ], ( Publish, MagazineDetailView, RelatedPageView, RelatedFileView ) ->
 
   class MagazineController extends Publish.Controller.LayoutController
+    DetailView: MagazineDetailView
     RelatedViews:
       FileView: RelatedFileView
-
-    newDetailView:(model)->
-      new MagazineDetailView
-        model: model
-        Config: @Config
-        i18n: @i18n
-
+      PageView: RelatedPageView
 

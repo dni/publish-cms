@@ -55,7 +55,7 @@ module.exports.setup = (app, cfg)->
     form = new multiparty.Form
     form.parse req, (err, fields, files)->
       if err then return console.log 'formparse error', err
-      files['files[]'].forEach (srcFile)->
+      for srcFile in files['files[]']
         title = safeFilename srcFile.originalFilename
         fs.renameSync srcFile.path, dir+title
         file = utils.createModel File, cfg
@@ -63,12 +63,15 @@ module.exports.setup = (app, cfg)->
           title: title
           link: title
           type: srcFile.headers['content-type']
+
         if srcFile.headers['content-type'].split("/")[0] is "image"
-          createImages file, req
+          file.save ->
+            createImages file, req
         else
           file.save ->
             req.io.broadcast "updateCollection", cfg.collectionName
     res.end()
+
 
   #create new copy of the file
   app.on cfg.moduleName+":after:post", (req, res, file) ->
@@ -78,9 +81,6 @@ module.exports.setup = (app, cfg)->
     file.setFieldValue 'link', newFileName
     file.setFieldValue 'title', newFileName
     copyImages file
-    file.save ->
-      console.log file, "copied file"
-      req.io.broadcast "updateCollection", "Files"
 
   # clean up files after model is deleted
   app.on cfg.moduleName+':after:delete', (req, res, file)->
@@ -108,7 +108,6 @@ module.exports.setup = (app, cfg)->
       title = title.replace /\.(?=[^.]*$)/, "_"+Date.now()+"_copy."
     return title
 
-
   createImages = (file, req) ->
     filename = file.getFieldValue "link"
     portrait = false
@@ -123,8 +122,9 @@ module.exports.setup = (app, cfg)->
         image.quality parseInt(moduleSetting.fields.quality.value)
         if portrait then image.resize null, maxSize
         else image.resize maxSize
-        image.write dir+targetName, (err) ->
-          file.save ->
-            cb()
+        image.write dir+targetName, ->
+          cb()
       async.each thumbTypes, addFile, ->
-        req.io.broadcast "updateCollection", cfg.collectionName
+        file.save ->
+          console.log file, "save after aysnc"
+          req.io.broadcast "updateCollection", cfg.collectionName

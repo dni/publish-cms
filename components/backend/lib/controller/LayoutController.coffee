@@ -17,11 +17,9 @@ define [
       @newLayoutView model
 
     newRelatedView:(model)->
-      relatedViews = []
-      for viewName, RelatedView of @RelatedViews
-        relatedView = new RelatedView model:model
-        relatedViews.push view: relatedView, viewName: viewName
-      new @RelatedView collection: new @Collection relatedViews
+      new @RelatedView
+        model: model
+        RelatedViews: @RelatedViews
 
     newLayoutView:(model)->
       detailView = @newDetailView model

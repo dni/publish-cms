@@ -13,8 +13,9 @@ module.exports = (app, config)->
     schema.name = req.body.name
     schema.fields = req.body.fields
     schema.fieldorder = req.body.fieldorder
+    app.emit config.moduleName+':after:post', req, res, schema
     schema.save ->
-      app.emit config.moduleName+':after:post', req, res, schema
+      req.io.broadcast "updateCollection", config.collectionName
       res.send schema
 
   app.get '/'+config.urlRoot, auth, (req, res)->
