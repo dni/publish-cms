@@ -20,6 +20,7 @@ define [
     initialize:->
       @listenTo @model, 'destroy', @close
     showFile: ->
+      c.l @model
       App.overlayRegion.currentView.childRegion.show new ShowFileView
         model: @model
 
@@ -49,7 +50,6 @@ define [
       @collection.filter (file)=>
         if @model.get("_id") is file.getValue "relation"
           if @fieldrelation
-            c.l file.getValue('fieldrelation')
             return file.getValue('fieldrelation') is @fieldrelation
           else
             return true
