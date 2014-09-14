@@ -18,7 +18,7 @@ define [
       preview: PreviewView
 
     filterFunction: (file)->
-      file.getValue('parent')?
+      !file.getValue('parent')?
 
     routes:
       "showfile/:id": "showfile"

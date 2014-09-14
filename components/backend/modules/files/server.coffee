@@ -43,7 +43,7 @@ module.exports.setup = (app, cfg)->
         if fs.existsSync(dir+title) is true
           title = title.replace /\.(?=[^.]*$)/, "_"+Date.now()+"_copy."
           file.setFieldValue "title", title
-        file = copyImages file, true # move = true, only moving
+        copyImages file, true # move = true, only moving
         file.setFieldValue "link", title
       file.save ->
         console.log("saveFile", file)
@@ -76,13 +76,13 @@ module.exports.setup = (app, cfg)->
 
   #create new copy of the file
   app.on cfg.moduleName+":after:post", (req, res, file) ->
-    console.log("afterPost")
     oldFileName = file.getFieldValue "title"
     newFileName = oldFileName.replace /\.(?=[^.]*$)/, "_"+Date.now()+"_copy."
     fs.writeFileSync dir+newFileName, fs.readFileSync dir+oldFileName
     file.setFieldValue 'link', newFileName
     file.setFieldValue 'title', newFileName
-    file = createImages file, req
+    console.log 'copiedFile', file
+    createImages file, req
     file.save ->
       req.io.broadcast "updateCollection", "Files"
 
@@ -105,7 +105,6 @@ module.exports.setup = (app, cfg)->
       else
         fs.writeFileSync dir+newLink, fs.readFileSync(dir+oldLink)
       file.setFieldValue type, newLink unless type is "link"
-    file
 
 
   createImages = (file, req) ->

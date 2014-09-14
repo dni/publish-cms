@@ -46,7 +46,7 @@ define [
         if field.type is "file"
           @RelatedViews[key] = new RelatedFileView
             model: @model
-            field: key
+            fieldrelation: key
             collection : new Collection
             multiple: field.multiple
           @RelatedViews[key].render()

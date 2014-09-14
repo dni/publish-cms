@@ -1,9 +1,9 @@
-<% if (!field) { %>
+<% if (!fieldrelation) { %>
   <h2><%= t.headline %></h2>
 <% } %>
 <div class="file-list sortable"></div>
 <a id="files" class="btn btn-primary">
-  <% if (!field) { %>
+  <% if (!fieldrelation) { %>
       <i class="glyphicon glyphicon-plus"></i> <%= t.addFiles %>
     <% } else { %>
       <i class="glyphicon glyphicon-plus"></i> <%= t.addFile %>

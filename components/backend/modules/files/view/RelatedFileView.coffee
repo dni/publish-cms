@@ -29,19 +29,30 @@ define [
     template: Template
     templateHelpers:
       t:i18n
-      field: @field
     events:
       "click #files": "add"
 
     add:->
       App.overlayRegion.currentView.childRegion.show new BrowseView
         model: @model
+        fieldrelation: @fieldrelation
 
     initialize:(args)->
+      # TODO add limit to add files / browseview
       @multiple = args.multiple
       @fieldrelation = args.fieldrelation # if relatedfileview is shown in model
+      if @fieldrelation
+        @model.set "fieldrelation", true
+      else
+        @model.set "fieldrelation", false
       @collection = Utilities.FilteredCollection App.Files
       @collection.filter (file)=>
-        @model.get '_id' is file.getValue('relation') and
-        @fieldrelation and file.getValue('fieldrelation') is @fieldrelation
+        if @model.get("_id") is file.getValue "relation"
+          if @fieldrelation
+            c.l file.getValue('fieldrelation')
+            return file.getValue('fieldrelation') is @fieldrelation
+          else
+            return true
+        else
+          return false
 

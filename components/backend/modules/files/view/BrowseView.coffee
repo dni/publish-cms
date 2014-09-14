@@ -37,7 +37,8 @@ define [
 
     ok:->
       @collection.forEach (file)=>
-        return if file.get "selected" is false
+        return unless file.get("selected")?
+
         newfile = new Model
         newfile.urlRoot = @Config.urlRoot
         newfile.collectionName = @Config.collectionName
