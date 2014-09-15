@@ -33,15 +33,11 @@ module.exports = (setting, cb)->
 
 
   createIcons = (format)->
-    #key = if format is "icon" then "icon" else "logo"
-    #size = if key is "logo" then width:1024,height:640 else width:286,height:286
     image = gm()
-
     iconInfos = sizeList[format]
     createIcon = (imgData)->
       targetDir = process.cwd()+'/cache/publish-baker/Baker/BakerAssets.xcassets/'
       if format is "icon"
-
         image = gm(icon)
         image.size (err, iconSize)->
           if err then throw err

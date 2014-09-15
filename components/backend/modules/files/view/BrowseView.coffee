@@ -14,18 +14,27 @@ define [
   class BrowseItemView extends Marionette.ItemView
     template: Template
     events:
-      "click input": 'toggleSelect'
-    toggleSelect: -> @model.set "selected", !@model.get "selected"
+      "click .browse-item": 'toggleSelect'
+    toggleSelect: ->
+      @model.set "selected", !@model.get "selected"
+
 
   class BrowseView extends Marionette.CollectionView
     childView: BrowseItemView
+
     initialize: (args)->
       @model = args.model
+      @multiple = args.multiple
+
       @Config = JSON.parse Config
       @fieldrelation = args.fieldrelation
       @collection = Utilities.FilteredCollection App.Files
       @collection.filter (file)->
         !file.getValue('parent')?
+      @collection.forEach (model)=>
+        model.set "multiple", @multiple
+      if !@multiple
+        @listenTo @collection, 'change', @ok
       @$el.prepend UploadTemplate
 
     events:
@@ -38,7 +47,6 @@ define [
     ok:->
       @collection.forEach (file)=>
         return unless file.get("selected")?
-        c.l file
         newfile = new Model
         newfile.urlRoot = @Config.urlRoot
         newfile.collectionName = @Config.collectionName

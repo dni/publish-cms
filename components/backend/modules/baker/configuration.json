@@ -14,13 +14,16 @@
 	      }
 		},
 		"icon" : {
-	      "type": "file"
+	      "type": "file",
+	      "multiple": false
 		},
 		"logo" : {
-	      "type": "file"
+	      "type": "file",
+	      "multiple": false
 		},
 		"background" : {
-	      "type": "file"
+	      "type": "file",
+	      "multiple": false
 		},
 		"appid" : {
 	      "value": "org.publish.com.magazines",
