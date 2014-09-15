@@ -52,7 +52,8 @@ module.exports.setup = (app, cfg)->
 
 
   app.post "/uploadFile", auth, (req,res)->
-    form = new multiparty.Form
+    form = new multiparty.Form 
+      uploadDir: dir
     form.parse req, (err, fields, files)->
       if err then return console.log 'formparse error', err
       for srcFile in files['files[]']
