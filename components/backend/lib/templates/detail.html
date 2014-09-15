@@ -30,7 +30,7 @@
       <% } %>
 
       <% if (attribute.type === "checkbox") { %>
-      <input type="checkbox" class="form-control" value="<%= attribute.value %>" checked="<%= attribute.value %>" name="<%= key %>" >
+      <input type="checkbox" class="form-control" value="1" <% if (attribute.value) {%> checked="checked" <% } %> name="<%= key %>" >
       <% } %>
 
       <% if (attribute.type === "range") { %>

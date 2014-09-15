@@ -16,6 +16,12 @@
 		"icon" : {
 	      "type": "file"
 		},
+		"logo" : {
+	      "type": "file"
+		},
+		"background" : {
+	      "type": "file"
+		},
 		"appid" : {
 	      "value": "org.publish.com.magazines",
 	      "type": "text"
@@ -64,6 +70,24 @@
 	      "value": "#bc242a",
 	      "type": "color"
 		},
+
+		"orPortrait" : {
+	      "value": "checked",
+	      "type": "checkbox"
+		},
+		"orUpsidedown" : {
+	      "value": "false",
+	      "type": "checkbox"
+		},
+		"orLandscapeleft" : {
+	      "value": "false",
+	      "type": "checkbox"
+		},
+		"orLandscaperight" : {
+	      "value": "true",
+	      "type": "checkbox"
+		},
+
 		"shelfNavigationTitle" : {
 	      "value": "Baker Shelf",
 	      "type": "text"

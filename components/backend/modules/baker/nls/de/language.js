@@ -31,6 +31,9 @@ define({
 		"downloadApp": "App downloaden",
 		"standalone": "Standalone App",
 		"newsstand": "Newsstand App",
+    "icon": "App Icon",
+    "logo": "App Logo",
+    "background": "App Background",
 		"paid": "Newsstand App mit Bezahlung"
 	}
 });

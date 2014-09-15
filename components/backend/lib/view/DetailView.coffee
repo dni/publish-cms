@@ -37,6 +37,8 @@ define [
       fields = @model.get "fields"
       for key, field of fields
         field.value = @ui[key].val()
+        if field.type is "checkbox"
+          field.value = @ui[key].prop('checked')
       return fields
 
     renderRelatedViews: ->
