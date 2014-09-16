@@ -11,5 +11,5 @@ define [
     tagName: 'article'
 
   class ListView extends Marionette.CollectionView
-    itemView: ListItemView
+    childView: ListItemView
     className: 'list'

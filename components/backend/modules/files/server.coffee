@@ -55,7 +55,7 @@ module.exports.setup = (app, cfg)->
     form = new multiparty.Form
     form.parse req, (err, fields, files)->
       if err then return console.log 'formparse error', err
-      for srcFile in files['files[]']
+      uploadFile = (srcFile, done)->
         title = safeFilename srcFile.originalFilename
         fs.renameSync srcFile.path, dir+title
         file = utils.createModel File, cfg
@@ -63,13 +63,18 @@ module.exports.setup = (app, cfg)->
           title: title
           link: title
           type: srcFile.headers['content-type']
-
         if srcFile.headers['content-type'].split("/")[0] is "image"
-          file.save ->
-            createImages file, req
+          createImages file, req, ->
+            console.log file,"createimage file"
+            file.save ->
+              req.io.broadcast "updateCollection", cfg.collectionName
+              done()
         else
           file.save ->
             req.io.broadcast "updateCollection", cfg.collectionName
+            done()
+      async.each files['files[]'], uploadFile, ->
+        console.log("uploaded"+files['files[]'].length+" files")
     res.end()
 
 
@@ -108,7 +113,7 @@ module.exports.setup = (app, cfg)->
       title = title.replace /\.(?=[^.]*$)/, "_"+Date.now()+"_copy."
     return title
 
-  createImages = (file, req) ->
+  createImages = (file, req, done) ->
     filename = file.getFieldValue "link"
     portrait = false
     thumbTypes = ["thumbnail", "smallPic", "bigPic"]
@@ -124,7 +129,4 @@ module.exports.setup = (app, cfg)->
         else image.resize maxSize
         image.write dir+targetName, ->
           cb()
-      async.each thumbTypes, addFile, ->
-        file.save ->
-          console.log file, "save after aysnc"
-          req.io.broadcast "updateCollection", cfg.collectionName
+      async.each thumbTypes, addFile, done
