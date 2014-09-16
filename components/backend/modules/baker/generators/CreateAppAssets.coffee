@@ -10,14 +10,19 @@ module.exports = (setting, cb)->
   icon= ''
   background= ''
   logo= ''
-  File.find(relation: 'setting:'+setting._id).exec (err, files)->
-    if err then return
+  File.find("fields.relation.value":""+setting._id).exec (err, files)->
+    if err then throw err
     if files.length != 0
       for i, file of files
-        if file.key is 'background' then background = process.cwd()+'/public/files/'+file.name
-        if file.key is 'logo' then logo = process.cwd()+'/public/files/'+file.name
-        if file.key is 'icon' then icon = process.cwd()+'/public/files/'+file.name
+        title = file.getFieldValue "title"
+        fieldrelation = file.getFieldValue "fieldrelation"
+        fileUrl = process.cwd()+'/public/files/'+title
 
+        if fieldrelation is 'background' then background = fileUrl
+        if fieldrelation is 'logo' then logo = fileUrl
+        if fieldrelation is 'icon' then icon = fileUrl
+
+    console.log background, icon, logo
     if background is "" then background = __dirname+'/templates/bg.jpg'
     if logo is '' && icon is ''
       logo = __dirname+'/templates/logo.png'
@@ -28,15 +33,11 @@ module.exports = (setting, cb)->
 
 
   createIcons = (format)->
-    #key = if format is "icon" then "icon" else "logo"
-    #size = if key is "logo" then width:1024,height:640 else width:286,height:286
     image = gm()
-
     iconInfos = sizeList[format]
     createIcon = (imgData)->
       targetDir = process.cwd()+'/cache/publish-baker/Baker/BakerAssets.xcassets/'
       if format is "icon"
-
         image = gm(icon)
         image.size (err, iconSize)->
           if err then throw err

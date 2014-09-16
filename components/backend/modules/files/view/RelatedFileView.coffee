@@ -27,25 +27,33 @@ define [
     childView: ItemView
     childViewContainer: ".file-list"
     template: Template
+    ui:
+      addFile: '#files'
     templateHelpers:
       t:i18n
     events:
-      "click #files": "add"
+      "click @ui.addFile": "add"
 
     add:->
       App.overlayRegion.currentView.childRegion.show new BrowseView
         model: @model
         fieldrelation: @fieldrelation
+        multiple: @multiple
+
+    updateButton:->
+      if @collection.models.length > 0 
+        @ui.addFile.hide()
+      else
+        @ui.addFile.show()
 
     initialize:(args)->
       # TODO add limit to add files / browseview
-      @multiple = args.multiple
+      @multiple = if args.multiple? then args.multiple else true
       @fieldrelation = args.fieldrelation # if relatedfileview is shown in model
-      if @fieldrelation
-        @model.set "fieldrelation", true
-      else
-        @model.set "fieldrelation", false
+      @model.set "fieldrelation", @fieldrelation
       @collection = Utilities.FilteredCollection App.Files
+      @listenTo @collection, 'sync', @updateButton
+      @listenTo @, "render", @updateButton
       @collection.filter (file)=>
         if @model.get("_id") is file.getValue "relation"
           if @fieldrelation

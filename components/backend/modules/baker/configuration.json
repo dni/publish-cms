@@ -14,7 +14,16 @@
 	      }
 		},
 		"icon" : {
-	      "type": "file"
+	      "type": "file",
+	      "multiple": false
+		},
+		"logo" : {
+	      "type": "file",
+	      "multiple": false
+		},
+		"background" : {
+	      "type": "file",
+	      "multiple": false
 		},
 		"appid" : {
 	      "value": "org.publish.com.magazines",
@@ -64,6 +73,24 @@
 	      "value": "#bc242a",
 	      "type": "color"
 		},
+
+		"orPortrait" : {
+	      "value": "checked",
+	      "type": "checkbox"
+		},
+		"orUpsidedown" : {
+	      "value": "false",
+	      "type": "checkbox"
+		},
+		"orLandscapeleft" : {
+	      "value": "false",
+	      "type": "checkbox"
+		},
+		"orLandscaperight" : {
+	      "value": "true",
+	      "type": "checkbox"
+		},
+
 		"shelfNavigationTitle" : {
 	      "value": "Baker Shelf",
 	      "type": "text"

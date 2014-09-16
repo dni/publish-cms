@@ -9,8 +9,7 @@ module.exports = (setting, cb)->
   Settings.findOne({"fields.title.value": "PublishModule"}).exec (error, generalsetting) ->
 
     dirname = process.cwd()+"/cache/publish-baker";
-    settingFields = settingFields
-    console.log generalsetting
+    settingFields = setting.fields
     domain = generalsetting.fields.domain.value
     # Constants
     template = fs.readFileSync(__dirname+"/templates/Constants.h", "utf-8")
@@ -39,7 +38,9 @@ module.exports = (setting, cb)->
       domain: domain
 
     #info menu
-    StaticBlocks.findOne(attributes: key: "info").exec (err, block) ->
+    StaticBlocks.findOne("fields.title.value": "info").exec (err, block) ->
+      unless block? then return console.log("No StaticBlocks 'info'")
+
       template = fs.readFileSync(__dirname+"/templates/info.html", "utf-8")
       fs.writeFileSync dirname+"/BakerShelf/info/info.html", ejs.render template,
         block: block.data
