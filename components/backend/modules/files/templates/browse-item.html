@@ -1,9 +1,4 @@
 <div class="form-group browse-item">
     <img src="/public/files/<%= fields.thumbnail.value %>" />
-    <label>
-      <% if (multiple) { %>
-      	<input class="checkbox" type="checkbox" name="<%= fields.title.value %>" data-uid="<%= _id %>">
-      <% } %>
-        <%= fields.title.value %></a>
-    </label>
+    <figcaption><%= fields.title.value %></figcaption>
 </div>

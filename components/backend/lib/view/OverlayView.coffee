@@ -25,11 +25,11 @@ define [
       "click .ok": "ok"
       "click .cancel": "cancel"
 
-    ok:->
+    ok:=>
       @childRegion.currentView?.ok?()
       @childRegion.empty()
       $(".modal").modal "hide"
 
-    cancel:->
+    cancel:=>
       @childRegion.empty()
       $(".modal").modal "hide"

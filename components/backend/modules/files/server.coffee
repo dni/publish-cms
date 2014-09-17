@@ -52,6 +52,7 @@ module.exports.setup = (app, cfg)->
 
 
   app.post "/uploadFile", auth, (req,res)->
+    #c.l "upload", req, res
     form = new multiparty.Form 
       uploadDir: dir
     form.parse req, (err, fields, files)->
@@ -61,12 +62,12 @@ module.exports.setup = (app, cfg)->
         fs.renameSync srcFile.path, dir+title
         file = utils.createModel File, cfg
         file.setFieldValue
-          title: title
-          link: title
-          type: srcFile.headers['content-type']
+          "title": title
+          "link": title
+          "type": srcFile.headers['content-type']
         if srcFile.headers['content-type'].split("/")[0] is "image"
-          createImages file, req, ->
-            console.log file,"createimage file"
+          createImages file, req, (file)->
+            #console.log file,"createimage file"
             file.save ->
               req.io.broadcast "updateCollection", cfg.collectionName
               done()
@@ -122,12 +123,19 @@ module.exports.setup = (app, cfg)->
       if err then return console.error "createWebPic getSize err=", err
       portrait = true if size.width < size.height
       addFile = (type, cb)->
+        console.log type
         maxSize = moduleSetting.getFieldValue type
         targetName = filename.replace /\.(?=[^.]*$)/, '_'+type+'.'
         file.setFieldValue type, targetName
+        console.log file.getFieldValue "link", filename
         image.quality parseInt(moduleSetting.fields.quality.value)
         if portrait then image.resize null, maxSize
         else image.resize maxSize
         image.write dir+targetName, ->
           cb()
+
+      #for type, i in thumbTypes then addFile type, file, ->
+      #  thumbTypes.splice(i, 1)
+      #  console.log thumbTypes, i
+      #  if thumbTypes.length is 0 then done(); c.l "i am done"
       async.each thumbTypes, addFile, done
