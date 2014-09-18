@@ -22,7 +22,6 @@ module.exports = (setting, cb)->
         if fieldrelation is 'logo' then logo = fileUrl
         if fieldrelation is 'icon' then icon = fileUrl
 
-    console.log background, icon, logo
     if background is "" then background = __dirname+'/templates/bg.jpg'
     if logo is '' && icon is ''
       logo = __dirname+'/templates/logo.png'
@@ -72,14 +71,19 @@ module.exports = (setting, cb)->
 
           gm(logo).in("-resize", sizeOfLogo).write process.cwd()+'/public/files/'+newImg, ->
             gm(background).size (err, bgSize)->
+
+
+
               if imgData.w>imgData.h
-                sizeOfBg=imgData.w
+                sizeOfBg= imgData.w
                 ww = sizeOfBg
                 hh = (imgData.height)*(sizeOfBg/logoSize.width)
               else
-                sizeOfBg=imgData.h
+                sizeOfBg= imgData.h
                 ww = (imgData.width)*(sizeOfBg/logoSize.height)
                 hh = sizeOfBg
+
+              rsStr = if bgSize.width>bgSize.height then "x"+sizeOfBg else sizeOfBg+"x"
 
               if format is "shelf"
                 if imgData.n.indexOf("portrait")>1 then targetDir += "shelf-bg-portrait.imageset"
@@ -89,9 +93,10 @@ module.exports = (setting, cb)->
               else if format is "launch"
                 topPos = (imgData.h-logoH)/2
                 targetDir += "LaunchImage.launchimage"
-
+              console.log imgData.w, imgData.h, sizeOfBg
               gm(background)
-                #.resize(sizeOfBg)
+                .in("-resize", rsStr)
+                #.extent(imgData.w, imgData.h)
                 .crop(imgData.w, imgData.h)#, ((ww-sizeOfBg)/2), ((hh-sizeOfBg)/2))
                 .write process.cwd()+'/public/files/'+newBg, ->
                   image
@@ -103,6 +108,8 @@ module.exports = (setting, cb)->
 
     # write the image
     writeImage = (image, imgData, targetDir) ->
+      # change targetDir for debuging
+      targetDir = process.cwd()+'/cache/publish-baker/Baker/BakerAssets.xcassets/'
       targetImageLink = targetDir+"/"+imgData.n+".png"
       image.write targetImageLink, (err)->
         if err then return console.error("WriteImage error...",err)

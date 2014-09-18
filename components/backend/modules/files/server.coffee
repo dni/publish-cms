@@ -7,17 +7,6 @@ gm = require 'gm'
 multiparty = require "multiparty"
 fs = require "fs-extra"
 
-# caused the file errors because it is asynchronous
-# file.save would workd
-# multiple file upload wont work
-# fs.move = (oldLink, newLink, cb)->
-#   console.log("move ", oldLink, newLink)
-#   fs.copy oldLink, newLink, (err)->
-#     if err? then return console.log err
-#     fs.unlink oldLink, (err)->
-      # if err? then return console.log err
-      # cb?()
-
 module.exports.setup = (app, cfg)->
   moduleSetting = ''
   dir = "./public/files/"
@@ -65,9 +54,9 @@ module.exports.setup = (app, cfg)->
           "title": title
           "link": title
           "type": srcFile.headers['content-type']
+
         if srcFile.headers['content-type'].split("/")[0] is "image"
           createImages file, req, (file)->
-            #console.log file,"createimage file"
             file.save ->
               req.io.broadcast "updateCollection", cfg.collectionName
               done()
@@ -116,26 +105,19 @@ module.exports.setup = (app, cfg)->
     return title
 
   createImages = (file, req, done) ->
-    filename = file.getFieldValue "link"
-    portrait = false
     thumbTypes = ["thumbnail", "smallPic", "bigPic"]
     image = gm(dir+filename).size (err, size) ->
       if err then return console.error "createWebPic getSize err=", err
-      portrait = true if size.width < size.height
+      portrait = if size.width < size.height then true else false 
       addFile = (type, cb)->
-        console.log type
         maxSize = moduleSetting.getFieldValue type
         targetName = filename.replace /\.(?=[^.]*$)/, '_'+type+'.'
         file.setFieldValue type, targetName
-        console.log file.getFieldValue "link", filename
         image.quality parseInt(moduleSetting.fields.quality.value)
         if portrait then image.resize null, maxSize
         else image.resize maxSize
         image.write dir+targetName, ->
+          file.save()
           cb()
-
-      #for type, i in thumbTypes then addFile type, file, ->
-      #  thumbTypes.splice(i, 1)
-      #  console.log thumbTypes, i
-      #  if thumbTypes.length is 0 then done(); c.l "i am done"
-      async.each thumbTypes, addFile, done
+      async.each thumbTypes, addFile, ->done file
+      
