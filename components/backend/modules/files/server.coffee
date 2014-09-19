@@ -41,8 +41,7 @@ module.exports.setup = (app, cfg)->
 
 
   app.post "/uploadFile", auth, (req,res)->
-    #c.l "upload", req, res
-    form = new multiparty.Form 
+    form = new multiparty.Form
       uploadDir: dir
     form.parse req, (err, fields, files)->
       if err then return console.log 'formparse error', err
@@ -56,16 +55,13 @@ module.exports.setup = (app, cfg)->
           "type": srcFile.headers['content-type']
 
         if srcFile.headers['content-type'].split("/")[0] is "image"
-          createImages file, req, (file)->
-            file.save ->
-              req.io.broadcast "updateCollection", cfg.collectionName
-              done()
+          createImages file, req, ->
+            done()
         else
           file.save ->
             req.io.broadcast "updateCollection", cfg.collectionName
             done()
-      async.each files['files[]'], uploadFile, ->
-        console.log("uploaded"+files['files[]'].length+" files")
+      async.eachSeries files['files[]'], uploadFile
     res.end()
 
 
@@ -106,9 +102,10 @@ module.exports.setup = (app, cfg)->
 
   createImages = (file, req, done) ->
     thumbTypes = ["thumbnail", "smallPic", "bigPic"]
+    filename = file.getFieldValue "title"
     image = gm(dir+filename).size (err, size) ->
       if err then return console.error "createWebPic getSize err=", err
-      portrait = if size.width < size.height then true else false 
+      portrait = if size.width < size.height then true else false
       addFile = (type, cb)->
         maxSize = moduleSetting.getFieldValue type
         targetName = filename.replace /\.(?=[^.]*$)/, '_'+type+'.'
@@ -117,7 +114,9 @@ module.exports.setup = (app, cfg)->
         if portrait then image.resize null, maxSize
         else image.resize maxSize
         image.write dir+targetName, ->
-          file.save()
           cb()
-      async.each thumbTypes, addFile, ->done file
-      
+      async.each thumbTypes, addFile, ->
+        file.save ->
+          done()
+          req.io.broadcast "updateCollection", cfg.collectionName
+
