@@ -14,7 +14,8 @@ define [
     templateHelpers:
       t:i18n
       getArticles: -> App.Articles.toJSON()
-      getLayouts: -> App.Settings.findWhere({name: "Magazines"}).getValue("layouts").split(",")
+      getLayouts: -> App.Settings.findWhere({name: "MagazineModule"}).getValue("layouts").split(",")
+
       getMagazineName: (magazine)-> App.Magazines.findWhere(_id:magazine).get "name"
 
     ui:

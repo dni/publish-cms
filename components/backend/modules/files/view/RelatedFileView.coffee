@@ -28,7 +28,7 @@ define [
     childViewContainer: ".file-list"
     template: Template
     ui:
-      addFile: '#files'
+      addFile: '.addFile'
     templateHelpers:
       t:i18n
     events:
@@ -41,7 +41,7 @@ define [
         multiple: @multiple
 
     updateButton:->
-      if @collection.models.length > 0 
+      if @collection.models.length > 0
         @ui.addFile.hide()
       else
         @ui.addFile.show()
