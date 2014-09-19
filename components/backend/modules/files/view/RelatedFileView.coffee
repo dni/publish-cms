@@ -17,8 +17,6 @@ define [
     className: "preview-item"
     events:
       "click img": "showFile"
-    initialize:->
-      @listenTo @model, 'destroy', @close
     showFile: ->
       App.overlayRegion.currentView.childRegion.show new ShowFileView
         model: @model
@@ -29,6 +27,7 @@ define [
     template: Template
     ui:
       addFile: '.addFile'
+
     templateHelpers:
       t:i18n
     events:
@@ -41,6 +40,7 @@ define [
         multiple: @multiple
 
     updateButton:->
+      return unless @multiple is false
       if @collection.models.length > 0
         @ui.addFile.hide()
       else
@@ -52,7 +52,6 @@ define [
       @fieldrelation = args.fieldrelation # if relatedfileview is shown in model
       @model.set "fieldrelation", @fieldrelation
       @collection = Utilities.FilteredCollection App.Files
-      @listenTo @collection, 'sync', @updateButton
       @listenTo @, "render", @updateButton
       @collection.filter (file)=>
         if @model.get("_id") is file.getValue "relation"
@@ -62,4 +61,6 @@ define [
             return true
         else
           return false
+      @listenTo @collection, "reset remove", @updateButton
+
 

@@ -7,17 +7,6 @@ gm = require 'gm'
 multiparty = require "multiparty"
 fs = require "fs-extra"
 
-# caused the file errors because it is asynchronous
-# file.save would workd
-# multiple file upload wont work
-# fs.move = (oldLink, newLink, cb)->
-#   console.log("move ", oldLink, newLink)
-#   fs.copy oldLink, newLink, (err)->
-#     if err? then return console.log err
-#     fs.unlink oldLink, (err)->
-      # if err? then return console.log err
-      # cb?()
-
 module.exports.setup = (app, cfg)->
   moduleSetting = ''
   dir = "./public/files/"
@@ -52,6 +41,7 @@ module.exports.setup = (app, cfg)->
 
 
   app.post "/uploadFile", auth, (req,res)->
+    #c.l "upload", req, res
     form = new multiparty.Form 
       uploadDir: dir
     form.parse req, (err, fields, files)->
@@ -61,12 +51,12 @@ module.exports.setup = (app, cfg)->
         fs.renameSync srcFile.path, dir+title
         file = utils.createModel File, cfg
         file.setFieldValue
-          title: title
-          link: title
-          type: srcFile.headers['content-type']
+          "title": title
+          "link": title
+          "type": srcFile.headers['content-type']
+
         if srcFile.headers['content-type'].split("/")[0] is "image"
-          createImages file, req, ->
-            console.log file,"createimage file"
+          createImages file, req, (file)->
             file.save ->
               req.io.broadcast "updateCollection", cfg.collectionName
               done()
@@ -115,12 +105,10 @@ module.exports.setup = (app, cfg)->
     return title
 
   createImages = (file, req, done) ->
-    filename = file.getFieldValue "link"
-    portrait = false
     thumbTypes = ["thumbnail", "smallPic", "bigPic"]
     image = gm(dir+filename).size (err, size) ->
       if err then return console.error "createWebPic getSize err=", err
-      portrait = true if size.width < size.height
+      portrait = if size.width < size.height then true else false 
       addFile = (type, cb)->
         maxSize = moduleSetting.getFieldValue type
         targetName = filename.replace /\.(?=[^.]*$)/, '_'+type+'.'
@@ -129,5 +117,7 @@ module.exports.setup = (app, cfg)->
         if portrait then image.resize null, maxSize
         else image.resize maxSize
         image.write dir+targetName, ->
+          file.save()
           cb()
-      async.each thumbTypes, addFile, done
+      async.each thumbTypes, addFile, ->done file
+      
