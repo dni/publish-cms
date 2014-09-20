@@ -1,19 +1,19 @@
 <div class="page ui-state-default">
 	<form class="form-inline">
 
-		<span class="number badge"><%= number %></span>
+		<span class="number badge"><%= fields.number.value %></span>
 		<select class="article form-control">
 			<% for(var i = 0, articles = getArticles(); i < articles.length; i++) { %>
-				<option <% if (articles[i]._id == article) { %> selected="selected" <% } %> value="<%= articles[i]._id %>"><%= articles[i].title %></option>
+				<option <% if (articles[i]._id == fields.article.value) { %> selected="selected" <% } %> value="<%= articles[i]._id %>"><%= articles[i].title %></option>
 			<% } %>
 		</select>
 		<select class="layout form-control">
 			<% for(var i = 0, settings = getLayouts(); i < settings.length; i++) { %>
-				<option <% if (layout == settings[i]) { %> selected <% } %> value="<%= settings[i] %>"><%= settings[i] %></option>
+				<option <% if (fields.layout.value == settings[i]) { %> selected <% } %> value="<%= settings[i] %>"><%= settings[i] %></option>
 			<% } %>
 		</select>
 		<a class="remove btn btn-default"><span class="glyphicon glyphicon-remove"></span></a>
 		<a class="sort btn btn-default"><span class="glyphicon glyphicon-sort"></span></a>
-		<a class="preview btn btn-default" href="public/books/<%= getMagazineName(magazine) %>/hpub/Page<%= number %>.html" target="_blank"><span class="glyphicon glyphicon-eye-open"></span></a>
+		<a class="preview btn btn-default" href="public/books/<%= getMagazineName(fields.magazine.value) %>/hpub/Page<%= fields.number.value %>.html" target="_blank"><span class="glyphicon glyphicon-eye-open"></span></a>
 	</form>
 </div>

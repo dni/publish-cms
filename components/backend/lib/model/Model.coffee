@@ -1,6 +1,7 @@
 define [
   'backbone'
-], (Backbone) ->
+  'underscore'
+], (Backbone, _) ->
   class Model extends Backbone.Model
     idAttribute: "_id"
     defaults:
@@ -8,8 +9,11 @@ define [
 
     setValue: (fieldname, val)->
       fields = @get "fields"
-      field = fields[fieldname]
-      field.value = val
+      if _.isObject fieldname
+        for key, value of fieldname
+          fields[key] = value
+      else
+        fields[fieldname] = val
       @set "fields", fields
 
     getValue: (fieldname)->

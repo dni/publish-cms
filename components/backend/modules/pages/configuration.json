@@ -13,8 +13,16 @@
       "type": "text",
       "mongooseType": "String"
     },
-    "magazine" : {
-      "type": "text",
+    "content" : {
+      "type": "wysiwyg",
+      "mongooseType": "String"
+    },
+    "relation" : {
+      "type": "hidden",
+      "mongooseType": "String"
+    },
+    "article" : {
+      "type": "hidden",
       "mongooseType": "String"
     },
     "layout" : {
@@ -22,7 +30,7 @@
       "mongooseType": "String"
     },
     "number" : {
-      "type": "text",
+      "type": "hidden",
       "mongooseType": "String"
     }
   }
