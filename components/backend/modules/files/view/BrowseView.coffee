@@ -57,5 +57,4 @@ define [
           'parent': file.get "_id"
           'relation': @model.get "_id"
           'fieldrelation': @fieldrelation
-          'key': 'default'
         App.Files.create newfile

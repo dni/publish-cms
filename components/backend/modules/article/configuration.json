@@ -1,5 +1,4 @@
 {
-  "name": "ArticleModule",
   "moduleName": "ArticleModule",
   "modelName": "Article",
   "collectionName": "Articles",
@@ -19,33 +18,30 @@
   },
   "model": {
     "title" : {
-      "type": "text",
-      "mongooseType": "String"
+      "type": "text"
     },
     "author" : {
-      "type": "text",
-      "mongooseType": "String"
+      "type": "text"
     },
     "teaser" : {
-      "type": "textarea",
-      "mongooseType": "String"
+      "type": "textarea"
+    },
+    "teaserimage" : {
+      "type": "file",
+      "multiple": false
     },
     "category" : {
       "type": "select",
-      "setting": "categories",
-      "mongooseType": "String"
+      "setting": "categories"
     },
     "tags" : {
-      "type": "text",
-      "mongooseType": "String"
+      "type": "text"
     },
     "files" : {
-      "type": "hidden",
-      "mongooseType": "Object"
+      "type": "hidden"
     },
    "description" : {
-      "type": "wysiwyg",
-      "mongooseType": "String"
+      "type": "wysiwyg"
     }
   }
 }

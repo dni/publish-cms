@@ -1,88 +1,72 @@
 {
-    "name": "FileModule",
-    "moduleName": "FileModule",
-    "modelName": "File",
-    "namespace": "files",
-    "collectionName": "Files",
-    "url": "/files/",
-    "urlRoot": "files",
-    "dbTable": "files",
-    "notpublishable":true,
-    "navigation": true,
-    "navigationButton": "cloud-upload",
-    "model": {
-        "title" : {
-          "type": "text",
-          "mongooseType": "String"
-        },
-        "link" : {
-          "type": "hidden",
-          "mongooseType": "String"
-        },
-        "type" : {
-          "type": "hidden",
-          "mongooseType": "String"
-        },
-        "info" : {
-          "type": "text",
-          "mongooseType": "String"
-        },
-        "alt" : {
-          "type": "text",
-          "mongooseType": "String"
-        },
-        "desc" : {
-          "type": "wysiwyg",
-          "mongooseType": "String"
-        },
-        "fieldrelation" : {
-          "type": "hidden",
-          "mongooseType": "String"
-        },
-        "relation" : {
-          "type": "hidden",
-          "mongooseType": "String"
-        },
-        "parent" : {
-          "type": "hidden",
-          "mongooseType": "String"
-        },
-        "key" : {
-          "type": "text",
-          "mongooseType": "String"
-        },
-        "thumbnail" : {
-          "type": "hidden",
-          "mongooseType": "String"
-        },
-        "smallPic" : {
-          "type": "hidden",
-          "mongooseType": "String"
-        },
-        "bigPic" : {
-          "type": "hidden",
-          "mongooseType": "String"
-        }
+  "name": "FileModule",
+  "moduleName": "FileModule",
+  "modelName": "File",
+  "namespace": "files",
+  "collectionName": "Files",
+  "url": "/files/",
+  "urlRoot": "files",
+  "dbTable": "files",
+  "notpublishable":true,
+  "navigation": true,
+  "navigationButton": "cloud-upload",
+  "model": {
+    "title" : {
+      "type": "text"
     },
-    "settings": {
-        "thumbnail" : {
-          "value": "200",
-          "type": "text"
-        },
-        "smallPic" : {
-          "value": "800",
-          "type": "text"
-        },
-        "bigPic" : {
-          "value": "1800",
-          "type": "text"
-        },
-        "quality" : {
-          "value": "85",
-          "type": "range",
-          "min": 1,
-          "max": 100,
-          "step": 1
-        }
+    "link" : {
+      "type": "hidden"
+    },
+    "type" : {
+      "type": "hidden"
+    },
+    "info" : {
+      "type": "text"
+    },
+    "alt" : {
+      "type": "text"
+    },
+    "desc" : {
+      "type": "wysiwyg"
+    },
+    "fieldrelation" : {
+      "type": "hidden"
+    },
+    "relation" : {
+      "type": "hidden"
+    },
+    "parent" : {
+      "type": "hidden"
+    },
+    "thumbnail" : {
+      "type": "hidden"
+    },
+    "smallPic" : {
+      "type": "hidden"
+    },
+    "bigPic" : {
+      "type": "hidden"
     }
+  },
+  "settings": {
+    "thumbnail" : {
+      "value": "200",
+      "type": "text"
+    },
+    "smallPic" : {
+      "value": "800",
+      "type": "text"
+    },
+    "bigPic" : {
+      "value": "1800",
+      "type": "text"
+    },
+    "quality" : {
+      "value": "85",
+      "type": "range",
+      "min": 1,
+      "max": 100,
+      "step": 1
+    }
+  }
 }
