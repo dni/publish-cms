@@ -26,13 +26,12 @@ define [
   App.addRegions
     contentRegion:"#list"
 
-  App.BlockView = new BlockView collection: Blocks
-
   $ ->
     blocks = $.map $('[block]'), (o) -> $(o).attr 'block'
     Blocks.fetch
       data:
         blocks:blocks
       success: ->
+        App.BlockView = new BlockView collection: Blocks
 
 

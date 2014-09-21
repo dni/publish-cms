@@ -5,6 +5,7 @@ sessionSecret = 'publish#crossplattform#app'
 
 express = require 'express.io'
 app = express()
+app.config = config
 passport = require "passport"
 LocalStrategy = require('passport-local').Strategy
 mongoose = require "mongoose"
@@ -14,6 +15,8 @@ User = require(__dirname+"/components/backend/lib/model/Schema")("users")
 auth = require "./components/backend/utilities/auth"
 
 app.http().io()
+
+
 app.configure ->
 
   #authentication

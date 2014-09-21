@@ -8,7 +8,8 @@ async = require 'async'
 module.exports.setup = (app)->
 
   app.get '/blocks', (req,res)->
-    Blocks.find('key':$in: req.query.blocks).execFind (err, data)->res.send data
+    Blocks.find('fields.title.value':$in: req.query.blocks).exec (err, data)->
+      res.send data
 
   # articles
   app.get '/publicarticles', (req,res)->
