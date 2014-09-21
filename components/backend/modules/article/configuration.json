@@ -46,14 +46,6 @@
    "description" : {
       "type": "wysiwyg",
       "mongooseType": "String"
-    },
-    "magazine" : {
-      "type": "text",
-      "mongooseType": "String"
-    },
-    "layout" : {
-      "type": "text",
-      "mongooseType": "String"
     }
   }
 }

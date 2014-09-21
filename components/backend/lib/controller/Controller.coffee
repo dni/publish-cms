@@ -46,12 +46,7 @@ define [
       return defaults
 
     createNewModel: ->
-      fields = {}
-      for key, field of @Config.model
-        fields[key] =
-          value: ''
-          type: field.type
-          options: field.options
+      fields = @Config.model
       model = new @Model
       model.urlRoot = @Config.urlRoot
       model.collectionName = @Config.collectionName

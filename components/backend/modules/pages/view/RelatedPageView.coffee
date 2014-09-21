@@ -59,7 +59,7 @@ define [
       newpage.setValue
         number: @collection.length+1
         relation: @model.get "_id"
-        article: App.Articles.first().get "_id"
+        article: App.Articles.first()?.get "_id"
       @collection.create newpage
 
     initialize:(args)->

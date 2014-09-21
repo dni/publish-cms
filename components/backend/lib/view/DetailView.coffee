@@ -12,6 +12,7 @@ define [
     template: Template
     initialize:(args)->
       @model = args.model
+      @Config = args.Config
       @notpublishable = unless args.Config.notpublishable? then false else true
       @ui = {}
       @ui[key] = "[name="+key+"]" for key, arg of @model.get "fields"
@@ -28,7 +29,17 @@ define [
     templateHelpers: ->
       vhs: Utils.Viewhelpers
       notpublishable: @notpublishable
+      Config: @Config
       t: @options.i18n
+      getOptions:(attribute)->
+        if attribute.setting
+          setting = App.Settings.findSetting @Config.moduleName
+          values = setting.getValue(attribute.setting).split(',')
+          options = {}
+          for option in values
+            options[option] = option
+          return options
+        return attribute.options
       foreachAttribute: (fields, cb)->
         for key in @fieldorder
           cb key, fields[key]

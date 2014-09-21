@@ -47,11 +47,12 @@
 
       <% if (attribute.type=="select") { %>
       <select class="form-control" name="<%= key %>" >
-        <% for (option in attribute.options) { %>
+        <% var options = getOptions(attribute); %>
+        <% for (option in options) { %>
           <% if (attribute.value == option) { %>
-            <option selected value="<%= option %>"><%= attribute.options[option] %></option>
+            <option selected value="<%= option %>"><%= options[option] %></option>
           <% } else { %>
-            <option value="<%= option %>"><%= attribute.options[option] %></option>
+            <option value="<%= option %>"><%= option %></option>
           <% } %>
         <% } %>
       </select>

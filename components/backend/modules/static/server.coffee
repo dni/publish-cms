@@ -9,6 +9,7 @@ module.exports.setup = (app, config)->
   StaticblockSchema.count {}, (err, count)->
     if count is 0
       spawn = require('child_process').spawn
+      console.log "Imported Static Blocks"
       mongoimport = spawn 'mongoimport', ['--db', app.config.dbname, '--collection', 'staticblocks', '--file', 'staticblocks.json'], cwd:__dirname+'/data/'
 
   # export StaticBlock
