@@ -11,9 +11,9 @@ define [
       fields = @get "fields"
       if _.isObject fieldname
         for key, value of fieldname
-          fields[key] = value
+          fields[key].value = value
       else
-        fields[fieldname] = val
+        fields[fieldname].value = val
       @set "fields", fields
 
     getValue: (fieldname)->

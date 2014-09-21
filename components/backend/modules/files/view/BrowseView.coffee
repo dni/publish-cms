@@ -46,16 +46,16 @@ define [
 
     ok: ->
       @collection.forEach (file)=>
-        selected = file.get("selected") || false
-        return if selected is false
+        return unless file.get "selected"
         file.set("selected", false)
         newfile = new Model
         newfile.urlRoot = @Config.urlRoot
         newfile.collectionName = @Config.collectionName
         newfile.set _.clone file.attributes
         delete newfile.attributes._id
-        newfile.setValue 'parent', file.get "_id"
-        newfile.setValue 'relation', @model.get "_id"
-        newfile.setValue 'fieldrelation', @fieldrelation
-        newfile.setValue 'key', 'default'
+        newfile.setValue
+          'parent': file.get "_id"
+          'relation': @model.get "_id"
+          'fieldrelation': @fieldrelation
+          'key': 'default'
         App.Files.create newfile

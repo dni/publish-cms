@@ -55,8 +55,10 @@ module.exports.setup = (app, cfg)->
           "type": srcFile.headers['content-type']
 
         if srcFile.headers['content-type'].split("/")[0] is "image"
-          createImages file, req, ->
-            done()
+          Setting.findOne("fields.title.value": cfg.moduleName).exec (err, setting) ->
+            moduleSetting = setting
+            createImages file, req, ->
+              done()
         else
           file.save ->
             req.io.broadcast "updateCollection", cfg.collectionName
@@ -103,6 +105,7 @@ module.exports.setup = (app, cfg)->
   createImages = (file, req, done) ->
     thumbTypes = ["thumbnail", "smallPic", "bigPic"]
     filename = file.getFieldValue "title"
+
     image = gm(dir+filename).size (err, size) ->
       if err then return console.error "createWebPic getSize err=", err
       portrait = if size.width < size.height then true else false
