@@ -2,6 +2,7 @@ define [
   'cs!App'
   'cs!utilities/Utilities'
   'marionette'
+  'underscore'
   "cs!../model/Model"
   "cs!../model/Collection"
   "cs!../view/EmptyView"
@@ -9,7 +10,7 @@ define [
   "cs!../view/ListView"
   "cs!../view/DetailView"
 
-], ( App, Utilities, Marionette, Model, Collection, EmptyView, TopView, ListView, DetailView) ->
+], ( App, Utilities, Marionette, _, Model, Collection, EmptyView, TopView, ListView, DetailView) ->
   class Controller extends Marionette.Controller
 
     constructor: (args)->
@@ -47,6 +48,8 @@ define [
 
     createNewModel: ->
       fields = @Config.model
+      for key, field of fields
+        field.value = ""
       model = new @Model
       model.urlRoot = @Config.urlRoot
       model.collectionName = @Config.collectionName

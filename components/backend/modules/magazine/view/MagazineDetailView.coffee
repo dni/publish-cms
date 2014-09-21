@@ -3,6 +3,8 @@ define [
   'underscore'
 ], (Publish, _) ->
   class MagazineDetailView extends Publish.View.DetailView
+
+
     events: _.extend {}, Publish.View.DetailView.prototype.events,
       "change [name=title]": "changeName"
 

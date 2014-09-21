@@ -9,15 +9,6 @@
   "navigation": true,
 
   "settings": {
-    "categories" : {
-      "value": "Webdevelopment, Interactive, Webdesign",
-      "type": "text"
-    },
-    "layouts" : {
-      "description": "Comma seperated list of layout keys",
-      "value": "default, fullsize",
-      "type": "text"
-    },
     "theme" : {
       "description": "Comma seperated list of theme keys",
       "value": "default",
@@ -50,7 +41,8 @@
       "mongooseType": "String"
     },
     "theme": {
-      "type": "text",
+      "type": "select",
+      "setting": "theme",
       "mongooseType": "String"
     },
     "files": {
@@ -83,10 +75,6 @@
         "A5": "A5",
         "A6": "A6"
       }
-    },
-    "layout" : {
-      "type": "text",
-      "mongooseType": "String"
     }
   }
 }

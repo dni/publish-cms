@@ -6366,9 +6366,6 @@ img {
   cursor: pointer;
   height: 32px;
 }
-.addFile {
-  display: inline-block !important;
-}
 .page {
   margin-bottom: 12px;
 }

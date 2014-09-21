@@ -6,7 +6,7 @@ define [
 
   Viewhelpers =
     formatDate: (date)->
-      if date not typeof Date then new Date(date)
+      if date not typeof Date then date = new Date(date)
       date.format()
 
     renderButtons: (notpublishable, published)->

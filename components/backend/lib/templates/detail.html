@@ -6,7 +6,7 @@
 <div class="form-fields">
   <% foreachAttribute(fields, function(key, attribute){ %>
   <div class="form-group <% if (attribute.type === "hidden") { %>hidden<% } %>">
-    <% if (attribute.condition) {cond = this[attribute.condition]();} else { cond = true; } %>
+    <% if (attribute.condition) {cond = checkCondition(attribute.condition);} else { cond = true; } %>
     <% if (cond) { %>
       <%if (attribute.type === "button") { %>
         <a target="_blank" class="form-control" href="<%= attribute.value %>" ><%= t.attributes[key] %></a>

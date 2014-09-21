@@ -12,7 +12,6 @@ define [
     template: Template
     initialize:(args)->
       @model = args.model
-      @Config = args.Config
       @notpublishable = unless args.Config.notpublishable? then false else true
       @ui = {}
       @ui[key] = "[name="+key+"]" for key, arg of @model.get "fields"
@@ -29,8 +28,13 @@ define [
     templateHelpers: ->
       vhs: Utils.Viewhelpers
       notpublishable: @notpublishable
-      Config: @Config
+      Config: @options.Config
       t: @options.i18n
+      checkCondition: (condition)->
+        @[condition]()
+      isPrint:->
+        setting = App.Settings.findSetting "MagazineModule"
+        setting.getValue 'print'
       getOptions:(attribute)->
         if attribute.setting
           setting = App.Settings.findSetting @Config.moduleName

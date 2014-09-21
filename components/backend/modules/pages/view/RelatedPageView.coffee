@@ -17,7 +17,7 @@ define [
       t:i18n
       magazine: @model
       getArticles: -> App.Articles.toJSON()
-      getLayouts: -> App.Settings.findSetting("MagazineModule").getValue("layouts").split(",")
+      getLayouts: -> App.Settings.findSetting("PageModule").getValue("layout").split(",")
       getMagazineName: =>
         @magazine.getValue "title"
 

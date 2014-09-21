@@ -40,14 +40,13 @@ define [
         multiple: @multiple
 
     updateButton:->
-      return unless @multiple is false
-      if @collection.models.length > 0
+      return if @multiple
+      if @collection.length > 0
         @ui.addFile.hide()
       else
         @ui.addFile.show()
 
     initialize:(args)->
-      # TODO add limit to add files / browseview
       @multiple = if args.multiple? then args.multiple else true
       @fieldrelation = args.fieldrelation # if relatedfileview is shown in model
       @model.set "fieldrelation", @fieldrelation
