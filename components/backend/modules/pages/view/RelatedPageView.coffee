@@ -59,14 +59,14 @@ define [
       newpage.setValue
         number: @collection.length+1
         relation: @model.get "_id"
-        article: App.Articles.first()
+        article: App.Articles.first().get "_id"
       @collection.create newpage
 
     initialize:(args)->
       @Config = JSON.parse Config
       @collection = Utilities.FilteredCollection App.Pages
       @collection.filter (model)=>
-        @model.get("_id") is model.get("relation")
+        @model.get("_id") is model.getValue("relation")
       @listenTo @collection, 'sort', @render
       # @listenTo @, "render", @_sortAble
 

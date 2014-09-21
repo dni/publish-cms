@@ -33,7 +33,7 @@
       "type": "text",
       "mongooseType": "String"
     },
-  "name" : {
+    "name" : {
       "type": "hidden",
       "mongooseType": "String"
     },
@@ -49,11 +49,11 @@
       "type": "text",
       "mongooseType": "String"
     },
-    "theme" : {
+    "theme": {
       "type": "text",
       "mongooseType": "String"
     },
-    "files" : {
+    "files": {
       "type": "hidden",
       "mongooseType": "Object"
     },
@@ -65,11 +65,7 @@
       "type": "wysiwyg",
       "mongooseType": "String"
     },
-    "magazine" : {
-      "type": "text",
-      "mongooseType": "String"
-    },
-    "orientation" : {
+    "orientation": {
       "type": "select",
       "mongooseType": "String",
       "condition": "isPrint",

@@ -26,6 +26,7 @@ define [
       # @Collection::url = => @Config.url
       # @Collection::model = @Model
 
+
     newDetailView:(model)->
       new @DetailView
         model: model

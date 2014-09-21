@@ -4,7 +4,7 @@
 		<span class="number badge"><%= fields.number.value %></span>
 		<select class="article form-control">
 			<% for(var i = 0, articles = getArticles(); i < articles.length; i++) { %>
-				<option <% if (articles[i]._id == fields.article.value) { %> selected="selected" <% } %> value="<%= articles[i]._id %>"><%= articles[i].title %></option>
+				<option <% if (articles[i]._id == fields.article.value) { %> selected="selected" <% } %> value="<%= articles[i]._id %>"><%= articles[i].fields.title.value %></option>
 			<% } %>
 		</select>
 		<select class="layout form-control">
@@ -14,6 +14,5 @@
 		</select>
 		<a class="remove btn btn-default"><span class="glyphicon glyphicon-remove"></span></a>
 		<a class="sort btn btn-default"><span class="glyphicon glyphicon-sort"></span></a>
-		<a class="preview btn btn-default" href="public/books/<%= getMagazineName(fields.magazine.value) %>/hpub/Page<%= fields.number.value %>.html" target="_blank"><span class="glyphicon glyphicon-eye-open"></span></a>
 	</form>
 </div>
