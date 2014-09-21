@@ -5,13 +5,12 @@
 			<%= renderImage('teaser', 'smallPic') %>
 		</div>
 	<% } %>
-
 	<div class="article-content">
-		<div class="entry-date"><%= formatDate(date) %></div>
+		<div class="entry-date"><%= formatDate(Date.now()) %></div>
 		<div class="inner">
-			<h1><%= title %></h1>
-			<p><b><%= teaser %></b></p>
-			<p><%= desc %></p>
+			<h1><%= fields.title.value %></h1>
+			<p><b><%= fields.teaser.value %></b></p>
+			<p><%= fields.description.value %></p>
 			<% if (fileKeyExists('animation')) { %>
 				<iframe style="border:none;width:100%;height:20em;" src="/public/files/<%= getFile('animation').name %> "></iframe>
 			<% } %>
@@ -20,9 +19,9 @@
 	<div class="infos">
 		<ul>
 			<li><span class="glyphicon glyphicon-comment"></span> Kommentare</li>
-			<li><span class="glyphicon glyphicon-tag"></span> <%= tags %></li>
-			<li><span class="glyphicon glyphicon-user"></span> by <%= author %></li>
-			<li><span class="glyphicon glyphicon-asterisk"></span> <%= category %></li>
+			<li><span class="glyphicon glyphicon-tag"></span> </li>
+			<li><span class="glyphicon glyphicon-user"></span> by</li>
+			<li><span class="glyphicon glyphicon-asterisk"></span> </li>
 		</ul>
 	</div>
 </article>

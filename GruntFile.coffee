@@ -16,6 +16,7 @@ module.exports = (grunt)->
       scripts:
         files: ['components/**/*.coffee']
         tasks: ['test']
+        ,
         options:
           spawn: false
       json:

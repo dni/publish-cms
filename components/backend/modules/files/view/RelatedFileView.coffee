@@ -17,8 +17,6 @@ define [
     className: "preview-item"
     events:
       "click img": "showFile"
-    initialize:->
-      @listenTo @model, 'destroy', @close
     showFile: ->
       App.overlayRegion.currentView.childRegion.show new ShowFileView
         model: @model
@@ -27,25 +25,34 @@ define [
     childView: ItemView
     childViewContainer: ".file-list"
     template: Template
+    ui:
+      addFile: '.addFile'
+
     templateHelpers:
       t:i18n
     events:
-      "click #files": "add"
+      "click @ui.addFile": "add"
 
     add:->
       App.overlayRegion.currentView.childRegion.show new BrowseView
         model: @model
         fieldrelation: @fieldrelation
+        multiple: @multiple
+
+    updateButton:->
+      return unless @multiple is false
+      if @collection.models.length > 0
+        @ui.addFile.hide()
+      else
+        @ui.addFile.show()
 
     initialize:(args)->
       # TODO add limit to add files / browseview
-      @multiple = args.multiple
+      @multiple = if args.multiple? then args.multiple else true
       @fieldrelation = args.fieldrelation # if relatedfileview is shown in model
-      if @fieldrelation
-        @model.set "fieldrelation", true
-      else
-        @model.set "fieldrelation", false
+      @model.set "fieldrelation", @fieldrelation
       @collection = Utilities.FilteredCollection App.Files
+      @listenTo @, "render", @updateButton
       @collection.filter (file)=>
         if @model.get("_id") is file.getValue "relation"
           if @fieldrelation
@@ -54,4 +61,6 @@ define [
             return true
         else
           return false
+      @listenTo @collection, "reset remove", @updateButton
+
 

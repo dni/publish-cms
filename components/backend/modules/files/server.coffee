@@ -7,17 +7,6 @@ gm = require 'gm'
 multiparty = require "multiparty"
 fs = require "fs-extra"
 
-# caused the file errors because it is asynchronous
-# file.save would workd
-# multiple file upload wont work
-# fs.move = (oldLink, newLink, cb)->
-#   console.log("move ", oldLink, newLink)
-#   fs.copy oldLink, newLink, (err)->
-#     if err? then return console.log err
-#     fs.unlink oldLink, (err)->
-      # if err? then return console.log err
-      # cb?()
-
 module.exports.setup = (app, cfg)->
   moduleSetting = ''
   dir = "./public/files/"
@@ -53,23 +42,26 @@ module.exports.setup = (app, cfg)->
 
   app.post "/uploadFile", auth, (req,res)->
     form = new multiparty.Form
+      uploadDir: dir
     form.parse req, (err, fields, files)->
       if err then return console.log 'formparse error', err
-      for srcFile in files['files[]']
+      uploadFile = (srcFile, done)->
         title = safeFilename srcFile.originalFilename
         fs.renameSync srcFile.path, dir+title
         file = utils.createModel File, cfg
         file.setFieldValue
-          title: title
-          link: title
-          type: srcFile.headers['content-type']
+          "title": title
+          "link": title
+          "type": srcFile.headers['content-type']
 
         if srcFile.headers['content-type'].split("/")[0] is "image"
-          file.save ->
-            createImages file, req
+          createImages file, req, ->
+            done()
         else
           file.save ->
             req.io.broadcast "updateCollection", cfg.collectionName
+            done()
+      async.eachSeries files['files[]'], uploadFile
     res.end()
 
 
@@ -108,13 +100,12 @@ module.exports.setup = (app, cfg)->
       title = title.replace /\.(?=[^.]*$)/, "_"+Date.now()+"_copy."
     return title
 
-  createImages = (file, req) ->
-    filename = file.getFieldValue "link"
-    portrait = false
+  createImages = (file, req, done) ->
     thumbTypes = ["thumbnail", "smallPic", "bigPic"]
+    filename = file.getFieldValue "title"
     image = gm(dir+filename).size (err, size) ->
       if err then return console.error "createWebPic getSize err=", err
-      portrait = true if size.width < size.height
+      portrait = if size.width < size.height then true else false
       addFile = (type, cb)->
         maxSize = moduleSetting.getFieldValue type
         targetName = filename.replace /\.(?=[^.]*$)/, '_'+type+'.'
@@ -126,5 +117,6 @@ module.exports.setup = (app, cfg)->
           cb()
       async.each thumbTypes, addFile, ->
         file.save ->
-          console.log file, "save after aysnc"
+          done()
           req.io.broadcast "updateCollection", cfg.collectionName
+

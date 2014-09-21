@@ -20,6 +20,7 @@ define [
       getLayouts: -> App.Settings.findSetting("MagazineModule").getValue("layouts").split(",")
       getMagazineName: =>
         @magazine.getValue "title"
+
     ui:
       number: '.number'
       layout: '.layout'
