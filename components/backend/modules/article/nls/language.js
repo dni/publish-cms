@@ -7,6 +7,7 @@ define({
       "author": "Author",
       "defaultAuthor": "DefaultAuthor",
       "teaser": "Teaser",
+      "teaserimage": "Teaserimage",
       "article": "Article",
       "category": "Category",
       "categories": "Categories",

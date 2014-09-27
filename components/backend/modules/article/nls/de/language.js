@@ -15,6 +15,7 @@ define({
         "tags": "Tags",
         "description": "Beschreibung",
         "teaser": "Einleitungstext",
+        "teaserimage": "Vorschaubild",
         "categories": "Kategories",
         "magazine": "Magazin"
     }

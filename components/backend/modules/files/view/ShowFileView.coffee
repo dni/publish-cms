@@ -9,7 +9,6 @@ define [
     ui:
       title: 'input[name=title]'
       description: 'textarea[name=description]'
-      key: 'input[name=key]'
 
     events:
       "click .deleteFile": "deleteFile"
@@ -24,5 +23,4 @@ define [
       @model.set
         title: @ui.title.val()
         description: @ui.description.val()
-        key: @ui.key.val()
       @model.save()

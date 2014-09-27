@@ -14,6 +14,6 @@ require([
   'jquery',
   'cs!modules/blog/BlogModule'
 ], function(Backbone, $){
-  Backbone.history.start();
+  setTimeout(function(){ Backbone.history.start()}, 400);
   $(document).off('.data-api');
 });

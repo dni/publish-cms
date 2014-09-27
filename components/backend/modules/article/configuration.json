@@ -1,5 +1,6 @@
 {
   "moduleName": "ArticleModule",
+  "name": "ArticleModule",
   "modelName": "Article",
   "collectionName": "Articles",
   "url": "/articles/",
@@ -37,10 +38,7 @@
     "tags" : {
       "type": "text"
     },
-    "files" : {
-      "type": "hidden"
-    },
-   "description" : {
+    "description" : {
       "type": "wysiwyg"
     }
   }

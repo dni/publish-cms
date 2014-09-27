@@ -57,7 +57,7 @@ define [
           if @fieldrelation
             return file.getValue('fieldrelation') is @fieldrelation
           else
-            return true
+            return file.getValue('fieldrelation') is undefined
         else
           return false
       @listenTo @collection, "reset remove", @updateButton

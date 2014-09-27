@@ -13,22 +13,24 @@ module.exports.setup = (app)->
 
   # articles
   app.get '/publicarticles', (req,res)->
+    condition =
+      published: true
+
     #filter condition
     if req.query.category
-      condition =
-        published: true
+      _.extend {}, condition,
         "fields.category.value": req.query.category
-    else
-      condition =
-        published: true
 
     Article.find(condition).sort(date: -1).execFind (err, articles)->
-      if err then res.end()
       addFiles = (article, cb)->
-        article.files = []
-        File.find("fields.relation.value":article._id).execFind (err, files)->
-          if err then return
+        filearray = []
+        File.find("fields.relation.value":article._id.toString()).exec (err, files)->
           for file in files
-            article.files.push file
+            fieldrelation = file.fields.fieldrelation.value
+            if fieldrelation
+              article.fields[fieldrelation].value = file
+            else
+              filearray.push file
+          article.fields.files = filearray
           cb()
       async.each articles, addFiles, -> res.send articles
