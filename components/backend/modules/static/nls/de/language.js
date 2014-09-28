@@ -9,6 +9,8 @@ define({
 	"updateModel": "hat statischen Block aktuelisiert",
 	"attributes": {
         "title": "Schlüssel",
+        "layout": "Layout",
+        "image": "Bild",
         "data": "Inhalt"
     }
 });

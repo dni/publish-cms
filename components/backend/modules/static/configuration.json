@@ -9,15 +9,28 @@
     "dbTable": "staticblocks",
     "navigation": true,
     "notpublishable": true,
+    "settings": {
+      "layout" : {
+        "value": "default, noimage, imageleft, imageright",
+        "type": "text"
+      }
+    },
     "model": {
         "title" : {
           "type": "text",
           "required": true,
           "mongooseType": "String"
         },
+        "image" : {
+          "type": "file",
+          "multiple": false
+        },
+        "layout": {
+          "type": "select",
+          "setting": "layout"
+        },
         "data" : {
-          "type": "wysiwyg",
-          "mongooseType": "String"
+          "type": "wysiwyg"
         }
     }
 }

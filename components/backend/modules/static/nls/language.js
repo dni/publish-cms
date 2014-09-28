@@ -8,6 +8,8 @@ define({
       "updateModel": "updated static block",
       "attributes": {
         "title": "Key",
+        "layout": "Layout",
+        "image": "Image",
         "data": "Content"
       }
     },
