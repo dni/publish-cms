@@ -5,7 +5,8 @@ define [
   'cs!./../model/Pages'
   'cs!./../view/ListView'
   'cs!./../view/DetailView'
-], (App, Marionette, Articles, Pages, ListView, DetailView) ->
+  'cs!./../view/PageDetailView'
+], (App, Marionette, Articles, Pages, ListView, DetailView, PageDetailView) ->
 
   class BlogController extends Marionette.Controller
 
