@@ -5,11 +5,13 @@ define [
   'cs!./controller/BlogController'
   'cs!./view/BlockView'
   'cs!./view/ListView'
+  'cs!./view/PageView'
   'cs!./model/Articles'
   'cs!./model/StaticBlocks'
+  'cs!./model/Pages'
   "less!./style/frontend"
 ],
-($, App, Router, Controller, BlockView, ListView, Articles, Blocks ) ->
+($, App, Router, Controller, BlockView, ListView, PageView, Articles, Blocks, Pages ) ->
 
   App.isMobile = ()->
     userAgent = navigator.userAgent or navigator.vendor or window.opera
@@ -18,13 +20,22 @@ define [
   Articles.fetch
     success:->
 
+  Pages.fetch
+    success:->
+
+      App.navigationRegion.show new PageView collection: Pages
+
   Router.processAppRoutes new Controller,
     "": "list",
     "article/:id": "details"
+    "page/:id": "page"
     "category/:name": "filterCategory"
 
   App.addRegions
     contentRegion:"#list"
+    navigationRegion:"#navigation"
+
+
 
   $ ->
     blocks = $.map $('[block]'), (o) -> $(o).attr 'block'

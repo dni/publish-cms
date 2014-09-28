@@ -19,9 +19,9 @@
 	<div class="infos">
 		<ul>
 			<li><span class="glyphicon glyphicon-comment"></span> Kommentare</li>
-			<li><span class="glyphicon glyphicon-tag"></span> </li>
-			<li><span class="glyphicon glyphicon-user"></span> by</li>
-			<li><span class="glyphicon glyphicon-asterisk"></span> </li>
+      <li><span class="glyphicon glyphicon-tag"></span><%= get('tags') %> </li>
+      <li><span class="glyphicon glyphicon-user"></span> by <%= get('author') %></li>
+      <li><span class="glyphicon glyphicon-asterisk"></span> <%= get('category') %></li>
 		</ul>
 	</div>
 </article>

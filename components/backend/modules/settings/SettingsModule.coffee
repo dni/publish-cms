@@ -24,7 +24,6 @@ define [
   App.vent.on "SettingsModule:addSetting", (config, lang)->
     for key, value of lang.attributes
       module.i18n.attributes[key] = value
-
     if settingsready
       createSettings config
     else
@@ -34,12 +33,10 @@ define [
     setting = App.Settings.findSetting config.moduleName
     if !setting
       setting = new Publish.Model
-
       config.settings['title'] =
         value: config.moduleName
         type: "hidden"
         mongooseType: "String"
-
       setting.set "name", pConfig.modelName
       setting.set "fieldorder", Object.keys(config.settings)
       setting.set "fields", config.settings

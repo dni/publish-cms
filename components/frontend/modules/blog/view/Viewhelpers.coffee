@@ -2,6 +2,9 @@ define ['underscore'], (_) ->
 
   Viewhelpers =
 
+    get:(field)->
+      @fields[field].value
+
     getFile: (key) ->
       @fields[key]?.value.fields
 

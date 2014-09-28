@@ -3,6 +3,7 @@ Setting = require(process.cwd()+'/components/backend/lib/model/Schema')('setting
 Blocks = require(process.cwd()+'/components/backend/lib/model/Schema')('staticblocks')
 File = require(process.cwd()+'/components/backend/lib/model/Schema')('files')
 Article = require(process.cwd()+'/components/backend/lib/model/Schema')('articles')
+Page = require(process.cwd()+'/components/backend/lib/model/Schema')('pages')
 async = require 'async'
 
 module.exports.setup = (app)->
@@ -10,6 +11,11 @@ module.exports.setup = (app)->
   app.get '/blocks', (req,res)->
     Blocks.find('fields.title.value':$in: req.query.blocks).exec (err, data)->
       res.send data
+
+  # pages
+  app.get '/publicpages', (req,res)->
+    Page.find(published:true).exec (err, pages)->
+      res.send pages
 
   # articles
   app.get '/publicarticles', (req,res)->

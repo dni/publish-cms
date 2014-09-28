@@ -2,9 +2,10 @@ define [
   'cs!utilities/App'
   'marionette'
   'cs!./../model/Articles'
+  'cs!./../model/Pages'
   'cs!./../view/ListView'
   'cs!./../view/DetailView'
-], (App, Marionette, Articles, ListView, DetailView) ->
+], (App, Marionette, Articles, Pages, ListView, DetailView) ->
 
   class BlogController extends Marionette.Controller
 
@@ -23,3 +24,7 @@ define [
         data: category: name
         success:->
           App.contentRegion.show new ListView collection: Articles
+
+    page: (id) ->
+      page = Pages.findWhere _id: id
+      App.contentRegion.show new PageDetailView model: page
