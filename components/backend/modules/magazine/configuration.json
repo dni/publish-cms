@@ -36,6 +36,14 @@
       "type": "text",
       "mongooseType": "String"
     },
+    "cover" : {
+      "type": "file",
+      "multiple": false
+    },
+    "back" : {
+      "type": "file",
+      "multiple": false
+    },
     "product_id" : {
       "type": "text",
       "mongooseType": "String"

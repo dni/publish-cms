@@ -9,6 +9,8 @@ define({
     "layouts": "Layouts",
     "theme": "Theme",
     "print": "Aktiviere Druck PDF",
+    "cover": "Cover Image",
+    "back": "Back Image",
     "publish": "Publish",
     "unpublish": "Unpublish",
     "downloadPdf": "Download Druck Pdf",

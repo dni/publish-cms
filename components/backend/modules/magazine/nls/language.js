@@ -12,6 +12,8 @@ define({
     "attributes": {
       "layouts": "Layouts",
       "theme": "Theme",
+      "cover": "Cover Image",
+      "back": "Back Image",
       "print": "Enable Print PDF",
       "publish": "Publish",
       "unpublish": "Unpublish",
