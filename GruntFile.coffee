@@ -1,5 +1,6 @@
 config = require "./configuration.json"
 backend_modules = require("./components/backend/configuration.json").backend_modules
+frontend_modules = require("./components/backend/configuration.json").modules
 
 mongoose = require "mongoose"
 db = mongoose.connect 'mongodb://localhost/'+config.dbname
@@ -207,7 +208,7 @@ module.exports = (grunt)->
           stubModules: ['less', 'css', 'cs', 'coffee-script'],
           modules: [{
             name: 'config'
-            include: backend_modules
+            include: frontend_modules
             exclude: ['coffee-script', 'css', 'less']
           }]
           optimize : 'uglify2',

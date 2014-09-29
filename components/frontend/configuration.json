@@ -1,0 +1,5 @@
+{
+  "modules": [
+    "cs!modules/blog/BlogModule"
+  ]
+}
