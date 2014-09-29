@@ -185,7 +185,7 @@ module.exports = (grunt)->
 
       libsMagazine:
         options:
-          destPrefix: "components/magazine/js/vendor"
+          destPrefix: "components/magazine/default/js/vendor"
         files:
           "jquery.min.js": "jquery/dist/jquery.min.js"
 

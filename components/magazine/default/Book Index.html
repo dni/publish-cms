@@ -2,14 +2,14 @@
 <html>
 <head>
 	<meta charset="utf-8"/>
-	<title>Editorial: <%= magazine.title %></title>
+	<title>Editorial: <%= magazine.fields.title.value %></title>
 	<meta name="viewport" content="width=768; initial-scale=1.0;"/>
 	<link rel="stylesheet" type="text/css" href="css/book.css">
 	<link rel="stylesheet" media="print" type="text/css" href="css/print.css">
 </head>
 <body>
 	<div id="page" class="editorial">
-		<%- magazine.editorial %>
+		<%- magazine.fields.editorial.value %>
 
 		<ul class="navigation">
             <% for (var i = 0; i < pages.length; i++) { %>
