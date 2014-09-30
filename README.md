@@ -23,6 +23,8 @@ This is a tool for Content Creators or Temas, because Publish once properly them
 * Create a iOS eBook a with Baker eBook Framework and serve it with a Baker Server API, written in NodeJS
 
 ## About
+Publish was started in 2011 by Danielkrahofer [dnilabs](http://labs.agency/) and improved since then. In 2013 in cooperation with [Qupik](http://qupik.com/) and [AWS](http://www.awsg.at/) a lot of active development was funded to bring Publish! to a ready to use status for our customers.
+dnilabs will continue tho improve Publish!, because we are passionate about Opensource and Javascript and we use CMS Systems written in php on a daily basis in our job.
 
 ## Support
 The project was supported by aws - austria wirtschaftsservice
