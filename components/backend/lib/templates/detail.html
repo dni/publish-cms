@@ -8,7 +8,7 @@
   <div class="form-group <% if (attribute.type === "hidden") { %>hidden<% } %>">
     <% if (attribute.condition) {cond = checkCondition(attribute.condition);} else { cond = true; } %>
     <% if (cond) { %>
-      <%if (attribute.type === "button") { %>
+      <% if (attribute.type === "button") {  console.log(attribute.value); attribute.value= key;%>
         <a target="_blank" class="form-control" href="<%= attribute.value %>" ><%= t.attributes[key] %></a>
       <% } else { %>
         <label><%= t.attributes[key] %></label>
@@ -41,7 +41,7 @@
       <div id="<%= key %>" class="related-file-container"></div>
       <% } %>
 
-      <% if (attribute.type === "color") { %>
+      <% if (attribute.type === "color") { console.log(attribute); %>
       <input type="text" class="form-control colorpicker" value="<%= attribute.value %>"  name="<%= key %>" >
       <% } %>
 

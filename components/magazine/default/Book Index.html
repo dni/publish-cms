@@ -14,8 +14,13 @@
 		<ul class="navigation">
             <% for (var i = 0; i < pages.length; i++) { %>
                 <li class="page">
-                    <label>Page <%= pages[i].number %>: </label>
-                    <a href="Page<%= pages[i].number %>.html"><h7><%= articles[pages[i].article] %></a>
+                    <label>Page <%= pages[i].fields.number.value %>: </label>
+                    <a href="Page<%= pages[i].fields.number.value %>.html">
+                      <h7><%= articles[pages[i].fields.article.value].title %></h7>
+                      <% if (articles[pages[i].fields.article.value].teaserimage) { %>
+                        <img src="images/<%= articles[pages[i].fields.article.value].teaserimage %>">
+                      <% } %>
+                    </a>
                 </li>
             <% } %>
         </ul>

@@ -3,11 +3,14 @@ define [
   'cs!../view/MagazineDetailView'
   'cs!modules/pages/view/RelatedPageView'
   'cs!modules/files/view/RelatedFileView'
-], ( Publish, MagazineDetailView, RelatedPageView, RelatedFileView ) ->
+  'cs!../view/RelatedPreviewView'
+], ( Publish, MagazineDetailView, RelatedPageView, RelatedFileView, RelatedPreviewView ) ->
 
   class MagazineController extends Publish.Controller.LayoutController
-    DetailView: MagazineDetailView
     RelatedViews:
+      PreviewView: RelatedPreviewView
       FileView: RelatedFileView
       PageView: RelatedPageView
+    DetailView: MagazineDetailView
+
 

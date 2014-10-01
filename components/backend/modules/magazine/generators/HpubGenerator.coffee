@@ -20,7 +20,7 @@ module.exports.generate = (magazine) ->
     print = settings.fields.print.value
 
     File.find("fields.relation.value": id).execFind (err, files) ->
-      if err then throw err
+      return console.log err if err 
       _.each files, (file) ->
         fileName = file.fields.title.value
         if file.fields.fieldrelation.value is "cover"
@@ -31,40 +31,48 @@ module.exports.generate = (magazine) ->
           fs.copy process.cwd() + "/public/files/" + fileName, process.cwd() + "/public/books/" + title + "/hpub/images/" + file.name
 
       # generage INDEX
-      Page.find(magazine: magazine._id).exec (err, pages) ->
+      Page.find("fields.relation.value": id).exec (err, pages) ->
 
         articleIds = []
 
         _.each pages, (page) ->
-          articleIds.push page.article if page.article
+          pageArticle = page.fields.article.value 
+          articleIds.push pageArticle if pageArticle
         sortedPages = pages.sort (a,b)->
           return 1 if a.number > b.number
           return -1 if a.number < b.number
           return 0
 
+
         Article.find(_id: $in: articleIds).execFind (err, articles) ->
           newarticles = {}
           _.each articles, (article) ->
-            newarticles[article._id] = article.title
+            newarticles[article._id] = {}
+            newarticles[article._id].title = article.fields.title.value
+            File.find("fields.relation.value": article._id.toString()).execFind (err, files) ->
+              _.each files, (file) ->
+                if file.fields.fieldrelation.value is "teaserimage"
+                  console.log "found teaserImage"
+                  fs.copySync process.cwd() + "/public/files/" + file.fields.title.value, process.cwd() + "/public/books/" + title + "/hpub/images/" + file.fields.title.value
+                  newarticles[article._id].teaserimage = file.fields.title.value || null
 
+              # generage index for baker navigation
+              template = fs.readFileSync("./components/magazine/" + theme + "/index.html", "utf8")
+              fs.writeFileSync "./public/books/" + title + "/hpub/index.html", ejs.render template,
+                magazine: magazine
+                pages: sortedPages
+                articles: newarticles
 
-          # generage index for baker navigation
-          template = fs.readFileSync("./components/magazine/" + theme + "/index.html", "utf8")
-          fs.writeFileSync "./public/books/" + title + "/hpub/index.html", ejs.render template,
-            magazine: magazine
-            pages: sortedPages
-            articles: newarticles
+              # generate Editorial
+              template = fs.readFileSync("./components/magazine/" + theme + "/Book Index.html", "utf8")
+              fs.writeFileSync "./public/books/" + title + "/hpub/Book Index.html", ejs.render template,
+                magazine: magazine
+                pages: sortedPages
+                articles: newarticles
 
-          # generate Editorial
-          template = fs.readFileSync("./components/magazine/" + theme + "/Book Index.html", "utf8")
-          fs.writeFileSync "./public/books/" + title + "/hpub/Book Index.html", ejs.render template,
-            magazine: magazine
-            pages: sortedPages
-            articles: newarticles
-
-          if print
-            PrintGenerator.generatePage "Book Index.html", magazine
-            PrintGenerator.generatePage "index.html", magazine
+              if print
+                PrintGenerator.generatePage "Book Index.html", magazine
+                PrintGenerator.generatePage "index.html", magazine
 
       # generate Cover
       template = fs.readFileSync("./components/magazine/" + theme + "/Book Cover.html", "utf8")
@@ -90,7 +98,7 @@ module.exports.generate = (magazine) ->
 
 
       # generate JSON
-      Page.find(magazine: magazine._id).exec (err, pages) ->
+      Page.find("fields.relation.value": id).exec (err, pages) ->
 
         # first pages
         contents = [
@@ -99,7 +107,6 @@ module.exports.generate = (magazine) ->
         ]
 
         for i, page of pages
-          console.log("addPage", i)
           j = parseInt(i)+1 # pages starts at 1 ;)
           contents.push "Page#{j}.html"
 
@@ -107,9 +114,9 @@ module.exports.generate = (magazine) ->
         contents.push "Tail.html"
         contents.push "Book Back.html"
 
-        Settings.find(name: "General").execFind (err, res) ->
-          if err then throw err
-          domain = "prostMahlzeit"#res[0].settings.domain.value
+        Settings.findOne("fields.title.value": "PublishModule").exec (err, setting) ->
+          if err then return console.log err
+          domain = setting.fields.domain.value
 
           fs.writeFileSync "./public/books/" + title + "/hpub/book.json", JSON.stringify
             hpub: 1
@@ -130,20 +137,24 @@ module.exports.generate = (magazine) ->
             contents: contents
 
       # CHAPTERS
-      Page.find(magazine: id).exec (err, pages) ->
+
         # generate pages
         _.each pages, (page) ->
-          return unless page.layout
-          template = fs.readFileSync("./components/magazine/" + theme + "/pages/" + (page.layout).trim() + ".html", "utf8")
-          Article.findOne(_id: page.article).exec (err, article) ->
-            if err then return
-            File.find(relation: "article:" + article._id).execFind (err, files) ->
-              articlefiles = {}
+          pagelayout = page.fields.layout.value || "default"
+          theme = page.fields.theme?.value || "default"
+          return unless pagelayout
+          template = fs.readFileSync("./components/magazine/" + theme + "/pages/" + (pagelayout).trim() + ".html", "utf8")
+          Article.findOne(_id: page.fields.article.value).exec (err, article) ->
+            if err then return console.log err
+            articleId = article._id.toString()
+            File.find("fields.relation.value": articleId).execFind (err, files) ->
+              articlefiles = []
               _.each files, (file) ->
-                fs.copySync process.cwd() + "/public/files/" + file.fields.name.value, process.cwd() + "/public/books/" + title + "/hpub/images/" + file.name
-                articlefiles[file.key] = file.fields.name.value
+                if file.fields.fieldrelation.value isnt "teaserimage"
+                  fs.copySync process.cwd() + "/public/files/" + file.fields.title.value, process.cwd() + "/public/books/" + title + "/hpub/images/" + file.fields.title.value
+                  articlefiles.push file.fields.title.value
 
-              filename = "Page" + page.number + ".html"
+              filename = "Page" + page.fields.number.value + ".html"
               fs.writeFileSync "./public/books/" + title + "/hpub/" + filename, ejs.render template,
                 magazine: magazine
                 page: page
