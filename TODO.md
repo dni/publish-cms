@@ -12,6 +12,7 @@
   * more flexibility with custom Frontend Themes
   * Offline mode for backend - Backbone.LocalStorage
   * Paid Newstand App BAKER NodeJS API
+  * Add https://prerender.io/ to frontend for SEO
 
 ## missing something?
 You my considering forking this file or report and Issue on Github. We will be glade for your support.
