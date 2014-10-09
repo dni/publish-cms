@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8"/>
-	<title>Cover: <%= magazine.title %></title>
+	<title>Cover: <%= magazine.fields.title.value %></title>
 
 	<link rel="stylesheet" type="text/css" href="css/book.css">
 	<link rel="stylesheet" media="print" type="text/css" href="css/print.css">
@@ -13,10 +13,10 @@
 	</style>
 </head>
 <body>
-	<h1 id="cover-title"><%= magazine.title %></h1>
+	<h1 id="cover-title"><%= magazine.fields.title.value %></h1>
 
 
-  <script type="text/javascript" src="js/vendor/jquery.min.js"></script>
-	<script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/vendor/jquery.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>

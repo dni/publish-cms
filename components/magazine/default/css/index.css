@@ -9,6 +9,9 @@ body {
 a {color:black;font-weight:bold;}
 ul {margin:0;padding:0;list-style:none;}
 label {display:block;}
+
+img {width:100%;max-height:auto;height:auto;}
+
 #index .page {
     float:left;
     width:150px;

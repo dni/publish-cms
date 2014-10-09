@@ -93,7 +93,6 @@ module.exports = (setting, cb)->
               else if format is "launch"
                 topPos = (imgData.h-logoH)/2
                 targetDir += "LaunchImage.launchimage"
-              console.log imgData.w, imgData.h, sizeOfBg
               gm(background)
                 .in("-resize", rsStr)
                 #.extent(imgData.w, imgData.h)

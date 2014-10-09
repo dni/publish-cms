@@ -24,10 +24,10 @@ body {
 	background-attachment:fixed;
 	background-position:center;
 	background-size:cover;
-
 }
 
 h1, h2 {font-weight:200;}
+
 img {width:100%;max-height:auto;height:auto;}
 
 #cover-title {
@@ -37,6 +37,7 @@ img {width:100%;max-height:auto;height:auto;}
     position: absolute;
     bottom: 96px;
 }
+
 
 #index {
 

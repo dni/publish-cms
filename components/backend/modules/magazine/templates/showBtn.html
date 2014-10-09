@@ -1,0 +1,11 @@
+  <div class="btn-group">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><%= t.preview %> <span class="caret"></span></button>
+    <ul class="dropdown-menu" role="menu">
+      <li><a href="public/books/<%= fields.name.value %>/hpub/Book Cover.html" target="_blank"><%= t.cover %></a></li>
+      <li><a href="public/books/<%= fields.name.value %>/hpub/Book Back.html" target="_blank"><%= t.back %></a></li>
+      <li><a href="public/books/<%= fields.name.value %>/hpub/Book Index.html" target="_blank"><%= t.index %></a></li>
+      <li><a href="public/books/<%= fields.name.value %>/hpub/Tail.html" target="_blank"><%= t.editorial %></a></li>
+      <li class="divider"></li>
+      <li><a href="/downloadHpub/<%= _id %>" target="_blank"><%= t.downloadHpub %></a></li>
+    </ul>
+  </div>
