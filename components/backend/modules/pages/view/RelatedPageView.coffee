@@ -60,15 +60,17 @@ define [
         number: @collection.length+1
         relation: @model.get "_id"
         article: App.Articles.first()?.get "_id"
-      @collection.create newpage
+      @collection.create newpage, wait:true, success: ->
 
     initialize:(args)->
       @Config = JSON.parse Config
       @collection = Utilities.FilteredCollection App.Pages
       @collection.filter (model)=>
         @model.get("_id") is model.getValue("relation")
+      @collection.comparator = (model)->
+        model.get "number"
       @listenTo @collection, 'sort', @render
-      # @listenTo @, "render", @_sortAble
+      @listenTo @, "render", @_sortAble
 
     _sortAble:->
       @$el.find(".page-list").sortable(
@@ -80,9 +82,11 @@ define [
 
     _sortStop: (event, ui)->
       that = @
-      @$el.find('.number').each (i)->
-        elNumber = $(@).text()
-        model = that.collection.findWhere number: parseInt elNumber
-        model.set "number", i+1
+      @$el.find('li').each (i)->
+        index = parseInt that.$el.find('li').index(@)
+        number = parseInt $(@).find('.number').text()
+        model = _.filter(that.collection.models, (m)-> parseInt(m.getValue('number')) is number).pop()
+        c.l "setfrom:", model.getValue("number"), "setto: ", index+1
+        model.setValue number: index+1
         model.save()
-      @collection.sort()
+      # @collection.sort()

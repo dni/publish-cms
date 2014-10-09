@@ -1,6 +1,5 @@
-<div class="page ui-state-default">
+<li data-uid="<%= _id %>" class="page ui-state-default">
 	<form class="form-inline">
-
 		<span class="number badge"><%= fields.number.value %></span>
 		<select class="article form-control">
 			<% for(var i = 0, articles = getArticles(); i < articles.length; i++) { %>
@@ -15,4 +14,4 @@
 		<a class="remove btn btn-default"><span class="glyphicon glyphicon-remove"></span></a>
 		<a class="sort btn btn-default"><span class="glyphicon glyphicon-sort"></span></a>
 	</form>
-</div>
+</li>
