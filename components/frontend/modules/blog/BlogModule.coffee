@@ -10,6 +10,7 @@ define [
   'cs!./model/StaticBlocks'
   'cs!./model/Pages'
   "less!./style/frontend"
+  "css!style/jquery.fancybox.css"
 ],
 ($, App, Router, Controller, BlockView, ListView, PageView, Articles, Blocks, Pages ) ->
 

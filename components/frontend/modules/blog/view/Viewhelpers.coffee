@@ -6,7 +6,7 @@ define ['underscore'], (_) ->
       @fields[field].value
 
     getFile: (key) ->
-      @fields[key]?.value.fields
+      @fields[key]?.value?.fields
 
     fileKeyExists: (key) ->
       !!@getFile(key)
