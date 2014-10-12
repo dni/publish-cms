@@ -68,7 +68,7 @@ define [
             multiple: field.multiple
           @RelatedViews[key].render()
           @on "close", => @RelatedViews[key].destroy()
-          @$el.find('#'+key).parent().hide().addClass('related-view')
+          if @model.isNew() then @$el.find('#'+key).parent().hide().addClass('related-view')
           @$el.find('#'+key).append @RelatedViews[key].el
 
     events:
