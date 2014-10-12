@@ -68,7 +68,8 @@ define [
       @collection.filter (model)=>
         @model.get("_id") is model.getValue("relation")
       @collection.comparator = (model)->
-        model.get "number"
+        model.getValue "number"
+      @collection.sort()
       @listenTo @collection, 'sort', @render
       @listenTo @, "render", @_sortAble
 
@@ -85,8 +86,7 @@ define [
       @$el.find('li').each (i)->
         index = parseInt that.$el.find('li').index(@)
         number = parseInt $(@).find('.number').text()
-        model = _.filter(that.collection.models, (m)-> parseInt(m.getValue('number')) is number).pop()
-        c.l "setfrom:", model.getValue("number"), "setto: ", index+1
+        # shift model, because pop would give the last changes model which would be the previous loop el
+        model = _.filter(that.collection.models, (m)-> parseInt(m.getValue('number')) is number).shift()
         model.setValue number: index+1
         model.save()
-      # @collection.sort()
