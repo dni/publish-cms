@@ -17,6 +17,7 @@ define [
       @on 'render', @afterRender
 
     showRelatedView: =>
+      @$el.parent().find('.related-view').show();
       @relatedRegion.show @RelatedView
 
     afterRender:->
