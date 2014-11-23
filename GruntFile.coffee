@@ -13,6 +13,10 @@ module.exports = (grunt)->
 
     pkg: grunt.file.readJSON 'package.json'
 
+    less:
+      development:
+        files: "components/backend/lib/style/main.css": "components/backend/lib/style/main.less"
+
     watch:
       scripts:
         files: ['components/**/*.coffee']
@@ -320,6 +324,7 @@ module.exports = (grunt)->
     'bowercopy'
     'copy:tinymce' # translations for tinymce
     'clean:lib' #workaround ;()
+    'less:development' # precompile less ;D
     'build'
   ]
 
