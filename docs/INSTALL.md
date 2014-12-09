@@ -38,6 +38,15 @@ git checkout master
 git merge upstream/master
 ```
 
+## Contribute back to publish
+First commit all feature you want to contribute and use the SHA hash of the commit.
+```sh
+git checkout upstream
+git cherry-pick <SHA hash of commit>
+git push upstream
+git checkout master
+```
+
 ## Install App
 To Install the application just type the following
 ```sh
