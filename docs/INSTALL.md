@@ -19,9 +19,29 @@ npm i -g bower grunt-cli coffee-script
 Make sure mongod process is running, you can start it with mongod
 
 
-## Dowload and Install
+## Setup new Repository and Fork Publish
+Best pratice is to setup up a new Github Repository, clone it  and add publish-cms as upstream, so you can sync updates from publish-cms.
 ```sh
-git clone https://github.com/dni/publish-cms && cd publish-cms && npm i
+git clone https://github.com/dni/mynewrepository
+cd mynewrepository
+git remote add upstream https://github.com/dni/publish-cms
+git fetch upstream
+git checkout master
+git merge upstream/master
+```
+
+## Updating publish
+If your project is setted up right as a fork
+```sh
+git fetch upstream
+git checkout master
+git merge upstream/master
+```
+
+## Install App
+To Install the application just type the following
+```sh
+npm i
 ```
 requirejs:buildBackend can take 4-5 minutes :(
 
