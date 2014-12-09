@@ -36,10 +36,14 @@ define [
         setting = App.Settings.findSetting "MagazineModule"
         setting.getValue 'print'
       getOptions:(attribute)->
+        options = {}
+        if attribute.collection
+          App[attribute.collection].forEach (model)->
+            options[model.get("_id")] = model.getValue("title")
+          return options
         if attribute.setting
           setting = App.Settings.findSetting @Config.moduleName
           values = setting.getValue(attribute.setting).split(',')
-          options = {}
           for option in values
             options[option] = option
           return options
