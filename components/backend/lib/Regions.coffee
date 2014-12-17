@@ -2,10 +2,11 @@ define [
   'cs!App'
   'i18n!modules/publish/nls/language.js'
   'jquery'
+  'bootstrap-datetimepicker'
   'jquery.tinymce'
   'jquery.minicolors'
   'bootstrap'
-], (App, i18n, $, tinymce, minicolors, bootstrap) ->
+], (App, i18n, $, datetimepicker, tinymce, minicolors, bootstrap) ->
 
   # important for build
   tinyMCE.baseURL = "/vendor/tinymce"
@@ -25,6 +26,8 @@ define [
     if App.contentRegion.currentView? then App.contentRegion.currentView.destroy()
 
   App.contentRegion.on "show", ->
+    # datepicker
+    App.contentRegion.currentView.$el.find(".datepicker").datetimepicker()
     # colorpicker
     App.contentRegion.currentView.$el.find(".colorpicker").minicolors
       control: $(this).attr('data-control') || 'hue'

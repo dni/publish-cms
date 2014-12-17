@@ -45,6 +45,14 @@
       <input type="text" class="form-control colorpicker" value="<%= attribute.value %>"  name="<%= key %>" >
       <% } %>
 
+      <% if (attribute.type === "date") { %>
+      <div class='input-group date datepicker'>
+        <input type='text' class="form-control" value="<%= attribute.value %>"  name="<%= key %>"/>
+        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+        </span>
+      </div>
+      <% } %>
+
       <% if (attribute.type=="select") { %>
       <select class="form-control" name="<%= key %>" >
         <% var options = getOptions(attribute); %>

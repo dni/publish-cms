@@ -149,12 +149,15 @@ module.exports = (grunt)->
           "css-builder.js": "require-css/css-builder.js"
           "normalize.js": "require-css/normalize.js"
           "lessc.js": "require-less/lessc.js"
+          "bootstrap-datetimepicker.js": "eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js"
+          "moment.js": "moment/min/moment-with-locales.js"
           # style
           "style": "bootstrap/less"
           "style/boostrap.css": "bootstrap/dist/css/bootstrap.css"
           "style/.": "jcrop/css/*"
           "style/jquery.minicolors.css": "jquery-minicolors/jquery.minicolors.css"
           "style/jquery.minicolors.png": "jquery-minicolors/jquery.minicolors.png"
+          "style/bootstrap-datetimepicker.less": "eonasdan-bootstrap-datetimepicker/src/less/bootstrap-datetimepicker.less"
 
       libsFrontend:
         options:
@@ -239,6 +242,8 @@ module.exports = (grunt)->
           optimize : 'uglify2',
           shim:
             'jquery.tinymce':['jquery', 'tinymce']
+            'jquery.ui':['jquery']
+            'jquery.minicolors':['jquery']
           paths:
             config: '../config'
             lib: '../lib'
