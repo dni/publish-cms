@@ -6,6 +6,7 @@ module.exports = (app, config)->
   # crud
   app.post '/'+config.urlRoot, auth, (req, res)->
     schema = new Schema
+    schema.cruser = app.user._id
     schema.user = app.user._id
     schema.crdate = new Date()
     schema.date = new Date()
@@ -25,6 +26,7 @@ module.exports = (app, config)->
     Schema.findById req.params.id, (e, schema)->
       app.emit config.moduleName+':before:put', req, res, schema
       schema.date = new Date()
+      schema.user = app.user._id
       schema.fields = req.body.fields
       schema.published = req.body.published
       schema.save ->
