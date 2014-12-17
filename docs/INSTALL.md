@@ -39,11 +39,11 @@ git merge upstream/master
 ```
 
 ## Contribute back to publish
-First commit all feature you want to contribute and use the SHA hash of the commit.
+First commit all feature you want to contribute and use the SHA hash of the commit to your master branch
 ```sh
 git checkout upstream
 git cherry-pick <SHA hash of commit>
-git push upstream
+git push upstream upstream:master
 git checkout master
 ```
 
