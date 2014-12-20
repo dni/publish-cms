@@ -19,15 +19,14 @@ define [
     listTopRegion: "#list-top"
     listRegion:"#list"
 
-
-
   # close detailview if now listview is shown
   App.listRegion.on "show", ->
     if App.contentRegion.currentView? then App.contentRegion.currentView.destroy()
 
   App.contentRegion.on "show", ->
     # datepicker
-    App.contentRegion.currentView.$el.find(".datepicker").datetimepicker()
+    App.contentRegion.currentView.$el.find(".datepicker").datetimepicker
+      showToday:true
     # colorpicker
     App.contentRegion.currentView.$el.find(".colorpicker").minicolors
       control: $(this).attr('data-control') || 'hue'

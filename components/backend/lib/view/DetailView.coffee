@@ -56,6 +56,8 @@ define [
       fields = @model.get "fields"
       for key, field of fields
         field.value = @ui[key].val()
+        if field.type is "date"
+          field.value is @ui[key].parent().data("DateTimePicker").getDate()
         if field.type is "checkbox"
           field.value = @ui[key].prop('checked')
       return fields
