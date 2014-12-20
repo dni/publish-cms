@@ -246,6 +246,7 @@ module.exports = (grunt)->
             'jquery.minicolors':['jquery']
           paths:
             config: '../config'
+            configuration: '../configuration.json'
             lib: '../lib'
             utilities: '../utilities'
             modules: '../modules'
