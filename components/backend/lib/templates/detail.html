@@ -9,7 +9,7 @@
     <% if (attribute.condition) {cond = checkCondition(attribute.condition);} else { cond = true; } %>
     <% if (cond) { %>
       <% if (attribute.type === "button") {  attribute.value= key;%>
-        <a target="_blank" class="form-control" href="<%= attribute.value %>" ><%= t.attributes[key] %></a>
+        <a target="_blank" class="btn btn-primary" href="<%= attribute.value %>" ><%= t.attributes[key] %></a>
       <% } else { %>
         <label><%= t.attributes[key] %></label>
       <% } %>

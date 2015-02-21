@@ -9,6 +9,14 @@
     "domain" : {
       "value": "localhost",
       "type": "text"
+    },
+    "backupDatabase" : {
+      "value": "backupDatabase",
+      "type": "button"
+    },
+    "restoreDatabase" : {
+      "value": "restoreDatabase",
+      "type": "button"
     }
   }
 }
