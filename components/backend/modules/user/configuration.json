@@ -21,7 +21,7 @@
           "mongooseType": "String"
         },
         "password": {
-          "type": "text",
+          "type": "password",
           "mongooseType": "String"
         },
         "email": {

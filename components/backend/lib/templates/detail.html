@@ -17,6 +17,10 @@
       <input<% if (attribute.required) {%> required<% } %> type="text" name="<%= key %>" class="form-control" value="<%= attribute.value %>" />
       <% } %>
 
+      <% if (attribute.type === "password") { %>
+      <input<% if (attribute.required) {%> required<% } %> type="password" name="<%= key %>" class="form-control" value="<%= attribute.value %>" />
+      <% } %>
+
       <% if (attribute.type === "hidden") { %>
       <input type="hidden" name="<%= key %>" class="form-control" value="<%= attribute.value %>" />
       <% } %>

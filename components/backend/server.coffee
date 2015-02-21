@@ -1,17 +1,15 @@
 fs = require 'fs'
 crud = require './utilities/crud'
+dir =  __dirname+'/modules/'
+configuration = require("./configuration.json")
+modules = configuration.backend_modules.map (moduleString)-> dir+moduleString.split("/")[1]
 module.exports.setup = (app)->
   app.configure ->
     # load/setup modules
-    dir =  __dirname+'/modules/'
-    fs.readdir dir, (err, files)->
-      return console.log err if err
-      files.forEach (file)->
-        fs.lstat dir+file, (err, stats)->
-          if !err && stats.isDirectory()
-            fs.exists dir+file+'/server.coffee', (exists)->
-              if exists
-                module = require dir+file+'/server.coffee'
-                config = require dir+file+'/configuration.json'
-                module.setup app, config
-                if config.model then crud app, config
+    modules.forEach (module)->
+      fs.exists module+'/server.coffee', (exists)->
+        if exists
+          module_server = require module+'/server.coffee'
+          config = require module+'/configuration.json'
+          module_server.setup app, config
+          if config.collectionName then crud app, config
