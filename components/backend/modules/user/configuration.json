@@ -10,7 +10,7 @@
     "notpublishable": true,
     "navigation": true,
     "navigationButton": "user",
-
+    "columns": ["title", "username", "email"],
     "model": {
         "title" : {
           "type": "text",
