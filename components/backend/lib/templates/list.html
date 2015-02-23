@@ -1,0 +1,16 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <% columns.forEach(function(column){ %>
+        <th class="<%= column %>"><%= i18n.attributes[column] %></th>
+      <% });%>
+      <th>
+        <button class="btn btn-default btn-xs">Select all</button>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+
+

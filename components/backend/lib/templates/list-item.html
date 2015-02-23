@@ -1,1 +1,22 @@
-<h3><a href="#<%= name %>/<%= _id %>"><%= fields.title.value %></a></h3>
+<% columns.forEach(function(column){
+  var value = "";
+  if (fields[column] == undefined) {
+    console.log("undefined field column", column);
+    if (column == "date") {
+      value = crdate;
+    }
+  }
+  else if (fields[column].collection) {
+    value = vhs.getModel(fields[column]).getValue('title');
+  } else {
+    value = fields[column].value;
+  }
+%>
+  <td class="column-<%= column %>"><%= value %></td>
+<% }); %>
+<td>
+  <div class="btn-group">
+    <button class="ok btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span></button>
+  </div>
+</td>
+<div class="buttons">

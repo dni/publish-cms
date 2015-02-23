@@ -77,4 +77,7 @@ define [
         newRoute: 'new'+@Config.modelName
       FilteredCollection = Utilities.FilteredCollection App[@Config.collectionName]
       FilteredCollection.filter @filterFunction
-      App.listRegion.show new @ListView collection: FilteredCollection
+      App.listRegion.show new @ListView
+        config: @Config
+        i18n: @i18n
+        collection: FilteredCollection
