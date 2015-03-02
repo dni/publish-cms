@@ -14,7 +14,7 @@ define [
       @model = args.model
       @notpublishable = unless args.Config.notpublishable? then false else true
       @ui = {}
-      @ui[key] = "[name="+key+"]" for key, arg of @model.get "fields"
+      @ui[key] = "[name="+key+"]" for key, arg of args.Config.model
       @bindUIElements()
       @on "render", @afterRender, @
 
@@ -49,12 +49,15 @@ define [
           return options
         return attribute.options
       foreachAttribute: (fields, cb)->
-        for key in @fieldorder
-          cb key, fields[key]
+        for key in @Config.fields
+          field = @Config.model[key]
+          field.value = fields[key]?.value
+          cb key, field
 
     getValuesFromUi: ()->
-      fields = @model.get "fields"
+      fields = @options.Config.model
       for key, field of fields
+        return unless @ui[key]
         field.value = @ui[key].val()
         if field.type is "date"
           field.value is @ui[key].parent().data("DateTimePicker").getDate()

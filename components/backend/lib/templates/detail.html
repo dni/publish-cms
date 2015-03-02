@@ -5,7 +5,7 @@
 
 <div class="form-fields">
   <% foreachAttribute(fields, function(key, attribute){ %>
-  <div class="form-group <% if (attribute.type === "hidden") { %>hidden<% } %>">
+  <div class="form-group">
     <% if (attribute.condition) {cond = checkCondition(attribute.condition);} else { cond = true; } %>
     <% if (cond) { %>
       <% if (attribute.type === "button") {  attribute.value= key;%>
@@ -19,10 +19,6 @@
 
       <% if (attribute.type === "password") { %>
       <input<% if (attribute.required) {%> required<% } %> type="password" name="<%= key %>" class="form-control" value="<%= attribute.value %>" />
-      <% } %>
-
-      <% if (attribute.type === "hidden") { %>
-      <input type="hidden" name="<%= key %>" class="form-control" value="<%= attribute.value %>" />
       <% } %>
 
       <% if (attribute.type === "wysiwyg") { %>
