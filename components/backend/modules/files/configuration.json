@@ -10,6 +10,8 @@
   "notpublishable":true,
   "navigation": true,
   "navigationButton": "cloud-upload",
+  "columns": ["title", "type"]
+  "fields": ["title", "type", "info", "alt", "desc"]
   "model": {
     "title" : {
       "type": "text"

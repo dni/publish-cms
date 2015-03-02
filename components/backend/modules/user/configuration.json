@@ -11,6 +11,7 @@
     "navigation": true,
     "navigationButton": "user",
     "columns": ["title", "username", "email"],
+    "fields": ["title", "email", "username", "password"],
     "model": {
         "title" : {
           "type": "text",
