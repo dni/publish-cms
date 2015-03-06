@@ -1,27 +1,33 @@
+async = require "async"
 auth = require './../../utilities/auth'
 module.exports.setup = (app, config)->
   Setting = require('../../lib/model/Schema')(config.dbTable)
 
+  # create settings on startup if they dont exist
+  app.settings = {}
+  Setting.find().exec (err, settings)->
+    for setting in settings
+      app.settings[setting.getFieldValue('title')] = setting
+    async.eachSeries Object.keys(app.modules), (moduleName, done)->
+      unless app.settings[moduleName] # return if settings exist
+        moduleSetting = app.modules[moduleName]
+        if moduleSetting.settings? # return if settings doesnt exist in config
+          setting = app.createModel config.moduleName, moduleSetting.settings
+          setting.fields.title =
+            type: "type"
+            value: moduleName
+          setting.set "fieldorder", Object.keys(moduleSetting.settings).splice(1)
+          setting.save ->
+            console.log "created setting: "+moduleName
+            done()
+        else
+          console.log "no settings in config "+moduleName
+          done()
+      else
+        console.log "setting exists in db "+moduleName
+        done()
+
   # clear cache /rebuild
   app.get "/clearCache", auth, (req, res) ->
-    # grunt = require("child_process").spawn("grunt", ["reloadSettings"])
-    # #grunt = require('grunt').tasks(['build']);
-    # grunt.stdout.on "data", (data) -> if data isnt "" then console.log "stdout: " + data
-    # grunt.stderr.on "data", (data) -> console.log "stderr: " + data
-    # #grunt.on "close", (code) -> console.log "child process closed with code " + code
-    # grunt.on "close", (code) ->
-    #     if code isnt 0
-    #       res.statusCode = 500
-    #       console.lcog "grunt process exited with code " + code
-    #       res.end()
-    #     else
-    #       console.log "grunt task done without errors"
-    #       res.end()
-    exec = require("child_process").exec
-    child = undefined
-    child = exec("grunt restart", (error, stdout, stderr) ->
-      console.log "stdout: " + stdout
-      console.log "stderr: " + stderr
-      console.log "exec error: " + error  if error isnt null
-      res.end()
-    )
+    app.log "cleared the cache", undefined, app.user.fields.title.value
+

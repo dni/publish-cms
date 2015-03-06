@@ -22,12 +22,10 @@ module.exports.setup = (app, cfg)->
       crop = req.body.crop
       gmImg.size (err, size)->
         return if err
-        Setting.findOne("fields.title.value": cfg.moduleName).exec (err, setting) ->
-          moduleSetting = setting
-          ratio = size.width / crop.origSize.w
-          gmImg.crop(crop.w*ratio, crop.h*ratio, crop.x*ratio, crop.y*ratio)
-          gmImg.write dir+title, ->
-            createImages file, req
+        ratio = size.width / crop.origSize.w
+        gmImg.crop(crop.w*ratio, crop.h*ratio, crop.x*ratio, crop.y*ratio)
+        gmImg.write dir+title, ->
+          createImages file, req
     else
       link = file.getFieldValue "link"
       if title != link
@@ -110,10 +108,10 @@ module.exports.setup = (app, cfg)->
       if err then return console.error "createWebPic getSize err=", err
       portrait = if size.width < size.height then true else false
       addFile = (type, cb)->
-        maxSize = moduleSetting.getFieldValue type
+        maxSize = app.settings[cfg.moduleName].getFieldValue type
         targetName = filename.replace /\.(?=[^.]*$)/, '_'+type+'.'
         file.setFieldValue type, targetName
-        image.quality parseInt(moduleSetting.fields.quality.value)
+        image.quality parseInt(app.settings[cfg.moduleName].getFieldValue('quality'))
         if portrait then image.resize null, maxSize
         else image.resize maxSize
         image.write dir+targetName, ->

@@ -5,14 +5,9 @@ define [
 ],
 ( Publish, TopView, $) ->
   class SettingsController extends Publish.Controller.Controller
-
-    constructor: (args)->
-      @TopView = TopView
-      super args
-
+    TopView: TopView
     routes:
       "clearCache": "clearCache"
-
     clearCache: ->
       $.get "/clearCache", ->
-        window.location = "/admin#settings"
+        window.location = "/"

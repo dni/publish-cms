@@ -41,7 +41,7 @@ define [
         Router.processAppRoutes @Controller, routes
 
       if config.settings
-        App.vent.trigger 'SettingsModule:addSetting', config, @i18n
+        App.vent.trigger 'SettingsModule:translate', @i18n
 
       if config.navigation is true
         App.vent.trigger 'publish:addNavItem', {button:config.navigationButton, route:config.name}, @i18n

@@ -5,15 +5,9 @@ module.exports = (app, config)->
 
   # crud
   app.post '/'+config.urlRoot, auth, (req, res)->
-    schema = new Schema
-    schema.cruser = app.user._id
-    schema.user = app.user._id
-    schema.crdate = new Date()
-    schema.date = new Date()
-    schema.published = req.body.published
-    schema.name = req.body.name
-    schema.fields = req.body.fields
-    schema.fieldorder = req.body.fieldorder
+    schema = app.createModel config.moduleName
+    for key, field of schema.fields
+      field.value = req.body.fields[key]?.value
     app.emit config.moduleName+':after:post', req, res, schema
     schema.save ->
       req.io.broadcast "updateCollection", config.collectionName
