@@ -29,7 +29,7 @@ define [
 
 
     newDetailView:(model)->
-      new @DetailView
+      @detailView = new @DetailView
         model: model
         Config: @Config
         i18n: @i18n
@@ -48,8 +48,6 @@ define [
 
     createNewModel: ->
       fields = @Config.model
-      for key, field of fields
-        field.value = ""
       model = new @Model
       model.urlRoot = @Config.urlRoot
       model.collectionName = @Config.collectionName

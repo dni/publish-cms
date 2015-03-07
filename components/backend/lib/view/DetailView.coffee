@@ -45,13 +45,15 @@ define [
           setting = App.Settings.findSetting @Config.moduleName
           values = setting.getValue(attribute.setting).split(',')
           for option in values
-            options[option] = option
+            options[option.trim()] = option.trim()
           return options
         return attribute.options
       foreachAttribute: (fields, cb)->
-        for key in @Config.fields
-          field = @Config.model[key]
-          field.value = fields[key]?.value
+        keys = Object.keys(fields)
+        fieldsArray = @Config.fields or keys.splice(0,keys.length-1)
+        for key in fieldsArray
+          field = fields[key]
+          field = @Config.model[key] unless field?
           cb key, field
 
     getValuesFromUi: ()->

@@ -1,123 +1,57 @@
-File = require('./../../lib/model/Schema')("files")
-Setting = require('./../../lib/model/Schema')("settings")
 async = require "async"
 auth = require './../../utilities/auth'
-utils = require './../../utilities/utils'
-gm = require 'gm'
 multiparty = require "multiparty"
 fs = require "fs-extra"
+dir = "./public/files/"
 
-module.exports.setup = (app, cfg)->
-  moduleSetting = ''
-  dir = "./public/files/"
-  types = ["thumbnail", "smallPic", "bigPic"]
+module.exports.setup = (app, config, setting)->
+  utils = require("../../utilities/fileutils.coffee")(app, setting)
 
-  Setting.findOne("fields.title.value": cfg.moduleName).exec (err, setting) ->
-    moduleSetting = setting
-
-  app.on cfg.moduleName+':after:put', (req, res, file)->
-    title = file.getFieldValue "title"
-    if req.params.crop
-      gmImg = gm(dir+title)
-      crop = req.body.crop
-      gmImg.size (err, size)->
-        return if err
-        ratio = size.width / crop.origSize.w
-        gmImg.crop(crop.w*ratio, crop.h*ratio, crop.x*ratio, crop.y*ratio)
-        gmImg.write dir+title, ->
-          createImages file, req
-    else
-      link = file.getFieldValue "link"
-      if title != link
-        if fs.existsSync(dir+title) is true
-          title = title.replace /\.(?=[^.]*$)/, "_"+Date.now()+"_copy."
-          file.setFieldValue "title", title
-        file.setFieldValue "link", title
-        copyImages file, true # move = true, only moving
-      file.save ->
-        req.io.broadcast 'updateCollection', cfg.collectionName
-
-
+  # upload file
   app.post "/uploadFile", auth, (req,res)->
-    form = new multiparty.Form
-      uploadDir: dir
+    form = new multiparty.Form uploadDir: dir
     form.parse req, (err, fields, files)->
       if err then return console.log 'formparse error', err
-      uploadFile = (srcFile, done)->
-        title = safeFilename srcFile.originalFilename
+      async.eachSeries files['files[]'], (srcFile, done)->
+        title = utils.safeFilename srcFile.originalFilename
         fs.renameSync srcFile.path, dir+title
-        file = utils.createModel File, cfg
+        file = app.createModel config.moduleName
         file.setFieldValue
           "title": title
           "link": title
           "type": srcFile.headers['content-type']
-
-        if srcFile.headers['content-type'].split("/")[0] is "image"
-          Setting.findOne("fields.title.value": cfg.moduleName).exec (err, setting) ->
-            moduleSetting = setting
-            createImages file, req, ->
-              done()
-        else
+        saveFile = ->
           file.save ->
-            req.io.broadcast "updateCollection", cfg.collectionName
+            req.io.broadcast "updateCollection", config.collectionName
             done()
-      async.eachSeries files['files[]'], uploadFile
-    res.end()
+        if srcFile.headers['content-type'].split("/")[0] is "image"
+          utils.createImages file, saveFile
+        else if srcFile.headers['content-type'] is "text/csv"
+          utils.importCsv file, saveFile
+        else
+          saveFile()
+      , res.end
 
+  # update existing files
+  app.on config.moduleName+':after:put', (req, res, file)->
+    title = file.getFieldValue "title"
+    saveFile = ->
+      file.save ->
+        req.io.broadcast 'updateCollection', config.collectionName
+    if crop = req.body.crop
+      file.set "crop", crop
+      utils.cropImage file, ->
+        utils.createImages file, saveFile
+    else
+      utils.updateFile file, saveFile
 
   #create new copy of the file
-  app.on cfg.moduleName+":after:post", (req, res, file) ->
-    oldFileName = file.getFieldValue "title"
-    newFileName = oldFileName.replace /\.(?=[^.]*$)/, "_"+Date.now()+"_child."
-    fs.writeFileSync dir+newFileName, fs.readFileSync dir+oldFileName
-    file.setFieldValue 'link', newFileName
-    file.setFieldValue 'title', newFileName
-    copyImages file
+  app.on config.moduleName+":after:post", (req, res, file) ->
+    utils.copyFile file, ->
+      req.io.broadcast "updateCollection", config.collectionName
 
   # clean up files after model is deleted
-  app.on cfg.moduleName+':after:delete', (req, res, file)->
-    fs.unlinkSync "./public/files/"+file.getFieldValue("title")
-    for type in types
-      fs.unlinkSync "./public/files/"+file.getFieldValue(type)
-
-  copyImages = (file, move)->
-    for type in types
-      oldLink = file.getFieldValue type
-      newLink = file.getFieldValue('title').replace /\.(?=[^.]*$)/, '_'+type+'.'
-      if move
-        fs.renameSync dir+oldLink, dir+newLink
-      else
-        fs.writeFileSync dir+newLink, fs.readFileSync(dir+oldLink)
-      file.setFieldValue type, newLink
-
-  safeFilename = (name)->
-    title = name
-      .replace(/\./g, '-')
-      .replace(/\-(?=[^-]*$)/, '.')
-      .replace(/\ /g, '_')
-      .toLowerCase()
-    if fs.existsSync(dir+title) is true
-      title = title.replace /\.(?=[^.]*$)/, "_"+Date.now()+"_copy."
-    return title
-
-  createImages = (file, req, done) ->
-    thumbTypes = ["thumbnail", "smallPic", "bigPic"]
-    filename = file.getFieldValue "title"
-
-    image = gm(dir+filename).size (err, size) ->
-      if err then return console.error "createWebPic getSize err=", err
-      portrait = if size.width < size.height then true else false
-      addFile = (type, cb)->
-        maxSize = app.settings[cfg.moduleName].getFieldValue type
-        targetName = filename.replace /\.(?=[^.]*$)/, '_'+type+'.'
-        file.setFieldValue type, targetName
-        image.quality parseInt(app.settings[cfg.moduleName].getFieldValue('quality'))
-        if portrait then image.resize null, maxSize
-        else image.resize maxSize
-        image.write dir+targetName, ->
-          cb()
-      async.each thumbTypes, addFile, ->
-        file.save ->
-          done()
-          req.io.broadcast "updateCollection", cfg.collectionName
+  app.on config.moduleName+':after:delete', (req, res, file)->
+    utils.deleteFile file, ->
+      res.end()
 
