@@ -17,20 +17,30 @@ module.exports = (app, setting)->
       title = title.replace /\.(?=[^.]*$)/, "_"+Date.now()+"_copy."
     return title
 
+  prependFilename: (link, text)->
+    # replace last dot in filename
+    link.replace /\.(?=[^.]*$)/, '_'+text+'.'
+
+  isImage: (file)-> file.getFieldValue("type").split("/")[0] is "image"
+
   deleteFile: (file, done)->
-    fs.unlinkSync dir+file.getFieldValue("title")
-    if file.getFieldValue("type").split("/")[0] is "image"
-      fs.unlinkSync dir+file.getFieldValue(type) for type in types
+    return if file?
+    if fs.exists dir.file.getFieldValue("title")
+      fs.unlinkSync dir+file.getFieldValue("title")
+    if @isImage file
+      for type in types
+        if fs.exists dir+file.getFieldValue(type)
+          fs.unlinkSync dir+file.getFieldValue(type)
 
   createImages: (file, done)->
+    that = @
     filename = file.getFieldValue "title"
     quality = parseInt setting.getFieldValue('quality')
     image = gm(dir+filename).size (err, size) ->
       portrait = if size.width < size.height then true else false
       async.each types, (type, cb)->
           maxSize = setting.getFieldValue type
-          # replace last dot in filename
-          targetName = filename.replace /\.(?=[^.]*$)/, '_'+type+'.'
+          targetName = that.prependFilename filename, type
           file.setFieldValue type, targetName
           image.quality quality
           if portrait then image.resize null, maxSize
@@ -39,20 +49,37 @@ module.exports = (app, setting)->
       , ->
         file.save done
 
-  copyImage: (file, done)->
 
-  updateFile: (file, done)->
+  updateFile: (file, done)=>
+    title = file.getFieldValue "link"
     link = file.getFieldValue "link"
     if title != link
       safe = @safeFilename link
       file.setFieldValue title:safe
       @moveFile file, done
 
+  copyFile: (file, done)->
+    oldLink = file.getFieldValue "link"
+    newLink = @prependFilename oldLink, 'child'
+    fs.writeFileSync dir+newLink, fs.readFileSync(dir+oldLink)
+    if @isImage file
+      for type in types
+        oldLink = file.getFieldValue type
+        newLink = @prependFilename oldLink, 'child'
+        fs.writeFileSync dir+newLink, fs.readFileSync(dir+oldLink)
+    done()
+
+
+  # improveable
   moveFile: (file, done)->
-    oldLink = file.getFieldValue type
-    newLink = file.getFieldValue('title')
+    oldLink = file.getFieldValue "link"
+    newLink = @prependFilename oldLink, 'child'
     fs.renameSync dir+oldLink, dir+newLink
-    file.setFieldValue type, newLink
+    if @isImage file
+      for type in types
+        oldLink = file.getFieldValue type
+        newLink = @prependFilename oldLink, 'child'
+        fs.renameSync dir+oldLink, dir+newLink
     done()
 
   cropImage: (file, done)->
