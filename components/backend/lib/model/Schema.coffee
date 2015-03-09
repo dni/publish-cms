@@ -25,5 +25,9 @@ module.exports = (dbTable)->
     schema.methods.getFieldValue = (field)->
       @fields[field].value
 
+    schema.pre 'save', (next)->
+      @date = Date.now
+      next()
+
     collections[dbTable] = mongoose.model dbTable, schema
   collections[dbTable]

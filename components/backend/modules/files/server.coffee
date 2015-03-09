@@ -54,4 +54,3 @@ module.exports.setup = (app, config, setting)->
   app.on config.moduleName+':after:delete', (req, res, file)->
     utils.deleteFile file, ->
       res.end()
-

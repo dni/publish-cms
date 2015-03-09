@@ -1,7 +1,8 @@
 define [
+  'cs!App'
   'backbone'
   'underscore'
-], (Backbone, _) ->
+], (App, Backbone, _) ->
   class Model extends Backbone.Model
     idAttribute: "_id"
     defaults:
@@ -18,7 +19,15 @@ define [
 
     getValue: (fieldname)->
       fields = @get "fields"
-      return fields[fieldname].value
+      return fields[fieldname]?.value
+
+    getCollection: (fieldname, collectionField)->
+      fields = @get "fields"
+      field = fields[fieldname]
+      if field
+        collectionName = fields[fieldname].collection
+        coll = App[collectionName].findWhere "_id":fields[fieldname].value
+        coll.getValue collectionField
 
     togglePublish: ->
       @.set "published", not @.get "published"
