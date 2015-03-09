@@ -23,7 +23,6 @@ define [
 
   Pages.fetch
     success:->
-
       App.navigationRegion.show new PageView collection: Pages
 
   Router.processAppRoutes new Controller,

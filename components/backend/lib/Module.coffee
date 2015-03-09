@@ -26,11 +26,10 @@ define [
         App[@Config.collectionName].url = @Config.url
         App[@Config.collectionName].fetch
           success:->
-        App.ready config.name
             App.ready config.moduleName
             App.vent.trigger config.moduleName+":collection:ready"
       else
-        App.ready config.moduleName
+        App.ready @Config.moduleName
 
       unless @disableRoutes
         # Routes from Controller

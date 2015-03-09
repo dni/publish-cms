@@ -9,6 +9,8 @@
     "dbTable": "staticblocks",
     "navigation": true,
     "notpublishable": true,
+    "fields": ["title", "image", "layout", "data"],
+    "columns": ["title"],
     "settings": {
       "layout" : {
         "value": "default, noimage, imageleft, imageright",
